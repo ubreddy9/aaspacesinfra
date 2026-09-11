@@ -1,0 +1,96 @@
+{
+  "hero": {
+    "eyebrow": "AA Spaces / project studies",
+    "title": "Built around the realities of each site.",
+    "description": "A developing view of the sectors AA Spaces is built to serve. Representative imagery will be replaced with completed AA Spaces project photography, specifications, and outcome details as the portfolio grows."
+  },
+  "filters": [
+    {
+      "label": "All sectors",
+      "value": "all",
+      "id": "Gpbz5GJWBF0i22-fWrn_h"
+    },
+    {
+      "label": "Warehouses",
+      "value": "warehouse",
+      "id": "t70TAfwiOtqHFCtbEDJT9"
+    },
+    {
+      "label": "Commercial",
+      "value": "commercial",
+      "id": "dspcTdyGFJBIab5ovRg7T"
+    },
+    {
+      "label": "Hospitality",
+      "value": "hospitality",
+      "id": "yGR62viF_VkGmc5tMVsfW"
+    },
+    {
+      "label": "Industrial",
+      "value": "industrial",
+      "id": "4aTtU7uWu4lixnzMBrLth"
+    },
+    {
+      "label": "Convention",
+      "value": "convention",
+      "id": "U7wPQLl6tKA_KSiiPdhHd"
+    }
+  ],
+  "projects": [
+    {
+      "title": "Span & logistics",
+      "sector": "Warehouse",
+      "filter": "warehouse",
+      "code": "AA / WH-01",
+      "description": "Clear-span warehouse environments for storage, handling, and operational flow.",
+      "image": "/airo-assets/images/pages/home/capabilities-warehouse",
+      "id": "UamW8eQy68rlghdH2PL6k"
+    },
+    {
+      "title": "Facade & frontage",
+      "sector": "Commercial",
+      "filter": "commercial",
+      "code": "AA / CE-02",
+      "description": "Commercial building envelopes designed for visibility, flexibility, and enduring presence.",
+      "image": "/airo-assets/images/pages/home/capabilities-commercial",
+      "id": "waw8_io4SkjJm6u6SiI3l"
+    },
+    {
+      "title": "Arrival & experience",
+      "sector": "Hospitality",
+      "filter": "hospitality",
+      "code": "AA / HS-03",
+      "description": "Hospitality structures shaped around arrival sequences, guest comfort, and operations.",
+      "image": "/airo-assets/images/pages/home/capabilities-hospitality",
+      "id": "h7xGRbCkuYIbJA-YBqrUe"
+    },
+    {
+      "title": "Operational resilience",
+      "sector": "Industrial",
+      "filter": "industrial",
+      "code": "AA / IN-04",
+      "description": "Industrial structures planned around production, processing, access, and site coordination.",
+      "image": "/airo-assets/images/pages/projects/industrial-structure",
+      "id": "M8GfHoOQvAc_5hrQ-CPZM"
+    },
+    {
+      "title": "Volume & gathering",
+      "sector": "Convention",
+      "filter": "convention",
+      "code": "AA / CC-05",
+      "description": "Large-format event and convention environments with adaptable circulation and volume.",
+      "image": "/airo-assets/images/pages/home/gallery-convention",
+      "id": "rLOHShWcsLzcSVLq7c0Kb"
+    }
+  ],
+  "note": {
+    "title": "Portfolio in progress",
+    "description": "Project photography and technical details will be added here as AA Spaces shares completed work. For a specific sector or site conversation, request a proposal."
+  },
+  "cta": {
+    "eyebrow": "Your project, clearly scoped",
+    "title": "Start with the structure.",
+    "description": "Tell us what the site needs to achieve, and we’ll begin the project conversation.",
+    "button": "Request a proposal"
+  }
+}

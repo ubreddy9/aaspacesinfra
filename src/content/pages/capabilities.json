@@ -1,0 +1,122 @@
+{
+  "hero": {
+    "eyebrow": "AA Spaces / capabilities",
+    "title": "Building systems that hold up to the brief.",
+    "description": "AA Spaces coordinates pre-engineered building solutions from early design thinking through fabrication planning and site erection — with the practical demands of the sector in view."
+  },
+  "services": [
+    {
+      "title": "Structural planning",
+      "detail": "Clear-span possibilities, internal circulation, loading conditions, and future growth are brought into the early conversation.",
+      "number": "01",
+      "id": "ADpBHvR5rDKJZ4A2VScOQ"
+    },
+    {
+      "title": "Building envelope",
+      "detail": "Roof, wall, facade, daylighting, ventilation, and weather protection are considered as one coordinated system.",
+      "number": "02",
+      "id": "5smACDodhm6cuFz8OMT1a"
+    },
+    {
+      "title": "Fabrication coordination",
+      "detail": "Components, connections, sequencing, and interfaces are organized to support an efficient build path.",
+      "number": "03",
+      "id": "8bVh1rgZdNMPv7Z4Hh3va"
+    },
+    {
+      "title": "On-site erection",
+      "detail": "Delivery and assembly are coordinated around site conditions, access, safety, and the agreed construction sequence.",
+      "number": "04",
+      "id": "tKpTp0cKjtqZFhWhF3YyA"
+    }
+  ],
+  "technical": {
+    "eyebrow": "What the system responds to",
+    "title": "A technical response, not a standard answer.",
+    "items": [
+      {
+        "label": "Span & volume",
+        "detail": "Column grids and unobstructed zones are shaped around the real use of the floor plate.",
+        "id": "ZCdcoMfc7dO4kw7cHClFW"
+      },
+      {
+        "label": "Loads & conditions",
+        "detail": "Structural considerations respond to operational loads, wind, location, and building purpose.",
+        "id": "stRbpXxaK9xzNjPGmeMt1"
+      },
+      {
+        "label": "Climate & enclosure",
+        "detail": "Envelope decisions take local conditions, daylight, heat, rain, and ventilation into account.",
+        "id": "s3vQzq_U4aB1L7XDfrC21"
+      },
+      {
+        "label": "Interfaces & movement",
+        "detail": "Entries, docks, equipment zones, people flow, and expansion points are planned as connected details.",
+        "id": "b5oH-GySPR47yryg2neHK"
+      }
+    ]
+  },
+  "sectors": {
+    "eyebrow": "Sector-specific solutions",
+    "title": "Designed for the work inside.",
+    "items": [
+      {
+        "name": "Warehouses",
+        "detail": "Storage-led spaces that support handling systems, clear movement, dock activity, and operational adaptability.",
+        "id": "TPcAcRRXZV94og3AuK0Jg"
+      },
+      {
+        "name": "Commercial establishments",
+        "detail": "High-visibility structures with the flexibility to support brand presence, visitors, and changing business use.",
+        "id": "rt4Y9hbzuL8cKerO7QA2W"
+      },
+      {
+        "name": "Hospitality structures",
+        "detail": "Purposeful settings for guest arrival, circulation, service areas, and an experience that feels considered.",
+        "id": "5Y7-RZw8PVQxtPhikWKBC"
+      },
+      {
+        "name": "Industrial structures",
+        "detail": "Robust building systems for manufacturing, processing, equipment, and the pace of everyday operations.",
+        "id": "__gyDgY9sF44lF9NnQVt9"
+      },
+      {
+        "name": "Convention centers",
+        "detail": "Large-volume environments planned around gathering, adaptable programming, technical needs, and circulation.",
+        "id": "n0DfVeLCilXPSj-7Nbj0l"
+      }
+    ]
+  },
+  "process": {
+    "eyebrow": "Delivery framework",
+    "title": "One line of sight from concept to completion.",
+    "steps": [
+      {
+        "title": "Listen to the brief",
+        "detail": "We start with the site, use case, priorities, and the constraints that will shape the project.",
+        "id": "nX-1G6x7yldTQpUhRIlFB"
+      },
+      {
+        "title": "Coordinate the system",
+        "detail": "The structure and envelope are considered together, with critical interfaces surfaced early.",
+        "id": "BFQAdzllhAIiAHzn0ajPS"
+      },
+      {
+        "title": "Plan the build",
+        "detail": "Fabrication and erection are prepared around a clear sequence that respects the realities of the site.",
+        "id": "Dj6JZTdzYX5EYzw6vR58w"
+      },
+      {
+        "title": "Bring it together",
+        "detail": "The project moves toward handover through coordinated site delivery and review.",
+        "id": "ZmGzdw-1l_Sfh8oejixhH"
+      }
+    ]
+  },
+  "cta": {
+    "eyebrow": "Project conversations",
+    "title": "Bring us the brief.",
+    "description": "Whether you have early sketches or a fully defined requirement, a focused conversation is the right first step.",
+    "button": "Request a proposal"
+  }
+}

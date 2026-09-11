@@ -1,0 +1,84 @@
+{
+  "hero": {
+    "eyebrow": "AA Spaces / about",
+    "title": "Spaces made with purpose and precision.",
+    "description": "AA Spaces delivers pre-engineered building solutions for the realities of modern industry, commerce, hospitality, and gathering — from the first project conversation through coordinated site delivery."
+  },
+  "story": {
+    "eyebrow": "Our perspective",
+    "title": "A building is more than a footprint.",
+    "body": [
+      {
+        "text": "It is the framework for how people move, operate, gather, create, store, and grow. AA Spaces begins by listening closely to what a site must support — then turns that understanding into a coordinated building response.",
+        "id": "4KCjW4daAon52K70mrNXG"
+      },
+      {
+        "text": "Our work brings together structural thinking, building envelope planning, fabrication coordination, and site erection with one practical goal: create spaces that meet the brief and stand ready for what comes next.",
+        "id": "1GH2X1w-QsaJ4l3lkoBUB"
+      }
+    ]
+  },
+  "commitments": {
+    "eyebrow": "What guides the work",
+    "title": "Clarity in every essential detail.",
+    "items": [
+      {
+        "number": "01",
+        "title": "Purpose before precedent",
+        "detail": "Every proposal begins with the sector, site, and operating need — not a standard answer.",
+        "id": "DnoItwu5YXxEeKWRml7tf"
+      },
+      {
+        "number": "02",
+        "title": "Coordinated decisions",
+        "detail": "Structural, envelope, fabrication, and erection considerations are kept in view together.",
+        "id": "iuEmLt_OoNo2NXr73d4jG"
+      },
+      {
+        "number": "03",
+        "title": "Practical delivery",
+        "detail": "The build path is planned around real site conditions, interfaces, access, and sequence.",
+        "id": "wc0MsEIECTVgXPWZaK-G8"
+      },
+      {
+        "number": "04",
+        "title": "Quality through attention",
+        "detail": "Clear detailing and methodical review help keep the project aligned with its agreed scope.",
+        "id": "7wJd_XtPzk6ssN1cTLSng"
+      }
+    ]
+  },
+  "leadership": {
+    "eyebrow": "Leadership approach",
+    "title": "Close to the brief. Accountable to the build.",
+    "description": "AA Spaces is led with a hands-on, project-focused mindset. We value direct communication, coordinated decision-making, and the discipline to keep the important details visible from consultation through handover."
+  },
+  "footprint": {
+    "eyebrow": "India-wide delivery",
+    "title": "One standard, wherever the site is.",
+    "description": "Our sector capability is designed to travel across India — adapting the building response to location, climate, site conditions, and the specific work that will happen inside.",
+    "points": [
+      {
+        "label": "Sector-ready",
+        "detail": "Warehouse, industrial, commercial, hospitality, and convention environments.",
+        "id": "kAdJki1Cxls1DEHZDMNaf"
+      },
+      {
+        "label": "Site-aware",
+        "detail": "A response shaped around the particular conditions and constraints of the project.",
+        "id": "Nd6hvp1mMNDrVE--h3Uw0"
+      },
+      {
+        "label": "End-to-end view",
+        "detail": "Design coordination, fabrication planning, erection, and handover.",
+        "id": "JsIPEWKQ7Ezx08oGuYPjW"
+      }
+    ]
+  },
+  "cta": {
+    "eyebrow": "Build with AA Spaces",
+    "title": "Start with the right questions.",
+    "description": "Bring your project brief, site considerations, and ambition for the space. We’ll help map the structural conversation.",
+    "button": "Request a proposal"
+  }
+}

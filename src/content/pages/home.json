@@ -1,0 +1,114 @@
+{
+  "hero": {
+    "eyebrow": "AA Spaces / Pre-engineered buildings",
+    "title": "Structures built for what’s next.",
+    "description": "Integrated pre-engineered building solutions for complex warehouse, industrial, commercial, hospitality, and convention environments across India.",
+    "cta": "Request a proposal",
+    "rail": [
+      "India-wide delivery",
+      "Five specialist sectors",
+      "Design to erection"
+    ]
+  },
+  "sectors": [
+    {
+      "number": "01",
+      "name": "Warehouses",
+      "detail": "Clear-span systems planned around storage, handling, workflow, and expansion needs.",
+      "id": "Lm4DwZVNbhgqX4dhSLG6K"
+    },
+    {
+      "number": "02",
+      "name": "Commercial establishments",
+      "detail": "Flexible building envelopes that support active, high-visibility business environments.",
+      "id": "qiUdFfrBnwkTdRLMsnshH"
+    },
+    {
+      "number": "03",
+      "name": "Hospitality structures",
+      "detail": "Purpose-led structural systems shaped for arrival, experience, and operating flow.",
+      "id": "OoPKqo22ut-vrDm8WPn73"
+    },
+    {
+      "number": "04",
+      "name": "Industrial structures",
+      "detail": "Robust, coordinated spaces for manufacturing, processing, and operational resilience.",
+      "id": "EiQkrV-2MK06DBzVrrwC2"
+    },
+    {
+      "number": "05",
+      "name": "Convention centers",
+      "detail": "Large-volume gathering environments designed around adaptability and circulation.",
+      "id": "FEaLM2lBMj2uPu5q_kUma"
+    }
+  ],
+  "approach": {
+    "eyebrow": "Engineering approach",
+    "title": "A disciplined route from brief to build.",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Consultation",
+        "text": "We align on site, sector requirements, use cases, and the project brief.",
+        "id": "hJ3ad771NTu1S81Oub63Z"
+      },
+      {
+        "number": "02",
+        "title": "Structural design",
+        "text": "The building concept is coordinated around spans, loads, envelope, and performance needs.",
+        "id": "XCp3xD2hG6YW92svbI87L"
+      },
+      {
+        "number": "03",
+        "title": "Fabrication coordination",
+        "text": "Components and interfaces are planned to keep the construction sequence clear.",
+        "id": "dm0a3sCRrYjrPN-yrUvuz"
+      },
+      {
+        "number": "04",
+        "title": "Site erection",
+        "text": "The structure is brought together with methodical on-site coordination.",
+        "id": "v-rq3EOFOMpNeUETjvr0r"
+      },
+      {
+        "number": "05",
+        "title": "Handover",
+        "text": "The completed space is reviewed against the agreed project scope.",
+        "id": "LyGediJRIgrHYlezqwYCh"
+      }
+    ]
+  },
+  "gallery": {
+    "eyebrow": "Selected structure studies",
+    "title": "A portfolio built around purpose.",
+    "note": "These are representative sector studies. Replace them with AA Spaces project imagery and details as the portfolio develops.",
+    "projects": [
+      {
+        "sector": "Warehouse",
+        "title": "Span & logistics",
+        "id": "bx21kZh984SQD6GY6NvVi"
+      },
+      {
+        "sector": "Commercial",
+        "title": "Facade & frontage",
+        "id": "P0XAS70zbfV9IxZ1vO1Tt"
+      },
+      {
+        "sector": "Hospitality",
+        "title": "Arrival & experience",
+        "id": "j1NQNDMth4qqxKeP39T-c"
+      },
+      {
+        "sector": "Convention",
+        "title": "Volume & gathering",
+        "id": "peEAUhIVqf2s7x-vg6oTg"
+      }
+    ]
+  },
+  "cta": {
+    "eyebrow": "Start with a clear brief",
+    "title": "Discuss your next build.",
+    "description": "Tell us what the space needs to achieve. We’ll help shape the structural conversation from there.",
+    "button": "Request a proposal"
+  }
+}

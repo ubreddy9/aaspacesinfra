@@ -1,0 +1,278 @@
+{
+  "pages/home/capabilities-commercial": {
+    "requestedSize": {
+      "width": 1200,
+      "height": 900,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "graphicalStyles": "photography",
+    "sortOrder": "best_match",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2267822047",
+    "searchQuery": "modern commercial building facade architecture India",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2228309168",
+      "https://img1.wsimg.com/isteam/getty/2275375346",
+      "https://img1.wsimg.com/isteam/getty/1644674282",
+      "https://img1.wsimg.com/isteam/getty/2226598262"
+    ],
+    "userModified": false,
+    "createdAt": "2026-09-08T11:16:36.551Z",
+    "lastUpdated": "2026-09-08T11:16:36.551Z",
+    "gettyId": "2267822047",
+    "alternativeGettyIds": [
+      "2228309168",
+      "2275375346",
+      "1644674282",
+      "2226598262"
+    ]
+  },
+  "pages/home/hero": {
+    "requestedSize": {
+      "width": 1920,
+      "height": 1080,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "graphicalStyles": "photography",
+    "sortOrder": "best_match",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2228308630",
+    "searchQuery": "modern steel warehouse exterior India architectural photography",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1576087832",
+      "https://img1.wsimg.com/isteam/getty/2222988276",
+      "https://img1.wsimg.com/isteam/getty/2003332689",
+      "https://img1.wsimg.com/isteam/getty/1454627884"
+    ],
+    "userModified": false,
+    "createdAt": "2026-09-08T11:16:37.898Z",
+    "lastUpdated": "2026-09-08T11:16:37.898Z",
+    "gettyId": "2228308630",
+    "alternativeGettyIds": [
+      "1576087832",
+      "2222988276",
+      "2003332689",
+      "1454627884"
+    ]
+  },
+  "pages/home/capabilities-warehouse": {
+    "requestedSize": {
+      "width": 1200,
+      "height": 900,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "graphicalStyles": "photography",
+    "sortOrder": "best_match",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2274362067",
+    "searchQuery": "warehouse steel frame interior architecture",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2227468654",
+      "https://img1.wsimg.com/isteam/getty/1327154435",
+      "https://img1.wsimg.com/isteam/getty/2149919071",
+      "https://img1.wsimg.com/isteam/getty/1415343042"
+    ],
+    "userModified": false,
+    "createdAt": "2026-09-08T11:16:38.803Z",
+    "lastUpdated": "2026-09-08T11:16:38.803Z",
+    "gettyId": "2274362067",
+    "alternativeGettyIds": [
+      "2227468654",
+      "1327154435",
+      "2149919071",
+      "1415343042"
+    ]
+  },
+  "pages/home/capabilities-hospitality": {
+    "requestedSize": {
+      "width": 1200,
+      "height": 900,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "graphicalStyles": "photography",
+    "sortOrder": "best_match",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2200018436",
+    "searchQuery": "modern hotel exterior steel architecture India",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2267822047",
+      "https://img1.wsimg.com/isteam/getty/2226598263",
+      "https://img1.wsimg.com/isteam/getty/2228310958",
+      "https://img1.wsimg.com/isteam/getty/2226598262"
+    ],
+    "userModified": false,
+    "createdAt": "2026-09-08T11:17:15.315Z",
+    "lastUpdated": "2026-09-08T11:17:15.315Z",
+    "gettyId": "2200018436",
+    "alternativeGettyIds": [
+      "2267822047",
+      "2226598263",
+      "2228310958",
+      "2226598262"
+    ]
+  },
+  "pages/home/gallery-convention": {
+    "requestedSize": {
+      "width": 1200,
+      "height": 900,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "graphicalStyles": "photography",
+    "sortOrder": "best_match",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2265411042",
+    "searchQuery": "modern convention center exterior architecture",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2281530390",
+      "https://img1.wsimg.com/isteam/getty/106478749",
+      "https://img1.wsimg.com/isteam/getty/186360877",
+      "https://img1.wsimg.com/isteam/getty/2288908085"
+    ],
+    "userModified": false,
+    "createdAt": "2026-09-08T11:17:16.548Z",
+    "lastUpdated": "2026-09-08T11:17:16.548Z",
+    "gettyId": "2265411042",
+    "alternativeGettyIds": [
+      "2281530390",
+      "106478749",
+      "186360877",
+      "2288908085"
+    ]
+  },
+  "logo/horizontal": {
+    "mediaType": "logo",
+    "currentUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-transparent-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png",
+    "searchQuery": "A refined architectural logo for AA Spaces featuring a minimal abstract A monogr",
+    "alternatives": [],
+    "solidUrlMap": {
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-transparent-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-original-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png"
+    },
+    "mockupUrlMap": {
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-transparent-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-transparent-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png"
+    },
+    "landscapeMockupUrlMap": {},
+    "logoSourceMap": {
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-transparent-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png": {
+        "sessionId": "2f5b300a-bf61-441e-8821-b6bdca719211",
+        "logoId": "a2195c5a-1d90-4b3d-9323-9b146960d9ea",
+        "groupId": "a5394acc-8f4c-41e8-a442-fd3ff0ec6b48"
+      }
+    },
+    "productMockupsMap": {
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-transparent-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png": [
+        {
+          "type": "mug",
+          "label": "Mug",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-mockup-mug-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png"
+        },
+        {
+          "type": "card",
+          "label": "Business Card",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-mockup-card-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png"
+        },
+        {
+          "type": "tshirt",
+          "label": "T-Shirt",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-mockup-tshirt-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png"
+        },
+        {
+          "type": "box",
+          "label": "Packaging",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-mockup-box-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png"
+        }
+      ]
+    },
+    "productMockups": [
+      {
+        "type": "mug",
+        "label": "Mug",
+        "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-mockup-mug-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png"
+      },
+      {
+        "type": "card",
+        "label": "Business Card",
+        "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-mockup-card-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png"
+      },
+      {
+        "type": "tshirt",
+        "label": "T-Shirt",
+        "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-mockup-tshirt-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png"
+      },
+      {
+        "type": "box",
+        "label": "Packaging",
+        "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-mockup-box-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png"
+      }
+    ],
+    "userModified": false,
+    "createdAt": "2026-09-08T11:17:26.195Z",
+    "lastUpdated": "2026-09-08T11:18:20.574Z",
+    "surfaceMode": "dark",
+    "generatedForSurfaceColor": "#282824",
+    "darkSurfaceUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/2f5b300a-bf61-441e-8821-b6bdca719211/horizontal-transparent-a2195c5a-1d90-4b3d-9323-9b146960d9ea/logo-logo.png",
+    "logoGroupId": "a5394acc-8f4c-41e8-a442-fd3ff0ec6b48"
+  },
+  "logo/favicon": {
+    "mediaType": "logo",
+    "currentUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/7c54f218-ec94-4915-9710-0cf032c082e8/favicon-transparent-606fb5fb-a218-4abc-90f8-51038b7fac9d/logo-logo.png",
+    "searchQuery": "favicon",
+    "alternatives": [],
+    "logoSourceMap": {
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/7c54f218-ec94-4915-9710-0cf032c082e8/favicon-transparent-606fb5fb-a218-4abc-90f8-51038b7fac9d/logo-logo.png": {
+        "sessionId": "7c54f218-ec94-4915-9710-0cf032c082e8",
+        "logoId": "606fb5fb-a218-4abc-90f8-51038b7fac9d",
+        "groupId": "a5394acc-8f4c-41e8-a442-fd3ff0ec6b48"
+      }
+    },
+    "logoGroupId": "a5394acc-8f4c-41e8-a442-fd3ff0ec6b48",
+    "solidUrlMap": {
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/7c54f218-ec94-4915-9710-0cf032c082e8/favicon-transparent-606fb5fb-a218-4abc-90f8-51038b7fac9d/logo-logo.png": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/7c54f218-ec94-4915-9710-0cf032c082e8/favicon-original-606fb5fb-a218-4abc-90f8-51038b7fac9d/logo-logo.png"
+    },
+    "userModified": false,
+    "createdAt": "2026-09-08T11:17:53.714Z",
+    "lastUpdated": "2026-09-08T11:18:20.654Z",
+    "surfaceMode": "dark",
+    "generatedForSurfaceColor": "#282824",
+    "darkSurfaceUrl": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/e371a5b2-f4ef-413b-965a-1d60452d3a03/session/7c54f218-ec94-4915-9710-0cf032c082e8/favicon-transparent-606fb5fb-a218-4abc-90f8-51038b7fac9d/logo-logo.png"
+  },
+  "pages/projects/industrial-structure": {
+    "requestedSize": {
+      "width": 1400,
+      "height": 1000,
+      "fit": "cover"
+    },
+    "orientations": "horizontal",
+    "graphicalStyles": "photography",
+    "sortOrder": "best_match",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/156209806",
+    "searchQuery": "modern industrial steel factory exterior architectural photography",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1354189734",
+      "https://img1.wsimg.com/isteam/getty/1425859505",
+      "https://img1.wsimg.com/isteam/getty/1338102759",
+      "https://img1.wsimg.com/isteam/getty/157295081"
+    ],
+    "userModified": false,
+    "createdAt": "2026-09-08T11:19:40.313Z",
+    "lastUpdated": "2026-09-08T11:19:40.313Z",
+    "gettyId": "156209806",
+    "alternativeGettyIds": [
+      "1354189734",
+      "1425859505",
+      "1338102759",
+      "157295081"
+    ]
+  }
+}

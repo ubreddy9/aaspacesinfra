@@ -1,0 +1,37 @@
+{
+  "hero": {
+    "eyebrow": "AA Spaces / Request a proposal",
+    "title": "Bring us the brief.",
+    "description": "Share what the site needs to achieve. We’ll use the information to begin a focused conversation around structure, use, delivery, and next steps."
+  },
+  "details": {
+    "eyebrow": "What to include",
+    "title": "Useful context, from day one.",
+    "items": [
+      {
+        "title": "Project type",
+        "detail": "Warehouse, commercial, hospitality, industrial, convention, or another building need.",
+        "id": "sbRiwR1FWuZZV9r-4GaJY"
+      },
+      {
+        "title": "Site & location",
+        "detail": "Where the project is proposed, and any known site conditions or access considerations.",
+        "id": "5OFDr7WO5xCqJ-u1ueElr"
+      },
+      {
+        "title": "Scale & timeline",
+        "detail": "Indicative footprint, height, span, programme, and your preferred project timeline.",
+        "id": "Ur_gTzpI6CV4qcxyCutN-"
+      }
+    ]
+  },
+  "form": {
+    "eyebrow": "Project brief",
+    "title": "Tell us about the space.",
+    "description": "The more context you can share, the more useful the first conversation can be."
+  },
+  "aside": {
+    "title": "A clear starting point.",
+    "description": "We respond to each brief with the project context in view. Your enquiry will be directed to the AA Spaces team for review."
+  }
+}
