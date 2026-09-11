@@ -1,8 +1,24 @@
-﻿User-agent: *
+User-agent: GPTBot
 Allow: /
 
-# Block admin panel from indexing
-Disallow: /admin
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: *
+Allow: /
 Disallow: /admin/
+Disallow: /wp-admin/
 
 Sitemap: https://aaspacesinfra.com/sitemap.xml
