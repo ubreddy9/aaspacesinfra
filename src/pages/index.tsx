@@ -380,6 +380,130 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* ═══ OUR TEAM ══════════════════════════════════════════════════ */}
+        <section style={{ background: "hsl(210 20% 97%)", padding: "96px 0" }}>
+          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
+            {/* Header */}
+            <motion.div {...reveal} style={{ textAlign: "center", marginBottom: 64 }}>
+              <span style={{
+                display: "inline-block", fontSize: 11, fontWeight: 700,
+                color: "hsl(215 72% 38%)", letterSpacing: "0.14em",
+                textTransform: "uppercase", background: "hsl(215 72% 18% / 0.08)",
+                border: "1px solid hsl(215 72% 18% / 0.15)",
+                padding: "5px 16px", borderRadius: 999, marginBottom: 18,
+              }}>Executive Leadership</span>
+              <h2 style={{
+                fontFamily: '"Sora", sans-serif',
+                fontSize: "clamp(2rem, 4vw, 2.8rem)",
+                fontWeight: 800, color: "hsl(215 40% 12%)",
+                letterSpacing: "-0.02em", marginBottom: 16,
+              }}>
+                Meet Our Team
+              </h2>
+              <p style={{ fontSize: 16, color: "hsl(215 20% 45%)", maxWidth: 480, margin: "0 auto", lineHeight: 1.7 }}>
+                The people behind every AA Spaces structure — decades of expertise, precision, and trust.
+              </p>
+            </motion.div>
+
+            {/* Cards */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 360px))",
+              gap: 32, justifyContent: "center",
+            }}>
+              {[
+                {
+                  name: "Mr. B. Upender Reddy",
+                  role: "Managing Director",
+                  experience: "28+ Years",
+                  email: "info@aaspacesinfra.com",
+                  photo: "/assets/team/upender-reddy.jpg",
+                  accent: "hsl(28 95% 52%)",
+                  qualification: "",
+                },
+                {
+                  name: "Mr. Ch. Gangadhar",
+                  role: "Executive Director",
+                  qualification: "M.Tech. Structures",
+                  experience: "10+ Years",
+                  email: "gangadhar@aaspacesinfra.com",
+                  photo: "/assets/team/gangadhar.jpg",
+                  accent: "hsl(160 70% 42%)",
+                },
+              ].map((member, i) => (
+                <motion.div
+                  key={member.name}
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.55, delay: i * 0.14, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                  style={{
+                    borderRadius: 24, overflow: "hidden", background: "#fff",
+                    boxShadow: "0 8px 40px hsl(215 40% 18% / 0.13)",
+                    border: "1px solid hsl(215 18% 90%)",
+                    display: "flex", flexDirection: "column",
+                  }}
+                >
+                  {/* Photo */}
+                  <div style={{ position: "relative", height: 340, overflow: "hidden", background: "hsl(215 20% 92%)" }}>
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block" }}
+                    />
+                    {/* Experience badge */}
+                    <div style={{
+                      position: "absolute", top: 16, left: 16,
+                      background: "hsl(215 40% 7% / 0.65)",
+                      backdropFilter: "blur(8px)",
+                      border: "1px solid hsl(0 0% 100% / 0.18)",
+                      borderRadius: 999, padding: "5px 14px",
+                      fontSize: 11.5, fontWeight: 700, color: "#fff",
+                      letterSpacing: "0.05em",
+                    }}>
+                      {member.experience}
+                    </div>
+                    {/* Bottom fade */}
+                    <div style={{
+                      position: "absolute", bottom: 0, left: 0, right: 0, height: 80,
+                      background: "linear-gradient(to top, #fff, transparent)",
+                    }} />
+                  </div>
+
+                  {/* Info */}
+                  <div style={{ padding: "20px 28px 28px", display: "flex", flexDirection: "column", gap: 12 }}>
+                    <div>
+                      <h3 style={{ fontFamily: '"Sora", sans-serif', fontSize: "1.15rem", fontWeight: 800, color: "hsl(215 40% 12%)", marginBottom: 4 }}>
+                        {member.name}
+                      </h3>
+                      <p style={{ fontSize: 13, fontWeight: 700, color: member.accent, marginBottom: 2 }}>
+                        {member.role}
+                      </p>
+                      {member.qualification && (
+                        <p style={{ fontSize: 12, color: "hsl(215 20% 55%)", fontWeight: 500 }}>{member.qualification}</p>
+                      )}
+                    </div>
+                    <a
+                      href={`mailto:${member.email}`}
+                      style={{
+                        display: "inline-flex", alignItems: "center", gap: 7,
+                        fontSize: 13, fontWeight: 600, color: "hsl(215 72% 38%)",
+                        textDecoration: "none", padding: "10px 16px", borderRadius: 10,
+                        background: "hsl(215 72% 18% / 0.06)",
+                        border: "1px solid hsl(215 72% 18% / 0.12)",
+                      }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                      {member.email}
+                    </a>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ═══ FINAL CTA ════════════════════════════════════════════════ */}
         <section style={{ background: "hsl(28 95% 50%)", padding: "80px 0", position: "relative", overflow: "hidden" }}>
           <div className="stripe-accent" style={{ position: "absolute", inset: 0 }} />
