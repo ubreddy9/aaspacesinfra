@@ -19,51 +19,72 @@
     --popover: 0 0% 100%;
     --popover-foreground: 215 35% 12%;
 
-    /* Primary — Deep Navy */
-    --primary: 215 72% 18%;           /* #0A2447 — deep navy */
+    /* ─── ARCHITECTURAL TEAL + WARM SAND + ICE AQUA PALETTE ───────────
+       Swatch 1: #125164 — Deep Teal Navy (Primary)
+       Swatch 2: #e0cb9a — Warm Sand Gold (Accent & Highlights)
+       Swatch 3: #a9d7d6 — Soft Ice Aqua (Surfaces & Muted Borders)
+       Accent:   #E85D26 — Poppy Orange (High-contrast Floral Accent)
+    ─────────────────────────────────────────────────────────────── */
+
+    /* Light mode backgrounds */
+    --background: 180 25% 98%;        /* #F7FAFA — clean icy mist */
+    --foreground: 194 65% 15%;        /* #0E2A34 — deep teal slate */
+    --card: 0 0% 100%;                /* pure white */
+    --card-foreground: 194 65% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 194 65% 15%;
+
+    /* Primary — Deep Teal Navy (#125164) */
+    --primary: 194 68% 23%;           /* #125164 */
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary — Steel Charcoal */
-    --secondary: 215 28% 17%;         /* #1C2B3A — dark steel */
-    --secondary-foreground: 210 20% 95%;
+    /* Secondary — Dark Oceanic Teal Variant */
+    --secondary: 194 60% 13%;         /* #0C252F — dark architectural teal */
+    --secondary-foreground: 180 20% 95%;
 
-    /* Muted — Cool Light Steel */
-    --muted: 210 18% 93%;             /* #EAEEF3 */
-    --muted-foreground: 215 20% 45%;  /* #5A6F85 */
+    /* Muted — Soft Ice Aqua Tint */
+    --muted: 180 20% 93%;             /* #E5F0F0 */
+    --muted-foreground: 194 25% 42%;  /* #517582 — muted slate teal */
 
-    /* Accent — Amber Orange (CTA color — high visibility) */
-    --accent: 28 95% 52%;             /* #F57D0A — industrial amber */
-    --accent-foreground: 0 0% 100%;
+    /* Accent — Warm Sand Champagne Gold (#e0cb9a) */
+    --accent: 42 54% 74%;             /* #e0cb9a — warm sand gold */
+    --accent-foreground: 194 65% 15%;
+
+    /* Palette extensions */
+    --accent-sand: 42 54% 74%;        /* #e0cb9a */
+    --accent-gold: 42 48% 58%;        /* #C9AE6F — richer button gold */
+    --ice-aqua: 179 38% 75%;          /* #a9d7d6 — swatch 3 */
+    --poppy: 18 82% 53%;              /* #E85D26 — floral poppy accent */
 
     /* Utility */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     --success: 160 84% 39%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-    --info: 217 91% 60%;
+    --warning: 42 54% 74%;
+    --warning-foreground: 194 65% 15%;
+    --info: 194 68% 45%;
     --info-foreground: 0 0% 100%;
-    --border: 215 18% 86%;            /* soft blue-gray border */
-    --input: 215 18% 86%;
-    --ring: 215 72% 18%;
+    --border: 180 20% 87%;            /* soft ice-slate border */
+    --input: 180 20% 87%;
+    --ring: 194 68% 23%;
 
     /* Extended chart colors */
-    --chart-1: 28 95% 70%;
-    --chart-2: 28 95% 52%;
-    --chart-3: 215 72% 35%;
-    --chart-4: 215 72% 18%;
-    --chart-5: 215 72% 10%;
+    --chart-1: 42 54% 74%;
+    --chart-2: 179 38% 75%;
+    --chart-3: 194 68% 23%;
+    --chart-4: 194 60% 13%;
+    --chart-5: 18 82% 53%;
 
     /* Sidebar */
-    --sidebar: 215 35% 14%;
-    --sidebar-foreground: 210 20% 92%;
-    --sidebar-primary: 28 95% 52%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 28 95% 52%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 215 28% 22%;
-    --sidebar-ring: 28 95% 52%;
+    --sidebar: 194 60% 13%;
+    --sidebar-foreground: 180 20% 92%;
+    --sidebar-primary: 42 54% 74%;
+    --sidebar-primary-foreground: 194 65% 15%;
+    --sidebar-accent: 179 38% 75%;
+    --sidebar-accent-foreground: 194 65% 15%;
+    --sidebar-border: 194 40% 20%;
+    --sidebar-ring: 42 54% 74%;
 
     /* ─── TYPOGRAPHY ─────────────────────────────────────────────── */
     --font-sans: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -131,18 +152,60 @@
     box-shadow: 0 8px 32px hsl(215 72% 5% / 0.35);
   }
   .glass-card {
-    background: hsl(0 0% 100% / 0.65);
+    background: hsl(0 0% 100% / 0.75);
     backdrop-filter: blur(16px) saturate(160%);
     -webkit-backdrop-filter: blur(16px) saturate(160%);
-    border: 1px solid hsl(215 18% 86% / 0.6);
+    border: 1px solid hsl(180 20% 87% / 0.8);
     border-radius: calc(var(--radius) * 2);
-    box-shadow: 0 4px 20px hsl(215 35% 12% / 0.07);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 4px 20px hsl(194 65% 15% / 0.06);
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .glass-card:hover {
-    background: hsl(0 0% 100% / 0.85);
-    box-shadow: 0 12px 40px hsl(215 35% 12% / 0.14), 0 0 0 1px hsl(28 95% 52% / 0.15);
-    transform: translateY(-3px);
+    background: hsl(0 0% 100% / 0.95);
+    box-shadow: 0 16px 36px -6px hsl(194 65% 15% / 0.14), 0 0 0 1px hsl(42 54% 74% / 0.4);
+    transform: translateY(-4px);
+  }
+
+  /* ─── 3 POLISHED INTERACTIONS (TASTEFUL ARCHITECTURAL DETAILS) ── */
+  /* 1. Structural Lift on Cards */
+  .interactive-card {
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.28s ease !important;
+  }
+  .interactive-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 16px 36px -6px hsl(194 65% 15% / 0.16), 0 0 0 1px hsl(42 54% 74% / 0.5) !important;
+  }
+
+  /* 2. Magnetic Corner Arrow Translation on Buttons/Links */
+  .interactive-arrow {
+    display: inline-flex;
+    align-items: center;
+  }
+  .interactive-arrow svg {
+    transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .interactive-arrow:hover svg {
+    transform: translate(3px, -3px);
+  }
+
+  /* 3. Navigation Underline Horizon */
+  .nav-interactive-link {
+    position: relative;
+  }
+  .nav-interactive-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: hsl(42 54% 74%);
+    transform: translateX(-50%);
+    transition: width 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    border-radius: 999px;
+  }
+  .nav-interactive-link:hover::after {
+    width: 75%;
   }
 
   /* ─── Marquee ─────────────────────────────────────────────────── */
@@ -302,42 +365,44 @@ html { scroll-behavior: smooth; }
 #loading-screen {
   position: fixed; inset: 0; z-index: 9999;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  background: hsl(215 40% 7%);
+  background: hsl(194 65% 10%);
 }
 #loading-screen.exit {
-  animation: loader-exit 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: loader-exit 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Ensure logo in loading screen is large, commanding, and sharp */
+#loading-screen img {
+  max-height: 140px !important;
+  max-width: 440px !important;
+  width: auto !important;
+  object-fit: contain !important;
+  display: block;
+}
+
+/* Ensure brand logo in header is prominent, crisp, and properly sized */
+header img {
+  max-height: 56px !important;
+  max-width: 260px !important;
+  width: auto !important;
+  object-fit: contain !important;
+  display: block;
 }
 
 /* ─── Float CTA ───────────────────────────────────────────────── */
 .float-cta-btn {
   position: relative; display: flex; align-items: center; justify-content: center;
   width: 3.25rem; height: 3.25rem; border-radius: 9999px;
-  box-shadow: 0 4px 24px hsl(215 35% 12% / 0.3);
+  box-shadow: 0 4px 24px hsl(194 65% 15% / 0.3);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.float-cta-btn:hover { transform: scale(1.1); box-shadow: 0 8px 32px hsl(215 35% 12% / 0.35); }
+.float-cta-btn:hover { transform: scale(1.1); box-shadow: 0 8px 32px hsl(194 65% 15% / 0.35); }
 
 /* ─── Custom scrollbar ────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: hsl(var(--muted)); }
-::-webkit-scrollbar-thumb { background: hsl(215 28% 35%); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: hsl(28 95% 52%); }
-
-/* ─── Global image safeguards ─────────────────────────────────── */
-/* Prevent logo or any img in header from overflowing */
-header img {
-  max-height: 44px !important;
-  width: auto !important;
-  object-fit: contain !important;
-  display: block;
-}
-/* Prevent any img in loading screen from blowing up */
-#loading-screen img {
-  max-height: 44px !important;
-  max-width: 200px !important;
-  width: auto !important;
-  object-fit: contain !important;
-}
+::-webkit-scrollbar-thumb { background: hsl(194 40% 30%); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(42 54% 74%); }
 
 /* ─── Responsive collapse ─────────────────────────────────────── */
 @media (max-width: 768px) {

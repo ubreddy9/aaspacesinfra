@@ -1,4 +1,4 @@
-﻿import { Helmet } from "@dr.pogodin/react-helmet";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { ArrowRight, ArrowUpRight, MapPin, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useEffect, useState } from "react";
@@ -154,7 +154,7 @@ export default function ProjectsPage() {
                 <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "64px 0", color: "hsl(var(--muted-foreground))" }}>
                   <p style={{ fontSize: 16, marginBottom: 8 }}>No projects found for this filter.</p>
                   <button onClick={() => setFilter("all")} style={{ fontSize: 13, color: "hsl(28 95% 52%)", background: "none", border: "none", cursor: "pointer", fontWeight: 700 }}>
-                    View all projects â†’
+                    View all projects &rarr;
                   </button>
                 </div>
               )}
@@ -214,7 +214,7 @@ export default function ProjectsPage() {
                       </p>
                       <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "1.2rem", marginBottom: 8 }}>{project.title}</h2>
                       <p style={{ fontSize: 13, lineHeight: 1.65, color: "hsl(var(--muted-foreground))", marginBottom: 12 }}>
-                        {project.description.length > 100 ? project.description.slice(0, 100) + "â€¦" : project.description}
+                        {project.description.length > 100 ? project.description.slice(0, 100) + "..." : project.description}
                       </p>
                       {project.location && (
                         <p style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "hsl(var(--muted-foreground))", marginBottom: 14 }}>
@@ -326,32 +326,62 @@ export default function ProjectsPage() {
                   <X size={18} />
                 </button>
               </div>
-              <div style={{ padding: "28px 32px" }}>
-                <p style={{ fontSize: 11, fontWeight: 700, color: "hsl(215 72% 18%)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 6 }}>{selected.code} Â· {selected.sector}</p>
-                <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "1.6rem", marginBottom: 12 }}>{selected.title}</h2>
-                <p style={{ fontSize: 14, lineHeight: 1.75, color: "hsl(var(--muted-foreground))", marginBottom: 16 }}>{selected.description}</p>
-                <div style={{ display: "flex", gap: 20, flexWrap: "wrap", marginBottom: 24 }}>
-                  {selected.location && (
-                    <span style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 13, color: "hsl(var(--muted-foreground))" }}>
-                      <MapPin size={13} color="hsl(215 72% 18%)" /> {selected.location}
+              <div style={{ padding: "32px 36px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "hsl(42 54% 74%)", background: "hsl(194 68% 23%)", padding: "4px 12px", borderRadius: 999, letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                    {selected.code} • {selected.sector}
+                  </span>
+                  {selected.area && (
+                    <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(194 68% 23%)", background: "hsl(179 38% 75% / 0.25)", padding: "4px 10px", borderRadius: 6 }}>
+                      {selected.area}
                     </span>
                   )}
-                  {selected.area && (
-                    <span style={{ fontSize: 13, fontWeight: 600, color: "hsl(var(--foreground))" }}>{selected.area}</span>
-                  )}
                 </div>
-                <Link
-                  to="/proposal"
-                  onClick={() => setSelected(null)}
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: 8,
-                    padding: "12px 24px", borderRadius: 12,
-                    background: "hsl(215 72% 18%)", color: "#fff",
-                    fontSize: 13, fontWeight: 700, textDecoration: "none",
-                  }}
-                >
-                  Discuss a similar build <ArrowUpRight size={15} />
-                </Link>
+
+                <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "1.65rem", fontWeight: 800, color: "hsl(194 65% 15%)", letterSpacing: "-0.02em", marginBottom: 14 }}>
+                  {selected.title}
+                </h2>
+
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12, background: "hsl(180 25% 96%)", border: "1px solid hsl(180 20% 88%)", borderRadius: 12, padding: "14px 18px", marginBottom: 18 }}>
+                  <div>
+                    <p style={{ fontSize: 10, fontWeight: 700, color: "hsl(194 25% 45%)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 2 }}>Location</p>
+                    <p style={{ fontSize: 13, fontWeight: 600, color: "hsl(194 65% 15%)" }}>{selected.location || "Pan-India"}</p>
+                  </div>
+                  <div>
+                    <p style={{ fontSize: 10, fontWeight: 700, color: "hsl(194 25% 45%)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 2 }}>Structural Span</p>
+                    <p style={{ fontSize: 13, fontWeight: 600, color: "hsl(194 65% 15%)" }}>Clear-Span Portal Frames</p>
+                  </div>
+                </div>
+
+                <p style={{ fontSize: 14, lineHeight: 1.8, color: "hsl(194 25% 35%)", marginBottom: 24 }}>
+                  {selected.description}
+                </p>
+
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12, borderTop: "1px solid hsl(180 20% 88%)", paddingTop: 20 }}>
+                  <span style={{ fontSize: 12, color: "hsl(194 25% 45%)" }}>
+                    IS:800 & IS:875 Certified Design
+                  </span>
+                  <Link
+                    to="/proposal"
+                    onClick={() => setSelected(null)}
+                    className="interactive-arrow"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "13px 26px",
+                      borderRadius: 10,
+                      background: "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)",
+                      color: "hsl(194 65% 15%)",
+                      fontSize: 13.5,
+                      fontWeight: 700,
+                      textDecoration: "none",
+                      boxShadow: "0 4px 18px hsl(42 54% 74% / 0.35)",
+                    }}
+                  >
+                    Discuss Similar Build <ArrowUpRight size={15} />
+                  </Link>
+                </div>
               </div>
             </motion.div>
           </motion.div>

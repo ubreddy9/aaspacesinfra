@@ -33,19 +33,19 @@ export default function Header() {
         zIndex: 50,
         transition: "all 0.35s cubic-bezier(0.4,0,0.2,1)",
         background: scrolled
-          ? "hsl(215 35% 10% / 0.92)"
-          : "hsl(215 35% 10%)",
+          ? "hsl(194 62% 12% / 0.94)"
+          : "hsl(194 60% 12%)",
         backdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
-        borderBottom: "1px solid hsl(215 35% 20%)",
-        boxShadow: scrolled ? "0 4px 32px hsl(215 72% 5% / 0.4)" : "none",
+        borderBottom: "1px solid hsl(179 38% 75% / 0.18)",
+        boxShadow: scrolled ? "0 4px 32px hsl(194 68% 8% / 0.45)" : "none",
       }}
     >
       {/* Top notice bar */}
       <div
         style={{
-          background: "hsl(215 72% 18%)",
-          borderBottom: "1px solid hsl(215 50% 25%)",
+          background: "hsl(194 68% 18%)",
+          borderBottom: "1px solid hsl(179 38% 75% / 0.15)",
           padding: "8px 0",
         }}
       >
@@ -61,7 +61,7 @@ export default function Header() {
             fontWeight: 500,
           }}
         >
-          <p style={{ color: "hsl(215 40% 70%)" }}>
+          <p style={{ color: "hsl(179 38% 75%)" }}>
             Engineering precision. Built for India.
           </p>
           <Link
@@ -70,7 +70,7 @@ export default function Header() {
               display: "none",
               alignItems: "center",
               gap: 4,
-              color: "hsl(28 95% 62%)",
+              color: "hsl(42 54% 74%)",
               fontWeight: 600,
               textDecoration: "none",
               fontSize: 11,
@@ -101,13 +101,13 @@ export default function Header() {
             style={{ flexShrink: 0, display: "flex", alignItems: "center" }}
           >
             <img
-              src="/assets/brand/logo.png"
+              src="/assets/brand/logo-light.png"
               alt="AA Spaces Infra"
               style={{
-                height: 44,
-                maxHeight: 44,
+                height: 52,
+                maxheight: 52,
                 width: "auto",
-                maxWidth: 200,
+                maxWidth: 240,
                 objectFit: "contain",
                 display: "block",
               }}
@@ -127,24 +127,20 @@ export default function Header() {
                   fontSize: 13.5,
                   fontWeight: isActive(item.href) ? 600 : 500,
                   letterSpacing: "0.01em",
-                  color: isActive(item.href)
-                    ? "hsl(28 95% 62%)"
-                    : "hsl(215 20% 75%)",
+                  color: isActive(item.href) ? "hsl(42 54% 74%)" : "hsl(180 20% 82%)",
                   textDecoration: "none",
                   transition: "all 0.2s",
-                  background: isActive(item.href)
-                    ? "hsl(28 95% 52% / 0.08)"
-                    : "transparent",
+                  background: isActive(item.href) ? "hsl(42 54% 74% / 0.12)" : "transparent",
                 }}
                 onMouseEnter={(e) => {
                   if (!isActive(item.href)) {
                     e.currentTarget.style.color = "#fff";
-                    e.currentTarget.style.background = "hsl(215 40% 22%)";
+                    e.currentTarget.style.background = "hsl(194 50% 20%)";
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (!isActive(item.href)) {
-                    e.currentTarget.style.color = "hsl(215 20% 75%)";
+                    e.currentTarget.style.color = "hsl(180 20% 82%)";
                     e.currentTarget.style.background = "transparent";
                   }
                 }}
@@ -160,7 +156,7 @@ export default function Header() {
                       width: 18,
                       height: 2,
                       borderRadius: 999,
-                      background: "hsl(28 95% 58%)",
+                      background: "hsl(42 54% 74%)",
                     }}
                   />
                 )}
@@ -180,7 +176,7 @@ export default function Header() {
                 transition: "color 0.2s",
                 display: "flex",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(215 20% 75%)")}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(180 20% 82%)")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(215 30% 50%)")}
             >
               <Shield size={15} />
@@ -193,19 +189,18 @@ export default function Header() {
                 gap: 7,
                 padding: "10px 22px",
                 borderRadius: 9,
-                background: "hsl(28 95% 52%)",
-                color: "#fff",
-                fontSize: 13,
+                background: "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)",
+                color: "hsl(194 65% 15%)", fontSize: 13.5,
                 fontWeight: 700,
                 textDecoration: "none",
                 letterSpacing: "0.01em",
                 transition: "all 0.2s",
-                boxShadow: "0 2px 16px hsl(28 95% 52% / 0.35)",
+                boxShadow: "0 2px 16px hsl(42 54% 74% / 0.35)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "hsl(28 95% 46%)";
+                e.currentTarget.style.background = "linear-gradient(135deg, hsl(42 54% 78%) 0%, hsl(42 50% 68%) 100%)";
                 e.currentTarget.style.transform = "translateY(-1px)";
-                e.currentTarget.style.boxShadow = "0 6px 24px hsl(28 95% 52% / 0.5)";
+                e.currentTarget.style.boxShadow = "0 6px 24px hsl(42 54% 74% / 0.5)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "hsl(28 95% 52%)";
@@ -242,7 +237,7 @@ export default function Header() {
           <nav
             aria-label="Mobile navigation"
             style={{
-              borderTop: "1px solid hsl(215 35% 20%)",
+              borderTop: "1px solid hsl(179 38% 75% / 0.18)",
               padding: "12px 0 16px",
             }}
             className="lg:hidden flex flex-col gap-1"
@@ -258,7 +253,7 @@ export default function Header() {
                   fontWeight: isActive(item.href) ? 600 : 500,
                   color: isActive(item.href) ? "hsl(28 95% 62%)" : "hsl(215 20% 72%)",
                   textDecoration: "none",
-                  background: isActive(item.href) ? "hsl(28 95% 52% / 0.08)" : "transparent",
+                  background: isActive(item.href) ? "hsl(42 54% 74% / 0.12)" : "transparent",
                   display: "block",
                 }}
               >
@@ -271,7 +266,7 @@ export default function Header() {
                 marginTop: 10,
                 padding: "13px 14px",
                 borderRadius: 9,
-                background: "hsl(28 95% 52%)",
+                background: "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)",
                 color: "#fff",
                 fontSize: 14,
                 fontWeight: 700,
@@ -288,3 +283,5 @@ export default function Header() {
     </header>
   );
 }
+
+

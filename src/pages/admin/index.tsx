@@ -181,13 +181,10 @@ export default function AdminLoginPage() {
               'Enter Admin Panel'
             )}
           </button>
-
-          <p style={{ marginTop: 24, textAlign: 'center', fontSize: 12, color: 'hsl(0 0% 100% / 0.25)' }}>
-            Default PIN: <code style={{ color: 'hsl(0 0% 100% / 0.4)' }}>admin2024</code>
-          </p>
         </form>
       </div>
     </>
   );
 }
+
 

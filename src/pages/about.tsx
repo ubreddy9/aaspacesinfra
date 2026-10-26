@@ -1,4 +1,4 @@
-﻿import { Helmet } from "@dr.pogodin/react-helmet";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { motion } from "motion/react";
 import { Link } from "react-router";
@@ -142,7 +142,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* â”€â”€ Our Team â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* Our Team */}
         <section style={{ background: "hsl(210 20% 97%)", padding: "96px 0" }}>
           <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
             {/* Section header */}
@@ -168,7 +168,7 @@ export default function AboutPage() {
                 fontSize: 16, color: "hsl(215 20% 45%)",
                 maxWidth: 520, margin: "0 auto", lineHeight: 1.7,
               }}>
-                Decades of structural engineering expertise and on-site project leadership â€” the people behind every AA Spaces structure.
+                Decades of structural engineering expertise and on-site project leadership - the people behind every AA Spaces structure.
               </p>
             </motion.div>
 
@@ -185,7 +185,7 @@ export default function AboutPage() {
                   experience: "28+ Years",
                   email: "info@aaspacesinfra.com",
                   photo: "/assets/team/upender-reddy.jpg",
-                  accent: "hsl(28 95% 52%)",
+                  accent: "hsl(42 54% 74%)",
                   qualification: "",
                 },
                 {
@@ -195,7 +195,7 @@ export default function AboutPage() {
                   experience: "10+ Years",
                   email: "info@aaspacesinfra.com",
                   photo: "/assets/team/gangadhar.jpg",
-                  accent: "hsl(160 70% 42%)",
+                  accent: "hsl(179 45% 55%)",
                 },
               ].map((member, i) => (
                 <motion.div
@@ -209,12 +209,12 @@ export default function AboutPage() {
                     borderRadius: 24,
                     overflow: "hidden",
                     background: "#fff",
-                    boxShadow: "0 8px 40px hsl(215 40% 18% / 0.13)",
-                    border: "1px solid hsl(215 18% 90%)",
+                    boxShadow: "0 8px 36px hsl(194 65% 15% / 0.08)",
+                    border: "1px solid hsl(180 20% 88%)",
                     display: "flex", flexDirection: "column",
                   }}
                 >
-                  {/* Photo â€” tall portrait */}
+                  {/* Photo - tall portrait */}
                   <div style={{ position: "relative", height: 340, overflow: "hidden", background: "hsl(215 20% 92%)" }}>
                     <img
                       src={member.photo}
@@ -240,7 +240,7 @@ export default function AboutPage() {
                     }} />
                   </div>
 
-                  {/* Card body â€” name, role, email only */}
+                  {/* Card body - name, role, email only */}
                   <div style={{ padding: "20px 28px 28px", display: "flex", flexDirection: "column", gap: 12 }}>
                     <div>
                       <h3 style={{
@@ -284,22 +284,66 @@ export default function AboutPage() {
         </section>
 
         {/* CTA */}
-        <section style={{ background: "hsl(28 95% 58%)", padding: "64px 0" }}>
-          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px", display: "flex", flexDirection: "column", gap: 24, alignItems: "flex-start" }}>
-            <motion.div {...reveal} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", flexWrap: "wrap", gap: 24 }}>
-              <div style={{ maxWidth: 600 }}>
-                <p style={{ fontSize: 12, fontWeight: 700, color: "hsl(0 0% 100% / 0.7)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>{about.cta.eyebrow}</p>
-                <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "clamp(1.6rem, 3vw, 2.4rem)", color: "#fff", lineHeight: 1.1, marginBottom: 12 }}>{about.cta.title}</h2>
-                <p style={{ fontSize: 15, lineHeight: 1.7, color: "hsl(0 0% 100% / 0.8)" }}>{about.cta.description}</p>
+        <section style={{
+          background: "linear-gradient(135deg, hsl(215 38% 12%) 0%, hsl(215 32% 16%) 50%, hsl(28 35% 13%) 100%)",
+          padding: "80px 0",
+          borderTop: "1px solid hsl(215 30% 20%)",
+          position: "relative",
+          overflow: "hidden"
+        }}>
+          <div style={{
+            position: "absolute",
+            top: "-40%",
+            right: "0%",
+            width: 500,
+            height: 500,
+            borderRadius: "50%",
+            background: "radial-gradient(circle, hsl(28 65% 50% / 0.15) 0%, transparent 70%)",
+            pointerEvents: "none"
+          }} />
+          <div className="steel-grid" style={{ position: "absolute", inset: 0, opacity: 0.18, pointerEvents: "none" }} />
+          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px", display: "flex", flexDirection: "column", gap: 24, alignItems: "flex-start", position: "relative", zIndex: 1 }}>
+            <motion.div {...reveal} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", flexWrap: "wrap", gap: 28 }}>
+              <div style={{ maxWidth: 640 }}>
+                <span style={{
+                  display: "inline-block",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: "hsl(28 65% 58%)",
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  background: "hsl(28 65% 50% / 0.12)",
+                  border: "1px solid hsl(28 65% 50% / 0.25)",
+                  padding: "4px 14px",
+                  borderRadius: 999,
+                  marginBottom: 14,
+                  fontFamily: '"Space Grotesk", sans-serif'
+                }}>
+                  {about.cta.eyebrow}
+                </span>
+                <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "clamp(1.8rem, 3.2vw, 2.6rem)", fontWeight: 800, color: "#fff", lineHeight: 1.1, marginBottom: 14, letterSpacing: "-0.02em" }}>
+                  {about.cta.title}
+                </h2>
+                <p style={{ fontSize: 15.5, lineHeight: 1.8, color: "hsl(215 20% 70%)" }}>
+                  {about.cta.description}
+                </p>
               </div>
               <Link
                 to="/proposal"
                 style={{
-                  display: "inline-flex", alignItems: "center", gap: 8,
-                  padding: "14px 28px", borderRadius: 14,
-                  background: "hsl(60 5% 15%)", color: "#fff",
-                  fontSize: 14, fontWeight: 700, textDecoration: "none",
-                  transition: "all 0.25s", whiteSpace: "nowrap",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "15px 32px",
+                  borderRadius: 12,
+                  background: "linear-gradient(135deg, hsl(28 68% 52%) 0%, hsl(28 75% 46%) 100%)",
+                  color: "#fff",
+                  fontSize: 14.5,
+                  fontWeight: 700,
+                  textDecoration: "none",
+                  transition: "all 0.25s",
+                  whiteSpace: "nowrap",
+                  boxShadow: "0 6px 28px hsl(28 68% 50% / 0.45)"
                 }}
                 className="hover:-translate-y-0.5"
               >

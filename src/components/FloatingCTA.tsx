@@ -61,7 +61,7 @@ export default function FloatingCTA() {
         }}
       >
         {expanded ? (
-          <span style={{ fontSize: 22, lineHeight: 1, fontWeight: 700 }}>×</span>
+          <span style={{ fontSize: 22, lineHeight: 1, fontWeight: 700 }}>&times;</span>
         ) : (
           <MessageCircle size={22} fill="white" />
         )}
