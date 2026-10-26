@@ -426,7 +426,7 @@ export default function HomePage() {
                   role: "Executive Director",
                   qualification: "M.Tech. Structures",
                   experience: "10+ Years",
-                  email: "gangadhar@aaspacesinfra.com",
+                  email: "info@aaspacesinfra.com",
                   photo: "/assets/team/gangadhar.jpg",
                   accent: "hsl(160 70% 42%)",
                 },
