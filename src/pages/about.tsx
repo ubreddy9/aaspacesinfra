@@ -184,10 +184,9 @@ export default function AboutPage() {
                   role: "Managing Director",
                   experience: "28+ Years",
                   email: "info@aaspacesinfra.com",
-                  initials: "UR",
-                  color: "hsl(215 72% 18%)",
+                  photo: "/assets/team/upender-reddy.jpg",
                   accent: "hsl(28 95% 52%)",
-                  bio: "Visionary founder and Managing Director with 28+ years of experience in pre-engineered steel building design, procurement and project delivery across India.",
+                  qualification: "",
                 },
                 {
                   name: "Mr. Ch. Gangadhar",
@@ -195,10 +194,8 @@ export default function AboutPage() {
                   qualification: "M.Tech. Structures",
                   experience: "10+ Years",
                   email: "gangadhar@aaspacesinfra.com",
-                  initials: "CG",
-                  color: "hsl(160 60% 22%)",
+                  photo: "/assets/team/gangadhar.jpg",
                   accent: "hsl(160 70% 42%)",
-                  bio: "Executive Director and structural engineering lead with M.Tech. in Structures, overseeing design quality, code compliance and technical excellence on every project.",
                 },
               ].map((member, i) => (
                 <motion.div
@@ -212,56 +209,39 @@ export default function AboutPage() {
                     borderRadius: 24,
                     overflow: "hidden",
                     background: "#fff",
-                    boxShadow: "0 4px 32px hsl(215 40% 18% / 0.10)",
+                    boxShadow: "0 8px 40px hsl(215 40% 18% / 0.13)",
                     border: "1px solid hsl(215 18% 90%)",
                     display: "flex", flexDirection: "column",
                   }}
                 >
-                  {/* Card top — gradient banner with avatar */}
-                  <div style={{
-                    position: "relative",
-                    height: 160,
-                    background: `linear-gradient(135deg, ${member.color} 0%, hsl(215 35% 28%) 100%)`,
-                    display: "flex", alignItems: "flex-end",
-                    padding: "0 28px 0",
-                  }}>
-                    {/* Decorative steel grid lines */}
+                  {/* Photo — tall portrait */}
+                  <div style={{ position: "relative", height: 340, overflow: "hidden", background: "hsl(215 20% 92%)" }}>
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block" }}
+                    />
+                    {/* Experience badge over photo */}
                     <div style={{
-                      position: "absolute", inset: 0, opacity: 0.06,
-                      backgroundImage: "linear-gradient(hsl(0 0% 100%) 1px, transparent 1px), linear-gradient(90deg, hsl(0 0% 100%) 1px, transparent 1px)",
-                      backgroundSize: "24px 24px",
-                    }} />
-                    {/* Experience badge */}
-                    <div style={{
-                      position: "absolute", top: 18, right: 20,
-                      background: "hsl(0 0% 100% / 0.12)",
-                      border: "1px solid hsl(0 0% 100% / 0.2)",
+                      position: "absolute", top: 16, left: 16,
+                      background: "hsl(215 40% 7% / 0.65)",
                       backdropFilter: "blur(8px)",
-                      borderRadius: 999, padding: "4px 12px",
+                      border: "1px solid hsl(0 0% 100% / 0.18)",
+                      borderRadius: 999, padding: "5px 14px",
                       fontSize: 11.5, fontWeight: 700, color: "#fff",
-                      letterSpacing: "0.04em",
+                      letterSpacing: "0.05em",
                     }}>
                       {member.experience}
                     </div>
-                    {/* Avatar circle */}
+                    {/* Gradient fade at bottom */}
                     <div style={{
-                      position: "relative", zIndex: 1,
-                      width: 80, height: 80,
-                      borderRadius: "50%",
-                      background: member.accent,
-                      border: "4px solid #fff",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      fontFamily: '"Sora", sans-serif',
-                      fontSize: 26, fontWeight: 800, color: "#fff",
-                      boxShadow: "0 6px 24px hsl(215 40% 7% / 0.25)",
-                      transform: "translateY(40px)",
-                    }}>
-                      {member.initials}
-                    </div>
+                      position: "absolute", bottom: 0, left: 0, right: 0, height: 80,
+                      background: "linear-gradient(to top, #fff, transparent)",
+                    }} />
                   </div>
 
-                  {/* Card body */}
-                  <div style={{ padding: "52px 28px 28px", flex: 1, display: "flex", flexDirection: "column", gap: 14 }}>
+                  {/* Card body — name, role, email only */}
+                  <div style={{ padding: "20px 28px 28px", display: "flex", flexDirection: "column", gap: 12 }}>
                     <div>
                       <h3 style={{
                         fontFamily: '"Sora", sans-serif',
@@ -279,13 +259,6 @@ export default function AboutPage() {
                         </p>
                       )}
                     </div>
-
-                    <p style={{
-                      fontSize: 13.5, lineHeight: 1.7,
-                      color: "hsl(215 20% 45%)", flex: 1,
-                    }}>
-                      {member.bio}
-                    </p>
 
                     {/* Email */}
                     <a
