@@ -59,16 +59,17 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <img
-              src="/airo-assets/images/logo/horizontal/dark"
-              alt="AA Spaces"
+              src="/assets/brand/logo.png"
+              alt="AA Spaces Infra"
               style={{
-                height: 36,
-                maxHeight: 36,
+                height: 48,
+                maxHeight: 48,
                 width: "auto",
-                maxWidth: 160,
+                maxWidth: 200,
                 objectFit: "contain",
                 marginBottom: 20,
                 display: "block",
+                filter: "brightness(0) invert(1)",
               }}
             />
             <p style={{ fontSize: 13.5, lineHeight: 1.8, color: "hsl(215 20% 50%)", maxWidth: 300 }}>

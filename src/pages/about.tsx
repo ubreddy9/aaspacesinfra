@@ -1,11 +1,11 @@
-import { Helmet } from "@dr.pogodin/react-helmet";
+﻿import { Helmet } from "@dr.pogodin/react-helmet";
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { motion } from "motion/react";
 import { Link } from "react-router";
 import { about } from "virtual:content";
 import AnimatedCounter from "@/components/AnimatedCounter";
 
-const site = "https://aa-spaces.example";
+const site = "https://aaspacesinfra.com";
 const url = `${site}/about`;
 const title = "About AA Spaces | Pre-Engineered Buildings";
 const description = "Learn how AA Spaces approaches pre-engineered buildings through quality, coordinated delivery and project-led support across India.";
@@ -30,11 +30,11 @@ export default function AboutPage() {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
-        <meta property="og:image" content={`${site}/airo-assets/images/pages/home/hero`} />
+        <meta property="og:image" content={`${site}https://aaspacesinfra.com/assets/brand/logo.png`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={`${site}/airo-assets/images/pages/home/hero`} />
+        <meta name="twitter:image" content={`${site}https://aaspacesinfra.com/assets/brand/logo.png`} />
         <script type="application/ld+json">{JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</script>
       </Helmet>
       <main>
@@ -142,7 +142,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ── Our Team ─────────────────────────────────────────── */}
+        {/* â”€â”€ Our Team â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
         <section style={{ background: "hsl(210 20% 97%)", padding: "96px 0" }}>
           <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
             {/* Section header */}
@@ -168,7 +168,7 @@ export default function AboutPage() {
                 fontSize: 16, color: "hsl(215 20% 45%)",
                 maxWidth: 520, margin: "0 auto", lineHeight: 1.7,
               }}>
-                Decades of structural engineering expertise and on-site project leadership — the people behind every AA Spaces structure.
+                Decades of structural engineering expertise and on-site project leadership â€” the people behind every AA Spaces structure.
               </p>
             </motion.div>
 
@@ -214,7 +214,7 @@ export default function AboutPage() {
                     display: "flex", flexDirection: "column",
                   }}
                 >
-                  {/* Photo — tall portrait */}
+                  {/* Photo â€” tall portrait */}
                   <div style={{ position: "relative", height: 340, overflow: "hidden", background: "hsl(215 20% 92%)" }}>
                     <img
                       src={member.photo}
@@ -240,7 +240,7 @@ export default function AboutPage() {
                     }} />
                   </div>
 
-                  {/* Card body — name, role, email only */}
+                  {/* Card body â€” name, role, email only */}
                   <div style={{ padding: "20px 28px 28px", display: "flex", flexDirection: "column", gap: 12 }}>
                     <div>
                       <h3 style={{
@@ -312,4 +312,6 @@ export default function AboutPage() {
     </>
   );
 }
+
+
 

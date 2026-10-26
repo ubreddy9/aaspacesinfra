@@ -1,4 +1,4 @@
-import { Helmet } from "@dr.pogodin/react-helmet";
+﻿import { Helmet } from "@dr.pogodin/react-helmet";
 import { ArrowRight, ArrowUpRight, MapPin, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useEffect, useState } from "react";
@@ -6,7 +6,7 @@ import { Link } from "react-router";
 import { projects as contentProjects } from "virtual:content";
 import { getProjects, type Project } from "@/lib/projectStore";
 
-const site = "https://aa-spaces.example";
+const site = "https://aaspacesinfra.com";
 const url = `${site}/projects`;
 const title = "PEB Project Studies | AA Spaces";
 const description = "Browse representative AA Spaces pre-engineered building studies across warehouse, commercial, industrial, hospitality and event sectors.";
@@ -54,11 +54,11 @@ export default function ProjectsPage() {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
-        <meta property="og:image" content={`${site}/airo-assets/images/pages/home/hero`} />
+        <meta property="og:image" content={`${site}https://aaspacesinfra.com/assets/brand/logo.png`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={`${site}/airo-assets/images/pages/home/hero`} />
+        <meta name="twitter:image" content={`${site}https://aaspacesinfra.com/assets/brand/logo.png`} />
         <script type="application/ld+json">{JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</script>
       </Helmet>
 
@@ -75,7 +75,7 @@ export default function ProjectsPage() {
           }}
         >
           <img
-            src="/airo-assets/images/pages/home/hero"
+            src="https://aaspacesinfra.com/assets/brand/logo.png"
             alt="Pre-engineered steel warehouse exterior"
             width={1920}
             height={1080}
@@ -154,7 +154,7 @@ export default function ProjectsPage() {
                 <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "64px 0", color: "hsl(var(--muted-foreground))" }}>
                   <p style={{ fontSize: 16, marginBottom: 8 }}>No projects found for this filter.</p>
                   <button onClick={() => setFilter("all")} style={{ fontSize: 13, color: "hsl(28 95% 52%)", background: "none", border: "none", cursor: "pointer", fontWeight: 700 }}>
-                    View all projects →
+                    View all projects â†’
                   </button>
                 </div>
               )}
@@ -214,7 +214,7 @@ export default function ProjectsPage() {
                       </p>
                       <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "1.2rem", marginBottom: 8 }}>{project.title}</h2>
                       <p style={{ fontSize: 13, lineHeight: 1.65, color: "hsl(var(--muted-foreground))", marginBottom: 12 }}>
-                        {project.description.length > 100 ? project.description.slice(0, 100) + "…" : project.description}
+                        {project.description.length > 100 ? project.description.slice(0, 100) + "â€¦" : project.description}
                       </p>
                       {project.location && (
                         <p style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "hsl(var(--muted-foreground))", marginBottom: 14 }}>
@@ -327,7 +327,7 @@ export default function ProjectsPage() {
                 </button>
               </div>
               <div style={{ padding: "28px 32px" }}>
-                <p style={{ fontSize: 11, fontWeight: 700, color: "hsl(215 72% 18%)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 6 }}>{selected.code} · {selected.sector}</p>
+                <p style={{ fontSize: 11, fontWeight: 700, color: "hsl(215 72% 18%)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 6 }}>{selected.code} Â· {selected.sector}</p>
                 <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "1.6rem", marginBottom: 12 }}>{selected.title}</h2>
                 <p style={{ fontSize: 14, lineHeight: 1.75, color: "hsl(var(--muted-foreground))", marginBottom: 16 }}>{selected.description}</p>
                 <div style={{ display: "flex", gap: 20, flexWrap: "wrap", marginBottom: 24 }}>
@@ -360,5 +360,7 @@ export default function ProjectsPage() {
     </>
   );
 }
+
+
 
 

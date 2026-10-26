@@ -101,13 +101,13 @@ export default function Header() {
             style={{ flexShrink: 0, display: "flex", alignItems: "center" }}
           >
             <img
-              src="/airo-assets/images/logo/horizontal/dark"
-              alt="AA Spaces"
+              src="/assets/brand/logo.png"
+              alt="AA Spaces Infra"
               style={{
-                height: 38,
-                maxHeight: 38,
+                height: 44,
+                maxHeight: 44,
                 width: "auto",
-                maxWidth: 180,
+                maxWidth: 200,
                 objectFit: "contain",
                 display: "block",
               }}

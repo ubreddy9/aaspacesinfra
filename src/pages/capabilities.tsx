@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import { capabilities } from "virtual:content";
 
-const site = "https://aa-spaces.example";
+const site = "https://aaspacesinfra.com";
 const url = `${site}/capabilities`;
 const title = "PEB Products & Services | AA Spaces";
 const description = "AA Spaces provides coordinated pre-engineered building services shaped around site, sector and operational needs.";
@@ -25,11 +25,11 @@ export default function CapabilitiesPage() {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
-        <meta property="og:image" content={`${site}/airo-assets/images/pages/home/hero`} />
+        <meta property="og:image" content={`${site}https://aaspacesinfra.com/assets/brand/logo.png`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={`${site}/airo-assets/images/pages/home/hero`} />
+        <meta name="twitter:image" content={`${site}https://aaspacesinfra.com/assets/brand/logo.png`} />
         <script type="application/ld+json">{JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</script>
       </Helmet>
       <main>
@@ -42,7 +42,7 @@ export default function CapabilitiesPage() {
           }}
         >
           <img
-            src="/airo-assets/images/pages/home/hero"
+            src="https://aaspacesinfra.com/assets/brand/logo.png"
             alt="Pre-engineered warehouse steel exterior"
             width={1920}
             height={1080}
@@ -247,4 +247,6 @@ export default function CapabilitiesPage() {
     </>
   );
 }
+
+
 

@@ -1,4 +1,4 @@
-import { Helmet } from "@dr.pogodin/react-helmet";
+﻿import { Helmet } from "@dr.pogodin/react-helmet";
 import { ArrowRight, ArrowUpRight, CheckCircle2, ChevronRight, MapPin, Star } from "lucide-react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useEffect, useRef, useState } from "react";
@@ -7,11 +7,29 @@ import { home } from "virtual:content";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import { getActiveProjects, type Project } from "@/lib/projectStore";
 
-const site = "https://aa-spaces.example";
+const site = "https://aaspacesinfra.com";
 const url = `${site}/`;
-const title = "Pre-Engineered Building Solutions | AA Spaces";
+const title = "Pre-Engineered Building Solutions | AA Spaces Infra";
 const description = "AA Spaces delivers precision-engineered steel building solutions for warehouse, industrial, commercial, and hospitality projects across India.";
 
+
+// Organization JSON-LD — tells Google to show the logo in search results
+const orgJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://aaspacesinfra.com/#organization",
+  name: "AA Spaces Infra",
+  url: "https://aaspacesinfra.com",
+  logo: {
+    "@type": "ImageObject",
+    url: "https://aaspacesinfra.com/assets/brand/logo.png",
+    width: 1063,
+    height: 508,
+  },
+  image: "https://aaspacesinfra.com/assets/brand/logo.png",
+  email: "info@aaspacesinfra.com",
+  address: { "@type": "PostalAddress", addressCountry: "IN" },
+};
 const reveal = {
   initial: { opacity: 0, y: 28 },
   whileInView: { opacity: 1, y: 0 },
@@ -49,14 +67,26 @@ export default function HomePage() {
         <title>{title}</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={url} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={url} />
+        <meta property="og:image" content="https://aaspacesinfra.com/assets/brand/logo.png" />
+        <meta property="og:image:width" content="1063" />
+        <meta property="og:image:height" content="508" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content="https://aaspacesinfra.com/assets/brand/logo.png" />
+        <script type="application/ld+json">{JSON.stringify(orgJsonLd).replace(/</g, "\u003c")}</script>
       </Helmet>
       <main>
-        {/* ═══ HERO ══════════════════════════════════════════════════════ */}
+        {/* â•â•â• HERO â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         <section ref={heroRef} style={{ position: "relative", minHeight: "94vh", overflow: "hidden", display: "flex", alignItems: "center", background: "hsl(215 40% 7%)" }}>
           {/* Parallax image */}
           <motion.div style={{ y: heroY, opacity: heroOpacity, position: "absolute", inset: 0 }}>
             <img
-              src="/airo-assets/images/pages/home/hero"
+              src="https://aaspacesinfra.com/assets/brand/logo.png"
               alt="Pre-engineered steel warehouse"
               width={1920} height={1080}
               loading="eager" fetchPriority="high"
@@ -183,18 +213,18 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ═══ MARQUEE ══════════════════════════════════════════════════ */}
+        {/* â•â•â• MARQUEE â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         <div style={{ background: "hsl(215 35% 10%)", borderTop: "1px solid hsl(215 35% 16%)", borderBottom: "1px solid hsl(215 35% 16%)", padding: "13px 0", overflow: "hidden" }}>
           <div className="marquee-track">
             {trustMarquee.map((item, i) => (
               <span key={i} style={{ padding: "0 32px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: i % 2 === 0 ? "hsl(28 95% 58%)" : "hsl(215 30% 38%)", whiteSpace: "nowrap" }}>
-                {i % 2 === 0 ? "◆ " : "· "}{item}
+                {i % 2 === 0 ? "â—† " : "Â· "}{item}
               </span>
             ))}
           </div>
         </div>
 
-        {/* ═══ SECTORS ══════════════════════════════════════════════════ */}
+        {/* â•â•â• SECTORS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         <section style={{ background: "hsl(210 20% 97%)", padding: "88px 0" }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 32px" }}>
             <motion.div {...reveal} style={{ marginBottom: 56 }}>
@@ -251,7 +281,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ═══ STATS ════════════════════════════════════════════════════ */}
+        {/* â•â•â• STATS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         <section className="steel-grid" style={{ padding: "80px 0" }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 32px" }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", borderRadius: 16, overflow: "hidden", border: "1px solid hsl(215 35% 18%)" }}>
@@ -281,7 +311,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ═══ APPROACH / PROCESS ═══════════════════════════════════════ */}
+        {/* â•â•â• APPROACH / PROCESS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         <section style={{ background: "hsl(210 20% 97%)", padding: "88px 0" }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 32px" }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: 72, alignItems: "start" }}>
@@ -289,7 +319,7 @@ export default function HomePage() {
                 <p style={{ fontSize: 11, fontWeight: 700, color: "hsl(28 95% 50%)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 14, fontFamily: '"Space Grotesk", sans-serif' }}>{home.approach.eyebrow}</p>
                 <h2 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: "clamp(1.9rem, 3vw, 2.8rem)", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: 20, color: "hsl(215 35% 12%)" }}>{home.approach.title}</h2>
                 <p style={{ fontSize: 15, lineHeight: 1.8, color: "hsl(215 15% 45%)", marginBottom: 32 }}>
-                  Our delivery approach connects every stage — from the initial brief to the completed structure — with one coordinated team.
+                  Our delivery approach connects every stage â€” from the initial brief to the completed structure â€” with one coordinated team.
                 </p>
                 <Link
                   to="/capabilities"
@@ -326,7 +356,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ═══ FEATURED PROJECTS ════════════════════════════════════════ */}
+        {/* â•â•â• FEATURED PROJECTS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         <section style={{ background: "hsl(215 35% 10%)", padding: "88px 0" }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 32px" }}>
             <motion.div {...reveal} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 48, flexWrap: "wrap", gap: 16 }}>
@@ -380,7 +410,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ═══ OUR TEAM ══════════════════════════════════════════════════ */}
+        {/* â•â•â• OUR TEAM â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         <section style={{ background: "hsl(210 20% 97%)", padding: "96px 0" }}>
           <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
             {/* Header */}
@@ -401,7 +431,7 @@ export default function HomePage() {
                 Meet Our Team
               </h2>
               <p style={{ fontSize: 16, color: "hsl(215 20% 45%)", maxWidth: 480, margin: "0 auto", lineHeight: 1.7 }}>
-                The people behind every AA Spaces structure — decades of expertise, precision, and trust.
+                The people behind every AA Spaces structure â€” decades of expertise, precision, and trust.
               </p>
             </motion.div>
 
@@ -504,7 +534,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ═══ FINAL CTA ════════════════════════════════════════════════ */}
+        {/* â•â•â• FINAL CTA â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
         <section style={{ background: "hsl(28 95% 50%)", padding: "80px 0", position: "relative", overflow: "hidden" }}>
           <div className="stripe-accent" style={{ position: "absolute", inset: 0 }} />
           <div style={{ position: "absolute", top: "-40%", right: "-10%", width: 500, height: 500, borderRadius: "50%", background: "hsl(0 0% 100% / 0.06)", pointerEvents: "none" }} />
@@ -539,4 +569,7 @@ export default function HomePage() {
     </>
   );
 }
+
+
+
 

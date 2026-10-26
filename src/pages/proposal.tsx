@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import ProposalForm from "@/components/ProposalForm";
 import { proposal } from "virtual:content";
 
-const site = "https://aa-spaces.example";
+const site = "https://aaspacesinfra.com";
 const url = `${site}/proposal`;
 const title = "Request a Building Proposal | AA Spaces";
 const description = "Share your warehouse, industrial, commercial, hospitality or convention building brief with AA Spaces.";
@@ -29,11 +29,11 @@ export default function ProposalPage() {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
-        <meta property="og:image" content={`${site}/airo-assets/images/pages/home/hero`} />
+        <meta property="og:image" content={`${site}https://aaspacesinfra.com/assets/brand/logo.png`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={`${site}/airo-assets/images/pages/home/hero`} />
+        <meta name="twitter:image" content={`${site}https://aaspacesinfra.com/assets/brand/logo.png`} />
         <script type="application/ld+json">{JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</script>
       </Helmet>
       <main>
@@ -49,7 +49,7 @@ export default function ProposalPage() {
           }}
         >
           <img
-            src="/airo-assets/images/pages/home/hero"
+            src="https://aaspacesinfra.com/assets/brand/logo.png"
             alt="AA Spaces pre-engineered building"
             width={1920}
             height={1080}
@@ -192,4 +192,6 @@ export default function ProposalPage() {
     </>
   );
 }
+
+
 
