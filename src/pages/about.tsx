@@ -69,7 +69,7 @@ export default function AboutPage() {
 
         {/* Story */}
         <section style={{ background: "hsl(var(--background))", padding: "80px 0" }}>
-          <div style={{ maxWidth: 1000, margin: "0 auto", padding: "0 32px", display: "grid", gridTemplateColumns: "1fr 2fr", gap: 64, alignItems: "start" }}>
+          <div className="site-container responsive-grid-2" style={{ alignItems: "start" }}>
             <motion.div {...reveal}>
               <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(215 72% 18%)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{about.story.eyebrow}</span>
             </motion.div>
@@ -86,12 +86,12 @@ export default function AboutPage() {
 
         {/* Commitments */}
         <section style={{ background: "hsl(var(--muted))", padding: "80px 0" }}>
-          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
+          <div className="site-container">
             <motion.div {...reveal} style={{ marginBottom: 48, maxWidth: 640 }}>
               <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(215 72% 18%)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{about.commitments.eyebrow}</span>
               <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "clamp(1.8rem, 3vw, 2.6rem)", lineHeight: 1.1, marginTop: 12 }}>{about.commitments.title}</h2>
             </motion.div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
+            <div className="responsive-grid-cards">
               {about.commitments.items.map((item: { number: string; title: string; detail: string }, i: number) => (
                 <motion.article
                   {...reveal}
@@ -115,13 +115,13 @@ export default function AboutPage() {
 
         {/* Footprint stats */}
         <section className="steel-grid" style={{ padding: "72px 0" }}>
-          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
+          <div className="site-container">
             <motion.div {...reveal} style={{ textAlign: "center", marginBottom: 48 }}>
               <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(28 95% 58%)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{about.footprint.eyebrow}</span>
               <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "clamp(1.8rem, 3vw, 2.6rem)", color: "#fff", lineHeight: 1.1, marginTop: 12 }}>{about.footprint.title}</h2>
               <p style={{ fontSize: 15, color: "hsl(0 0% 100% / 0.55)", maxWidth: 560, margin: "16px auto 0" }}>{about.footprint.description}</p>
             </motion.div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 2 }}>
+            <div className="responsive-grid-4">
               {footprintStats.map((stat, i) => (
                 <motion.div
                   {...reveal}
@@ -144,7 +144,7 @@ export default function AboutPage() {
 
         {/* Our Team */}
         <section style={{ background: "hsl(210 20% 97%)", padding: "96px 0" }}>
-          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
+          <div className="site-container">
             {/* Section header */}
             <motion.div {...reveal} style={{ textAlign: "center", marginBottom: 64 }}>
               <span style={{
@@ -175,8 +175,7 @@ export default function AboutPage() {
             {/* Team cards */}
             <div style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 360px))",
-              gap: 32, justifyContent: "center",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 360px))", gap: 24, justifyContent: "center",
             }}>
               {[
                 {

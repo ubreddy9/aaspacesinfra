@@ -64,14 +64,14 @@ export default function CapabilitiesPage() {
 
         {/* Services grid */}
         <section style={{ background: "hsl(var(--background))", padding: "80px 0" }}>
-          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
+          <div className="site-container">
             <motion.div {...reveal} style={{ marginBottom: 48 }}>
               <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(215 72% 18%)", letterSpacing: "0.12em", textTransform: "uppercase" }}>Integrated service</span>
               <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "clamp(1.8rem, 3vw, 2.8rem)", lineHeight: 1.1, marginTop: 12, maxWidth: 640 }}>
                 The decisions that make a building work are connected.
               </h2>
             </motion.div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}>
+            <div className="responsive-grid-cards">
               {capabilities.services.map((service: { number: string; title: string; detail: string }, i: number) => (
                 <motion.article
                   {...reveal}
@@ -92,8 +92,8 @@ export default function CapabilitiesPage() {
 
         {/* Technical specs — Accordion */}
         <section style={{ background: "hsl(var(--muted))", padding: "80px 0" }}>
-          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "start" }}>
+          <div className="site-container">
+            <div className="responsive-grid-2" style={{ alignItems: "start" }}>
               <motion.div {...reveal}>
                 <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(215 72% 18%)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{capabilities.technical.eyebrow}</span>
                 <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "clamp(1.8rem, 3vw, 2.6rem)", lineHeight: 1.1, marginTop: 12, marginBottom: 24 }}>{capabilities.technical.title}</h2>
@@ -157,7 +157,7 @@ export default function CapabilitiesPage() {
 
         {/* Sectors */}
         <section style={{ background: "hsl(var(--background))", padding: "80px 0" }}>
-          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
+          <div className="site-container">
             <motion.div {...reveal} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 40, flexWrap: "wrap", gap: 16 }}>
               <div>
                 <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(215 72% 18%)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{capabilities.sectors.eyebrow}</span>
@@ -197,12 +197,12 @@ export default function CapabilitiesPage() {
 
         {/* Process */}
         <section className="steel-grid" style={{ padding: "80px 0" }}>
-          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
+          <div className="site-container">
             <motion.div {...reveal} style={{ marginBottom: 48 }}>
               <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(28 95% 58%)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{capabilities.process.eyebrow}</span>
               <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "clamp(1.8rem, 3vw, 2.6rem)", color: "#fff", lineHeight: 1.1, marginTop: 12 }}>{capabilities.process.title}</h2>
             </motion.div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 20 }}>
+            <div className="responsive-grid-cards">
               {capabilities.process.steps.map((step: { title: string; detail: string }, i: number) => (
                 <motion.div
                   {...reveal}

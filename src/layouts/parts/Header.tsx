@@ -84,7 +84,7 @@ export default function Header() {
       </div>
 
       {/* Main nav */}
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+      <div className="site-container">
         <div
           style={{
             display: "flex",
@@ -103,11 +103,8 @@ export default function Header() {
             <img
               src="/assets/brand/logo-light.png"
               alt="AA Spaces Infra"
+              className="h-10 sm:h-12 md:h-[50px] w-auto max-w-[185px] sm:max-w-[240px]"
               style={{
-                height: 52,
-                maxheight: 52,
-                width: "auto",
-                maxWidth: 240,
                 objectFit: "contain",
                 display: "block",
               }}
@@ -203,9 +200,9 @@ export default function Header() {
                 e.currentTarget.style.boxShadow = "0 6px 24px hsl(42 54% 74% / 0.5)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "hsl(28 95% 52%)";
+                e.currentTarget.style.background = "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)";
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 2px 16px hsl(28 95% 52% / 0.35)";
+                e.currentTarget.style.boxShadow = "0 2px 16px hsl(42 54% 74% / 0.35)";
               }}
             >
               Get a Proposal <ArrowUpRight size={14} />
@@ -251,7 +248,7 @@ export default function Header() {
                   borderRadius: 9,
                   fontSize: 14,
                   fontWeight: isActive(item.href) ? 600 : 500,
-                  color: isActive(item.href) ? "hsl(28 95% 62%)" : "hsl(215 20% 72%)",
+                  color: isActive(item.href) ? "hsl(42 54% 74%)" : "hsl(180 20% 88%)",
                   textDecoration: "none",
                   background: isActive(item.href) ? "hsl(42 54% 74% / 0.12)" : "transparent",
                   display: "block",
@@ -267,7 +264,7 @@ export default function Header() {
                 padding: "13px 14px",
                 borderRadius: 9,
                 background: "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)",
-                color: "#fff",
+                color: "hsl(194 65% 15%)",
                 fontSize: 14,
                 fontWeight: 700,
                 textDecoration: "none",

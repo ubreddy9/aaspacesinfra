@@ -45,16 +45,13 @@ export default function Footer() {
       </div>
 
       {/* Main footer grid */}
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "60px 24px 40px" }}>
+      <div className="site-container" style={{ padding: "52px 0 36px" }}>
         <div
+          className="responsive-grid-footer"
           style={{
-            display: "grid",
-            gridTemplateColumns: "1.8fr 0.8fr 0.8fr 1.1fr",
-            gap: 48,
             paddingBottom: 48,
             borderBottom: "1px solid hsl(179 38% 75% / 0.12)",
           }}
-          className="grid-cols-1 md:grid-cols-2 lg:!grid-cols-4"
         >
           {/* Brand */}
           <div>

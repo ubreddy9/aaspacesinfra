@@ -81,8 +81,8 @@ export default function ProposalPage() {
 
         {/* Main content */}
         <section style={{ background: "hsl(var(--background))", padding: "72px 0" }}>
-          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: 56, alignItems: "start" }}>
+          <div className="site-container">
+            <div className="responsive-grid-2" style={{ alignItems: "start" }}>
               {/* Left sidebar */}
               <aside>
                 <motion.div {...reveal}>

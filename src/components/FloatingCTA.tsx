@@ -16,8 +16,8 @@ export default function FloatingCTA() {
     <div
       style={{
         position: 'fixed',
-        bottom: 28,
-        right: 24,
+        bottom: 'calc(16px + env(safe-area-inset-bottom, 0px))',
+        right: 'clamp(14px, 3.5vw, 24px)',
         zIndex: 900,
         display: 'flex',
         flexDirection: 'column',

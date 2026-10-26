@@ -114,12 +114,14 @@ export default function LoadingScreen() {
         <p
           style={{
             marginTop: 22,
-            fontSize: 11,
+            fontSize: "clamp(9px, 2.5vw, 11px)",
             fontFamily: '"Space Grotesk", sans-serif',
             fontWeight: 700,
             color: "hsl(42 54% 74%)",
             textTransform: "uppercase",
-            letterSpacing: "0.26em",
+            letterSpacing: "clamp(0.12em, 2vw, 0.22em)",
+            padding: "0 16px",
+            maxWidth: "90vw",
             animation: "loader-sub-reveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both",
           }}
         >
@@ -130,7 +132,7 @@ export default function LoadingScreen() {
         <div
           style={{
             marginTop: 32,
-            width: 220,
+            width: "min(220px, 65vw)",
             height: 2,
             background: "hsl(194 40% 18%)",
             borderRadius: 999,

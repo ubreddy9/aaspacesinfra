@@ -101,7 +101,7 @@ export default function HomePage() {
           <div style={{ position: "absolute", top: "30%", left: "5%", width: 500, height: 400, borderRadius: "50%", background: "radial-gradient(ellipse, hsl(28 95% 52% / 0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
 
           {/* Content */}
-          <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 1280, margin: "0 auto", padding: "100px 32px 120px" }}>
+          <div className="site-container" style={{ position: "relative", zIndex: 1 }}>
             <div style={{ maxWidth: 760 }}>
               {/* Badge */}
               <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }}>
@@ -127,8 +127,8 @@ export default function HomePage() {
                 style={{
                   fontFamily: '"Sora", sans-serif',
                   fontWeight: 800,
-                  fontSize: "clamp(2.8rem, 5.5vw, 5rem)",
-                  lineHeight: 1.0,
+                  fontSize: "clamp(2rem, 5.5vw, 4.8rem)",
+                  lineHeight: 1.08,
                   letterSpacing: "-0.03em",
                   color: "#ffffff",
                   marginBottom: 28,
@@ -191,7 +191,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.85 }}
-              style={{ position: "absolute", bottom: 36, left: 32, right: 32, display: "flex", flexWrap: "wrap", gap: 8 }}
+              style={{ marginTop: "clamp(32px, 6vh, 48px)", display: "flex", flexWrap: "wrap", gap: 8 }}
             >
               {home.hero.rail.map((item: string) => (
                 <span key={item} style={{
@@ -223,7 +223,7 @@ export default function HomePage() {
 
         {/* SECTORS */}
         <section style={{ background: "hsl(210 20% 97%)", padding: "88px 0" }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 32px" }}>
+          <div className="site-container">
             <motion.div {...reveal} style={{ marginBottom: 56 }}>
               <p style={{ fontSize: 11, fontWeight: 700, color: "hsl(194 68% 23%)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 14, fontFamily: '"Space Grotesk", sans-serif' }}>
                 What We Build
@@ -233,7 +233,7 @@ export default function HomePage() {
               </h2>
             </motion.div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 18 }}>
+            <div className="responsive-grid-cards">
               {home.sectors.map((sector: { number: string; name: string; detail: string }, i: number) => (
                 <motion.article
                   {...reveal}
@@ -280,8 +280,8 @@ export default function HomePage() {
 
         {/* STATS */}
         <section className="steel-grid" style={{ padding: "80px 0" }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 32px" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", borderRadius: 16, overflow: "hidden", border: "1px solid hsl(179 38% 75% / 0.18)" }}>
+          <div className="site-container">
+            <div className="responsive-grid-4" style={{ borderRadius: 16, overflow: "hidden", border: "1px solid hsl(179 38% 75% / 0.18)" }}>
               {stats.map((s, i) => (
                 <motion.div
                   {...reveal}
@@ -309,8 +309,8 @@ export default function HomePage() {
 
         {/* APPROACH / PROCESS */}
         <section style={{ background: "hsl(210 20% 97%)", padding: "88px 0" }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 32px" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: 72, alignItems: "start" }}>
+          <div className="site-container">
+            <div className="responsive-grid-2" style={{ alignItems: "start" }}>
               <motion.div {...reveal}>
                 <p style={{ fontSize: 11, fontWeight: 700, color: "hsl(194 68% 23%)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 14, fontFamily: '"Space Grotesk", sans-serif' }}>{home.approach.eyebrow}</p>
                 <h2 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: "clamp(1.9rem, 3vw, 2.8rem)", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: 20, color: "hsl(215 35% 12%)" }}>{home.approach.title}</h2>
@@ -354,7 +354,7 @@ export default function HomePage() {
 
         {/* FEATURED PROJECTS */}
         <section style={{ background: "hsl(215 35% 10%)", padding: "88px 0" }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 32px" }}>
+          <div className="site-container">
             <motion.div {...reveal} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 48, flexWrap: "wrap", gap: 16 }}>
               <div>
                 <p style={{ fontSize: 11, fontWeight: 700, color: "hsl(42 54% 74%)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 14, fontFamily: '"Space Grotesk", sans-serif' }}>{home.gallery.eyebrow}</p>
@@ -368,7 +368,7 @@ export default function HomePage() {
               </Link>
             </motion.div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 24 }}>
+            <div className="responsive-grid-cards">
               {projects.map((project, i) => (
                 <motion.article
                   {...reveal}
@@ -460,7 +460,7 @@ export default function HomePage() {
 
         {/* OUR TEAM */}
         <section style={{ background: "hsl(210 20% 97%)", padding: "96px 0" }}>
-          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
+          <div className="site-container">
             {/* Header */}
             <motion.div {...reveal} style={{ textAlign: "center", marginBottom: 64 }}>
               <span style={{
@@ -485,8 +485,7 @@ export default function HomePage() {
             {/* Cards */}
             <div style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 360px))",
-              gap: 32, justifyContent: "center",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 360px))", gap: 24, justifyContent: "center",
             }}>
               {[
                 {
@@ -603,7 +602,7 @@ export default function HomePage() {
           <div className="steel-grid" style={{ position: "absolute", inset: 0, opacity: 0.18, pointerEvents: "none" }} />
           
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 32px", position: "relative", zIndex: 1 }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: 56, alignItems: "center" }}>
+            <div className="responsive-grid-cta" style={{ alignItems: "center" }}>
               <motion.div {...reveal}>
                 <span style={{
                   display: "inline-block",

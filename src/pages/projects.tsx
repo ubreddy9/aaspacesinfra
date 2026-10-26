@@ -105,7 +105,7 @@ export default function ProjectsPage() {
 
         {/* Filters + Grid */}
         <section style={{ background: "hsl(var(--background))", padding: "56px 0" }}>
-          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
+          <div className="site-container">
             {/* Filter pills */}
             <motion.div {...reveal} style={{ marginBottom: 36 }}>
               <div
@@ -140,7 +140,7 @@ export default function ProjectsPage() {
             </motion.div>
 
             {/* Projects grid */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 24 }}>
+            <div className="responsive-grid-cards">
               {/* Loading skeletons */}
               {loadingProjects && Array.from({ length: 6 }).map((_, i) => (
                 <div
@@ -245,7 +245,7 @@ export default function ProjectsPage() {
           className="steel-grid"
           style={{ padding: "64px 0" }}
         >
-          <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 32px" }}>
+          <div className="site-container">
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center" }}>
               <motion.div {...reveal}>
                 <p style={{ fontSize: 13, fontWeight: 700, color: "hsl(28 95% 58%)", marginBottom: 12 }}>{contentProjects.note.title}</p>
@@ -326,7 +326,7 @@ export default function ProjectsPage() {
                   <X size={18} />
                 </button>
               </div>
-              <div style={{ padding: "32px 36px" }}>
+              <div style={{ padding: "clamp(20px, 4vw, 36px)" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                   <span style={{ fontSize: 11, fontWeight: 700, color: "hsl(42 54% 74%)", background: "hsl(194 68% 23%)", padding: "4px 12px", borderRadius: 999, letterSpacing: "0.12em", textTransform: "uppercase" }}>
                     {selected.code} • {selected.sector}
@@ -342,7 +342,7 @@ export default function ProjectsPage() {
                   {selected.title}
                 </h2>
 
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12, background: "hsl(180 25% 96%)", border: "1px solid hsl(180 20% 88%)", borderRadius: 12, padding: "14px 18px", marginBottom: 18 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: 12, background: "hsl(180 25% 96%)", border: "1px solid hsl(180 20% 88%)", borderRadius: 12, padding: "14px 18px", marginBottom: 18 }}>
                   <div>
                     <p style={{ fontSize: 10, fontWeight: 700, color: "hsl(194 25% 45%)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 2 }}>Location</p>
                     <p style={{ fontSize: 13, fontWeight: 600, color: "hsl(194 65% 15%)" }}>{selected.location || "Pan-India"}</p>
