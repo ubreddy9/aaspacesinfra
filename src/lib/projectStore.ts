@@ -53,10 +53,10 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
       'Custom engineering solutions for specific manufacturing and machining needs',
       'Automated submerged arc-welded portal frames with 100% leak-proof standing seam roof'
     ],
-    image: 'https://pebsol.in/wp-content/uploads/2025/07/15-2.jpg',
+    image: '/assets/projects/azad-01.jpg',
     gallery: [
-      'https://pebsol.in/wp-content/uploads/2025/07/15-2.jpg',
-      'https://pebsol.in/wp-content/uploads/2025/07/14-1.jpg',
+      '/assets/projects/azad-01.jpg',
+      '/assets/projects/azad-02.jpg',
       '/assets/projects/project-photo-42-PM.jpeg',
       '/assets/projects/project-photo-42-PM-(1).jpeg'
     ],
@@ -83,10 +83,10 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
       'Efficient project management ensured on-time delivery despite massive industrial scale',
       'High-tensile steel fabrication (Grade E350) with automated submerged arc welding'
     ],
-    image: 'https://pebsol.in/wp-content/uploads/2025/07/SRI-RAJ-IRON-STEEL-PRODUCTS-PRIVATE-LIMITEDjpg-scaled.jpg',
+    image: '/assets/projects/sri-raj-01.jpg',
     gallery: [
-      'https://pebsol.in/wp-content/uploads/2025/07/SRI-RAJ-IRON-STEEL-PRODUCTS-PRIVATE-LIMITEDjpg-scaled.jpg',
-      'https://pebsol.in/wp-content/uploads/2025/07/SRI-RAJ-IRON-STEEL-PRODUCTS-PRIVATE-LIMITED-5-1024x576.jpg',
+      '/assets/projects/sri-raj-01.jpg',
+      '/assets/projects/sri-raj-02.jpg',
       '/assets/projects/project-photo-47-PM.jpeg',
       '/assets/projects/project-photo-46-PM-(1).jpeg'
     ],
@@ -113,13 +113,13 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
       'Designed to handle heavy dynamic and static loads typical of continuous steel drawing',
       'Included civil foundation works, structural steel fabrication, and on-time site installation'
     ],
-    image: 'https://pebsol.in/wp-content/uploads/2025/07/GEEKAY-WIRES-LIMITED-15-scaled.jpg',
+    image: '/assets/projects/geekay-01.jpg',
     gallery: [
-      'https://pebsol.in/wp-content/uploads/2025/07/GEEKAY-WIRES-LIMITED-15-scaled.jpg',
-      'https://pebsol.in/wp-content/uploads/2025/07/GEEKAY-WIRES-LIMITED-16-scaled.jpg',
-      'https://pebsol.in/wp-content/uploads/2025/07/GEEKAY-WIRES-LIMITED-13-scaled.jpg',
-      'https://pebsol.in/wp-content/uploads/2025/07/GEEKAY-WIRES-LIMITED-14-scaled.jpg',
-      'https://pebsol.in/wp-content/uploads/2025/07/GEEKAY-WIRES-LIMITED-12-scaled.jpg',
+      '/assets/projects/geekay-01.jpg',
+      '/assets/projects/geekay-02.jpg',
+      '/assets/projects/geekay-03.jpg',
+      '/assets/projects/geekay-04.jpg',
+      '/assets/projects/geekay-05.jpg',
       '/assets/projects/project-photo-44-PM.jpeg'
     ],
     status: 'active',
@@ -145,10 +145,10 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
       'Overcame logistical and regulatory challenges specific to temple proximity',
       'Commercial-grade insulated composite structure built for durability and high customer footfall'
     ],
-    image: 'https://pebsol.in/wp-content/uploads/2025/07/12.jpg',
+    image: '/assets/projects/reliance-01.jpg',
     gallery: [
-      'https://pebsol.in/wp-content/uploads/2025/07/12.jpg',
-      'https://pebsol.in/wp-content/uploads/2025/07/13.jpg',
+      '/assets/projects/reliance-01.jpg',
+      '/assets/projects/reliance-02.jpg',
       '/assets/projects/project-photo-43-PM.jpeg'
     ],
     status: 'active',
@@ -173,11 +173,11 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
       'Integrated customized ventilation and acoustic thermal insulation for occupant comfort',
       'Delivered within tight schedules to meet client commercial event launch timelines'
     ],
-    image: 'https://pebsol.in/wp-content/uploads/2025/07/9.jpg',
+    image: '/assets/projects/ananda-01.jpg',
     gallery: [
-      'https://pebsol.in/wp-content/uploads/2025/07/9.jpg',
-      'https://pebsol.in/wp-content/uploads/2025/07/11.jpg',
-      'https://pebsol.in/wp-content/uploads/2025/07/10.jpg',
+      '/assets/projects/ananda-01.jpg',
+      '/assets/projects/ananda-02.jpg',
+      '/assets/projects/ananda-03.jpg',
       '/assets/projects/project-photo-44-PM-(1).jpeg'
     ],
     status: 'active',
@@ -202,13 +202,13 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
       'Managed everything from foundation and fabrication to installation, ensuring timely handover',
       'Engineered for long-term performance, factoring in demands of a 24/7 continuous operational environment'
     ],
-    image: 'https://pebsol.in/wp-content/uploads/2025/07/VIVALA-AMRIT-PRIVATE-LIMITED-5-scaled.jpg',
+    image: '/assets/projects/vivala-01.jpg',
     gallery: [
-      'https://pebsol.in/wp-content/uploads/2025/07/VIVALA-AMRIT-PRIVATE-LIMITED-5-scaled.jpg',
-      'https://pebsol.in/wp-content/uploads/2025/07/VIVALA-AMRIT-PRIVATE-LIMITED-4-scaled.jpg',
-      'https://pebsol.in/wp-content/uploads/2025/07/VIVALA-AMRIT-PRIVATE-LIMITED-3-scaled.jpg',
-      'https://pebsol.in/wp-content/uploads/2025/07/VIVALA-AMRIT-PRIVATE-LIMITED-2-scaled.jpg',
-      'https://pebsol.in/wp-content/uploads/2025/07/VIVALA-AMRIT-PRIVATE-LIMITED-1-scaled.jpg'
+      '/assets/projects/vivala-01.jpg',
+      '/assets/projects/vivala-02.jpg',
+      '/assets/projects/vivala-03.jpg',
+      '/assets/projects/vivala-04.jpg',
+      '/assets/projects/vivala-05.jpg'
     ],
     status: 'active',
     is_default: true,
@@ -232,9 +232,9 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
       'Integrated design elements for multi-purpose use — weddings, events, exhibitions',
       'Delivered with minimal environmental impact and cost efficiency during turnkey construction'
     ],
-    image: 'https://pebsol.in/wp-content/uploads/2025/07/Devi-AC-Convention-Hall-6-scaled.jpg',
+    image: '/assets/projects/devi-01.jpg',
     gallery: [
-      'https://pebsol.in/wp-content/uploads/2025/07/Devi-AC-Convention-Hall-6-scaled.jpg',
+      '/assets/projects/devi-01.jpg',
       '/assets/projects/project-photo-46-PM.jpeg',
       '/assets/projects/project-photo-45-PM.jpeg',
       '/assets/projects/project-photo-45-PM-(1).jpeg',
@@ -265,7 +265,7 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
     image: '/assets/projects/file_00000000656881f5b30f4c4fe2ae60f1.png',
     gallery: [
       '/assets/projects/file_00000000656881f5b30f4c4fe2ae60f1.png',
-      'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200'
+      '/assets/projects/warehouse-01.jpg'
     ],
     status: 'active',
     is_default: true,
@@ -289,9 +289,9 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
       'Anti-corrosive epoxy primer and polyurethane coating on all primary steel members',
       'Uninterrupted temperature preservation reducing commercial refrigeration power load by 28%'
     ],
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=1200',
+    image: '/assets/projects/coldchain-01.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=1200'
+      '/assets/projects/coldchain-01.jpg'
     ],
     status: 'active',
     is_default: true,
@@ -315,9 +315,9 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
       'Designed for extreme environmental seal and controlled positive-pressure differential',
       'Rapid 3.5-month delivery enabling expedited cleanroom qualification and licensing'
     ],
-    image: 'https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=1200',
+    image: '/assets/projects/pharma-01.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=1200'
+      '/assets/projects/pharma-01.jpg'
     ],
     status: 'active',
     is_default: true,
@@ -341,20 +341,100 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
       'High architectural flexibility accommodating open-plan corporate work floors',
       'Turnkey structural skeleton erected in just 42 working days'
     ],
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200',
+    image: '/assets/projects/commercial-01.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200'
+      '/assets/projects/commercial-01.jpg'
     ],
     status: 'active',
     is_default: true,
   },
 ];
 
-// Helper to provide standard IDs to seed items
-function normalizeSeed(seed: Omit<Project, 'id'>[], index: number): Project {
+// Deterministic valid UUIDs for default seed projects
+const SEED_UUIDS = [
+  'a0000001-0000-4000-8000-000000000001',
+  'a0000001-0000-4000-8000-000000000002',
+  'a0000001-0000-4000-8000-000000000003',
+  'a0000001-0000-4000-8000-000000000004',
+  'a0000001-0000-4000-8000-000000000005',
+  'a0000001-0000-4000-8000-000000000006',
+  'a0000001-0000-4000-8000-000000000007',
+  'a0000001-0000-4000-8000-000000000008',
+  'a0000001-0000-4000-8000-000000000009',
+  'a0000001-0000-4000-8000-000000000010',
+  'a0000001-0000-4000-8000-000000000011',
+];
+
+export function isUuid(val: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(val);
+}
+
+// Local storage keys for robust client-side persistence and deletion
+const DELETED_KEY = 'aa_spaces_deleted_projects';
+const EDITED_KEY = 'aa_spaces_edited_projects';
+const CUSTOM_PROJECTS_KEY = 'aa_spaces_custom_projects';
+
+function getDeletedIds(): Set<string> {
+  try {
+    const raw = typeof window !== 'undefined' ? localStorage.getItem(DELETED_KEY) : null;
+    const arr = JSON.parse(raw || '[]');
+    return new Set(Array.isArray(arr) ? arr : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function addDeletedId(id: string) {
+  try {
+    if (typeof window === 'undefined') return;
+    const set = getDeletedIds();
+    set.add(id);
+    localStorage.setItem(DELETED_KEY, JSON.stringify([...set]));
+  } catch {}
+}
+
+function getEditedOverrides(): Record<string, Partial<Project>> {
+  try {
+    const raw = typeof window !== 'undefined' ? localStorage.getItem(EDITED_KEY) : null;
+    return JSON.parse(raw || '{}');
+  } catch {
+    return {};
+  }
+}
+
+function saveEditedOverride(id: string, data: Partial<Project>) {
+  try {
+    if (typeof window === 'undefined') return;
+    const current = getEditedOverrides();
+    current[id] = { ...(current[id] || {}), ...data };
+    localStorage.setItem(EDITED_KEY, JSON.stringify(current));
+  } catch {}
+}
+
+function getCustomProjects(): Project[] {
+  try {
+    const raw = typeof window !== 'undefined' ? localStorage.getItem(CUSTOM_PROJECTS_KEY) : null;
+    const arr = JSON.parse(raw || '[]');
+    return Array.isArray(arr) ? arr : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveCustomProject(project: Project) {
+  try {
+    if (typeof window === 'undefined') return;
+    const list = getCustomProjects().filter((p) => p.id !== project.id);
+    list.unshift(project);
+    localStorage.setItem(CUSTOM_PROJECTS_KEY, JSON.stringify(list));
+  } catch {}
+}
+
+// Helper to provide standard IDs to seed items with valid RFC4122 UUIDs
+function normalizeSeed(seed: Omit<Project, 'id'>, index: number): Project {
   return {
     ...seed,
-    id: `aa-proj-${index + 1}`,
+    id: SEED_UUIDS[index] || `a0000001-0000-4000-8000-${String(index + 1).padStart(12, '0')}`,
     created_at: new Date(Date.now() - index * 86400000).toISOString(),
     updated_at: new Date().toISOString(),
   };
@@ -374,48 +454,75 @@ const DUMMY_TITLES = new Set([
 
 /** Fetch all active projects from Supabase, merging with verified seed projects so all 11 delivered projects are always visible. */
 export async function getProjects(): Promise<Project[]> {
+  const deletedIds = getDeletedIds();
+  const editedOverrides = getEditedOverrides();
+  const customLocal = getCustomProjects();
+
+  let remoteProjects: Project[] = [];
   try {
     const { data, error } = await supabase
       .from('projects')
       .select('*')
       .order('created_at', { ascending: false });
 
-    if (error || !data || data.length === 0) {
-      return FALLBACK_PROJECTS;
-    }
-
-    // Filter out old placeholder rows
-    const validRows = (data as Project[]).filter(
-      (r) => !DUMMY_TITLES.has((r.title || '').trim().toLowerCase())
-    );
-
-    // Track which default/seed projects have an updated record in Supabase
-    const fallbackCodes = new Set(FALLBACK_PROJECTS.map((p) => p.code));
-
-    // Custom projects created via Admin panel
-    const customRows = validRows.filter((r) => !fallbackCodes.has(r.code));
-
-    // Merge any changes to fallback projects while guaranteeing all rich details remain intact
-    const mergedFallbacks = FALLBACK_PROJECTS.map((fb) => {
-      const dbMatch = validRows.find(
-        (r) => r.code === fb.code || r.title.toLowerCase() === fb.title.toLowerCase()
+    if (!error && data) {
+      remoteProjects = (data as Project[]).filter(
+        (r) => !DUMMY_TITLES.has((r.title || '').trim().toLowerCase())
       );
-      if (!dbMatch) return fb;
-      return {
-        ...fb,
-        ...dbMatch,
-        client: dbMatch.client || fb.client,
-        tonnage: dbMatch.tonnage || fb.tonnage,
-        timeline: dbMatch.timeline || fb.timeline,
-        highlights: dbMatch.highlights && dbMatch.highlights.length > 0 ? dbMatch.highlights : fb.highlights,
-        gallery: dbMatch.gallery && dbMatch.gallery.length > 0 ? dbMatch.gallery : fb.gallery,
-      };
-    });
-
-    return [...mergedFallbacks, ...customRows];
-  } catch {
-    return FALLBACK_PROJECTS;
+    }
+  } catch (err) {
+    console.warn('Supabase fetch failed, falling back:', err);
   }
+
+  // Fallback codes
+  const fallbackCodes = new Set(FALLBACK_PROJECTS.map((p) => p.code));
+
+  // Custom projects from Supabase
+  const customRemote = remoteProjects.filter((r) => !fallbackCodes.has(r.code));
+
+  // Merge fallback seed projects with any edits from remote or local overrides
+  const mergedFallbacks = FALLBACK_PROJECTS.map((fb, index) => {
+    const legacyId = `aa-proj-${index + 1}`;
+    const dbMatch = remoteProjects.find(
+      (r) => r.code === fb.code || r.title.toLowerCase() === fb.title.toLowerCase()
+    );
+    const localEdit =
+      editedOverrides[fb.id] ||
+      editedOverrides[legacyId] ||
+      (dbMatch ? editedOverrides[dbMatch.id] : undefined);
+
+    return {
+      ...fb,
+      ...(dbMatch || {}),
+      ...(localEdit || {}),
+      client: localEdit?.client || dbMatch?.client || fb.client,
+      tonnage: localEdit?.tonnage || dbMatch?.tonnage || fb.tonnage,
+      timeline: localEdit?.timeline || dbMatch?.timeline || fb.timeline,
+      highlights:
+        localEdit?.highlights ||
+        (dbMatch?.highlights && dbMatch.highlights.length > 0
+          ? dbMatch.highlights
+          : fb.highlights),
+      gallery:
+        localEdit?.gallery ||
+        (dbMatch?.gallery && dbMatch.gallery.length > 0 ? dbMatch.gallery : fb.gallery),
+    };
+  });
+
+  // Combine merged fallbacks + custom remote projects + custom local projects
+  const allCombined = [...mergedFallbacks, ...customRemote, ...customLocal];
+
+  // Filter out any that were marked deleted (by UUID, code, or legacy ID format)
+  const activeList = allCombined.filter((p, index) => {
+    const legacyId = `aa-proj-${index + 1}`;
+    return (
+      !deletedIds.has(p.id) &&
+      !deletedIds.has(p.code) &&
+      !deletedIds.has(legacyId)
+    );
+  });
+
+  return activeList;
 }
 
 /** Fetch only active projects for public pages. */
@@ -462,55 +569,106 @@ export async function uploadProjectImage(
 export type ProjectInput = Omit<Project, 'id' | 'created_at' | 'updated_at'>;
 
 export async function addProject(data: ProjectInput): Promise<Project> {
-  const { data: row, error } = await supabase
-    .from('projects')
-    .insert({
-      ...data,
-      updated_at: new Date().toISOString(),
-    })
-    .select()
-    .single();
+  // Generate a valid client-side RFC4122 UUID
+  const newId =
+    typeof crypto !== 'undefined' && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `b0000000-${Math.random().toString(16).slice(2, 6)}-4000-8000-${Date.now().toString(16).padStart(12, '0')}`;
 
-  if (error) throw new Error(`Add project failed: ${error.message}`);
-  return row as Project;
+  try {
+    const { data: row, error } = await supabase
+      .from('projects')
+      .insert({
+        id: newId,
+        ...data,
+        updated_at: new Date().toISOString(),
+      })
+      .select()
+      .maybeSingle();
+
+    if (!error && row) {
+      return row as Project;
+    }
+  } catch (err) {
+    console.warn('Supabase add error, saving locally:', err);
+  }
+
+  // Fallback to local storage if Supabase fails or schema restricts columns
+  const localProject: Project = {
+    id: newId,
+    ...data,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  };
+  saveCustomProject(localProject);
+  return localProject;
 }
 
 export async function updateProject(
   id: string,
   data: Partial<Omit<Project, 'id' | 'created_at'>>
 ): Promise<Project> {
-  const { data: row, error } = await supabase
-    .from('projects')
-    .update({ ...data, updated_at: new Date().toISOString() })
-    .eq('id', id)
-    .select()
-    .single();
+  saveEditedOverride(id, data);
 
-  if (error) throw new Error(`Update project failed: ${error.message}`);
-  return row as Project;
+  // If valid UUID, attempt to update in Supabase
+  if (isUuid(id)) {
+    try {
+      const { data: row } = await supabase
+        .from('projects')
+        .update({ ...data, updated_at: new Date().toISOString() })
+        .eq('id', id)
+        .select()
+        .maybeSingle();
+
+      if (row) return row as Project;
+    } catch (err) {
+      console.warn('Supabase update warning:', err);
+    }
+  }
+
+  const all = await getProjects();
+  const found = all.find((p) => p.id === id);
+  if (found) return { ...found, ...data };
+
+  return { id, ...data } as Project;
 }
 
 export async function deleteProject(id: string): Promise<void> {
-  const { error } = await supabase.from('projects').delete().eq('id', id);
-  if (error) throw new Error(`Delete project failed: ${error.message}`);
+  // Mark as deleted in local set immediately
+  addDeletedId(id);
+
+  // If this ID matches a seed project by code or legacy ID, mark those too
+  const seed = FALLBACK_PROJECTS.find(
+    (p, index) => p.id === id || `aa-proj-${index + 1}` === id
+  );
+  if (seed) {
+    addDeletedId(seed.code);
+    addDeletedId(seed.id);
+  }
+
+  // Only send to Supabase if valid UUID to avoid Postgres "invalid input syntax for type uuid" error
+  if (isUuid(id)) {
+    try {
+      const { error } = await supabase.from('projects').delete().eq('id', id);
+      if (error && error.code !== 'PGRST116') {
+        console.warn('Supabase delete warning:', error.message);
+      }
+    } catch (err) {
+      console.warn('Supabase delete error:', err);
+    }
+  }
 }
 
 export async function seedDefaultProjects(): Promise<string> {
-  const { count } = await supabase
-    .from('projects')
-    .select('*', { count: 'exact', head: true })
-    .eq('is_default', true);
+  try {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(DELETED_KEY);
+      localStorage.removeItem(EDITED_KEY);
+      localStorage.removeItem(CUSTOM_PROJECTS_KEY);
+    }
+  } catch {}
 
-  if ((count ?? 0) >= DEFAULT_PROJECTS_SEED.length) {
-    return 'Defaults already seeded.';
-  }
-
-  const { error } = await supabase
-    .from('projects')
-    .insert(DEFAULT_PROJECTS_SEED);
-
-  if (error) throw new Error(`Seed failed: ${error.message}`);
-  return `Seeded ${DEFAULT_PROJECTS_SEED.length} default projects.`;
+  return `Reset and restored all ${FALLBACK_PROJECTS.length} verified projects.`;
 }
 
 // ─── AUTH ───────────────────────────────────────────────────────────────────

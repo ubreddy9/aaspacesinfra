@@ -44,7 +44,7 @@ export default function CapabilitiesPage() {
           }}
         >
           <img
-            src="https://pebsol.in/wp-content/uploads/2025/07/SRI-RAJ-IRON-STEEL-PRODUCTS-PRIVATE-LIMITEDjpg-scaled.jpg"
+            src="/assets/projects/sri-raj-01.jpg"
             alt="Pre-engineered warehouse steel exterior"
             width={1920}
             height={1080}
@@ -261,7 +261,7 @@ export default function CapabilitiesPage() {
               <div>
                 <div style={{ borderRadius: 18, overflow: "hidden", border: "1px solid hsl(179 38% 75% / 0.25)", boxShadow: "0 20px 50px hsl(194 70% 5% / 0.5)" }}>
                   <img
-                    src="https://pebsol.in/wp-content/uploads/2025/07/GEEKAY-WIRES-LIMITED-15-scaled.jpg"
+                    src="/assets/projects/geekay-01.jpg"
                     alt="AA Spaces Medak Plant Fabrication"
                     style={{ width: "100%", height: 380, objectFit: "cover", display: "block" }}
                   />

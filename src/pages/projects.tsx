@@ -77,7 +77,7 @@ export default function ProjectsPage() {
           }}
         >
           <img
-            src="https://pebsol.in/wp-content/uploads/2025/07/SRI-RAJ-IRON-STEEL-PRODUCTS-PRIVATE-LIMITEDjpg-scaled.jpg"
+            src="/assets/projects/sri-raj-01.jpg"
             alt="Pre-engineered steel warehouse exterior"
             width={1920}
             height={1080}

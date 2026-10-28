@@ -33,7 +33,7 @@ export const CLIENTS_DATA: ClientData[] = [
     name: 'Azad Engineering',
     sector: 'Aerospace & Precision Manufacturing',
     location: 'Jeedimetla, Hyderabad',
-    logo: 'https://pebsol.in/wp-content/uploads/2025/06/AZAD-logo-blue-1-e1696590887222.png',
+    logo: '/assets/clients/azad-logo.png',
     project: '65,000 sq.ft Turnkey Facility in 48 Days',
     testimonial: {
       quote: "We are thoroughly impressed with the ability to deliver our 65,000 sq.ft facility within just 48 days. From civil works to final PEB structure, the team ensured flawless execution while adhering to our stringent aerospace standards.",
@@ -46,7 +46,7 @@ export const CLIENTS_DATA: ClientData[] = [
     name: 'Reliance Retail',
     sector: 'Commercial Retail & Superstores',
     location: 'Tirupati (Adjacent to Temple)',
-    logo: 'https://pebsol.in/wp-content/uploads/2025/06/reliance-retail-logo-e1751177873916.png',
+    logo: '/assets/clients/reliance-logo.png',
     project: 'Night-Shift Commercial Hypermarket (2.5 Months)',
     testimonial: {
       quote: "Executing a project next to the temple in a bustling market under night-only work constraints was no small feat. The dedication, planning & professionalism helped us complete the project on time without disrupting the surrounding activity.",
@@ -59,7 +59,7 @@ export const CLIENTS_DATA: ClientData[] = [
     name: 'Geekay Wires Limited',
     sector: 'Heavy Galvanized Steel Wires',
     location: 'Wadiram, Telangana',
-    logo: 'https://pebsol.in/wp-content/uploads/2025/06/logo.png',
+    logo: '/assets/clients/geekay-logo.png',
     project: '95,000 sq.ft Plant with 15T Crane Gantry',
     testimonial: {
       quote: "From prefab structural design to turnkey site execution, everything was delivered ahead of schedule. The automated fabrication quality and crane integration were outstanding.",
@@ -72,7 +72,7 @@ export const CLIENTS_DATA: ClientData[] = [
     name: 'Shri Raj Udyog Pvt Ltd',
     sector: 'Iron & Steel Integrated Mega Plant',
     location: 'Cherkurda, Hyderabad',
-    logo: 'https://pebsol.in/wp-content/uploads/2025/06/logo-dark.png',
+    logo: '/assets/clients/sri-raj-logo.png',
     project: '250,000 sq.ft Integrated Steel Plant (30T Cranes)',
     testimonial: {
       quote: "A dependable structural partner for heavy industrial sheds and mega facilities. Their engineering quality, erection speed, and post-completion accountability are unmatched in the PEB sector.",
@@ -85,7 +85,7 @@ export const CLIENTS_DATA: ClientData[] = [
     name: 'Ananda Convention Center',
     sector: 'Commercial & Convention Infrastructure',
     location: 'Hyderabad, Telangana',
-    logo: 'https://pebsol.in/wp-content/uploads/2025/07/Ananda-covention.png',
+    logo: '/assets/clients/ananda-logo.png',
     project: '70,000 sq.ft Clear-Span Grand Event Center',
     testimonial: {
       quote: "Delivered a top-class 45m+ clear-span structure that perfectly balances aesthetics and functionality for our convention center. The attention to detail and adherence to strict deadlines made the experience effortless.",
@@ -98,7 +98,7 @@ export const CLIENTS_DATA: ClientData[] = [
     name: 'Vivala Amrit (Parle Agro Bailley)',
     sector: 'Food & Beverage Processing Hub',
     location: 'Hyderabad, Telangana',
-    logo: 'https://pebsol.in/wp-content/uploads/2025/07/VIVALA-AMRIT-PRIVATE-LIMITED-5-scaled.jpg',
+    logo: '/assets/projects/vivala-01.jpg',
     project: '85,000 sq.ft Food-Grade Beverage Plant',
     testimonial: {
       quote: "A high-performance industrial facility built to strict hygienic and 24/7 continuous operational standards. The custom engineering, insulated panels, and rapid erection exceeded all benchmarks.",
@@ -111,7 +111,7 @@ export const CLIENTS_DATA: ClientData[] = [
     name: 'Devi Function Hall',
     sector: 'Grand Convention & Hospitality',
     location: 'Shankarpally, Hyderabad',
-    logo: 'https://pebsol.in/wp-content/uploads/2025/07/Devi-AC-Convention-Hall-6-scaled.jpg',
+    logo: '/assets/projects/devi-01.jpg',
     project: '70,000 sq.ft Architectural Convention Facility',
     testimonial: {
       quote: "Delivered a spacious and fully customized clear-span structure tailored for high-traffic public events and grand gatherings, with a strong emphasis on structural durability and design flexibility.",
