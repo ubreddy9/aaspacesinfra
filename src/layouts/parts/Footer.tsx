@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Building2, Link } from "react-router";
 import { ArrowUpRight, MapPin, Phone, Mail, Instagram, Linkedin } from "lucide-react";
 
 const marqueeItems = [
@@ -68,7 +68,7 @@ export default function Footer() {
                 display: "block",
               }}
             />
-            <p style={{ fontSize: 13.5, lineHeight: 1.8, color: "hsl(215 20% 50%)", maxWidth: 300 }}>
+            <p style={{ fontSize: 13.5, lineHeight: 1.8, color: "hsl(180 20% 78%)", maxWidth: 300 }}>
               Delivering precision-engineered steel structures for industrial, commercial,
               and institutional projects across India.
             </p>
@@ -153,7 +153,7 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h3 style={{ fontSize: 11, fontWeight: 700, color: "hsl(28 95% 58%)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20, fontFamily: '"Space Grotesk", sans-serif' }}>
+            <h3 style={{ fontSize: 11, fontWeight: 700, color: "hsl(42 54% 74%)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20, fontFamily: '"Space Grotesk", sans-serif' }}>
               Company
             </h3>
             <nav style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -166,7 +166,7 @@ export default function Footer() {
                 <Link
                   key={to}
                   to={to}
-                  style={{ fontSize: 13.5, color: "hsl(215 20% 50%)", textDecoration: "none", transition: "color 0.2s" }}
+                  style={{ fontSize: 13.5, color: "hsl(180 20% 78%)", textDecoration: "none", transition: "color 0.2s" }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(215 10% 80%)")}
                   onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(215 20% 50%)")}
                 >
@@ -178,7 +178,7 @@ export default function Footer() {
 
           {/* Solutions */}
           <div>
-            <h3 style={{ fontSize: 11, fontWeight: 700, color: "hsl(28 95% 58%)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20, fontFamily: '"Space Grotesk", sans-serif' }}>
+            <h3 style={{ fontSize: 11, fontWeight: 700, color: "hsl(42 54% 74%)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20, fontFamily: '"Space Grotesk", sans-serif' }}>
               Solutions
             </h3>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
@@ -186,14 +186,14 @@ export default function Footer() {
                 "Warehouses", "Industrial Facilities", "Commercial Structures",
                 "Hospitality Spaces", "Convention Centres", "Cold Storage",
               ].map((s) => (
-                <li key={s} style={{ fontSize: 13.5, color: "hsl(215 20% 50%)" }}>{s}</li>
+                <li key={s} style={{ fontSize: 13.5, color: "hsl(180 20% 78%)" }}>{s}</li>
               ))}
             </ul>
           </div>
 
           {/* Contact + CTA */}
           <div>
-            <h3 style={{ fontSize: 11, fontWeight: 700, color: "hsl(28 95% 58%)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20, fontFamily: '"Space Grotesk", sans-serif' }}>
+            <h3 style={{ fontSize: 11, fontWeight: 700, color: "hsl(42 54% 74%)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 20, fontFamily: '"Space Grotesk", sans-serif' }}>
               Contact
             </h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 24 }}>
@@ -212,7 +212,7 @@ export default function Footer() {
                       alignItems: "flex-start",
                       gap: 9,
                       fontSize: 13.5,
-                      color: "hsl(215 20% 50%)",
+                      color: "hsl(180 20% 78%)",
                       textDecoration: "none",
                       transition: "color 0.2s",
                     }}

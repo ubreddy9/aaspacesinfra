@@ -1,4 +1,4 @@
-﻿import { Helmet } from "@dr.pogodin/react-helmet";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { CheckCircle2, ArrowUpRight, Building2, Clock, FileText } from "lucide-react";
 import { motion } from "motion/react";
 import { Link } from "react-router";
@@ -44,12 +44,12 @@ export default function ProposalPage() {
             minHeight: "48vh",
             display: "flex",
             alignItems: "flex-end",
-            background: "hsl(215 40% 7%)",
+            background: "hsl(194 65% 10%)",
             overflow: "hidden",
           }}
         >
           <img
-            src="https://aaspacesinfra.com/assets/brand/logo.png"
+            src="https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1920&q=80"
             alt="AA Spaces pre-engineered building"
             width={1920}
             height={1080}
@@ -57,10 +57,10 @@ export default function ProposalPage() {
             fetchPriority="high"
             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
           />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, hsl(215 40% 7%) 0%, hsl(215 40% 7% / 0.7) 40%, hsl(215 40% 7% / 0.25) 100%)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, hsl(194 65% 10%) 0%, hsl(194 65% 10% / 0.75) 45%, hsl(194 65% 10% / 0.3) 100%)" }} />
           <div style={{ position: "relative", zIndex: 1, maxWidth: 1240, width: "100%", margin: "0 auto", padding: "48px 32px 56px" }}>
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(28 95% 58%)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{proposal.hero.eyebrow}</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(42 54% 74%)", letterSpacing: "0.14em", textTransform: "uppercase" }}>{proposal.hero.eyebrow}</span>
               <h1
                 style={{
                   fontFamily: '"Sora", sans-serif',
@@ -86,7 +86,7 @@ export default function ProposalPage() {
               {/* Left sidebar */}
               <aside>
                 <motion.div {...reveal}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(215 72% 18%)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{proposal.details.eyebrow}</span>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(194 65% 20%)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{proposal.details.eyebrow}</span>
                   <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)", lineHeight: 1.1, marginTop: 12, marginBottom: 28 }}>{proposal.details.title}</h2>
                 </motion.div>
 
@@ -133,15 +133,15 @@ export default function ProposalPage() {
                             width: 36,
                             height: 36,
                             borderRadius: 10,
-                            background: "hsl(20 62% 38% / 0.1)",
-                            border: "1px solid hsl(20 62% 38% / 0.2)",
+                            background: "hsl(42 54% 74% / 0.15)",
+                            border: "1px solid hsl(42 54% 74% / 0.35)",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
                             flexShrink: 0,
                           }}
                         >
-                          <Icon size={16} color="hsl(215 72% 18%)" />
+                          <Icon size={16} color="hsl(194 65% 20%)" />
                         </div>
                         <div>
                           <p style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>{item.title}</p>
@@ -165,19 +165,19 @@ export default function ProposalPage() {
                   boxShadow: "0 8px 40px hsl(0 0% 0% / 0.08)",
                 }}
               >
-                <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(215 72% 18%)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{proposal.form.eyebrow}</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(194 65% 20%)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{proposal.form.eyebrow}</span>
                 <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)", lineHeight: 1.1, marginTop: 12, marginBottom: 12 }}>{proposal.form.title}</h2>
                 <p style={{ fontSize: 14, lineHeight: 1.7, color: "hsl(var(--muted-foreground))", marginBottom: 32 }}>{proposal.form.description}</p>
 
                 {/* Checklist */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 32, padding: "20px 24px", borderRadius: 14, background: "hsl(20 62% 38% / 0.05)", border: "1px solid hsl(20 62% 38% / 0.15)" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 32, padding: "20px 24px", borderRadius: 14, background: "hsl(42 54% 74% / 0.12)", border: "1px solid hsl(42 54% 74% / 0.3)" }}>
                   {[
                     "Tell us what you are planning",
                     "Share site and project requirements",
                     "Receive a considered response",
                   ].map((item) => (
                     <p key={item} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, fontWeight: 600 }}>
-                      <CheckCircle2 size={16} color="hsl(215 72% 18%)" />
+                      <CheckCircle2 size={16} color="hsl(194 65% 20%)" />
                       {item}
                     </p>
                   ))}

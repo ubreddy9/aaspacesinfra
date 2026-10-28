@@ -1,10 +1,13 @@
 import { Helmet } from "@dr.pogodin/react-helmet";
-import { ArrowRight, ArrowUpRight, CheckCircle2, ChevronRight, MapPin, Star } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CheckCircle2, ChevronRight, MapPin, Star, Building2, Factory, Clock, ShieldCheck, Award, Camera } from "lucide-react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { home } from "virtual:content";
 import AnimatedCounter from "@/components/AnimatedCounter";
+import ClientsSection from "@/components/ClientsSection";
+import ProjectDetailModal from "@/components/ProjectDetailModal";
+import QuoteModal from "@/components/QuoteModal";
 import { getActiveProjects, type Project } from "@/lib/projectStore";
 
 const site = "https://aaspacesinfra.com";
@@ -38,10 +41,10 @@ const reveal = {
 };
 
 const stats = [
-  { value: 500, suffix: "+", label: "Projects Delivered" },
-  { value: 20, suffix: "M+", label: "Sq Ft Constructed" },
-  { value: 15, suffix: "+", label: "States Across India" },
-  { value: 12, suffix: "+", label: "Years of Expertise" },
+  { value: 12, display: "1.2M+ sq.ft", label: "Annual PEB Execution", sub: "Warehousing & Industrial Sheds", icon: Building2 },
+  { value: 80, display: "80,000 sq.ft", label: "Medak Fabrication Plant", sub: "Automated SAW & Roll-Forming", icon: Factory },
+  { value: 48, display: "48 Days", label: "Record Turnkey Delivery", sub: "Azad Aerospace Facility", icon: Clock },
+  { value: 15, display: "15+ Years", label: "Structural Leadership", sub: "Est. 2009 • 100% In-House QA", icon: ShieldCheck },
 ];
 
 const trustMarquee = [
@@ -57,8 +60,11 @@ export default function HomePage() {
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.2]);
     const [projects, setProjects] = useState<Project[]>([]);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const [quoteBaseline, setQuoteBaseline] = useState<Project | null>(null);
   useEffect(() => {
-    getActiveProjects().then((list) => setProjects(list.slice(0, 4)));
+    getActiveProjects().then((list) => setProjects(list.slice(0, 6)));
   }, []);
 
   return (
@@ -154,11 +160,12 @@ export default function HomePage() {
                 transition={{ duration: 0.6, delay: 0.65 }}
                 style={{ display: "flex", flexWrap: "wrap", gap: 14 }}
               >
-                <Link
-                  to="/proposal"
+                <button
+                  type="button"
+                  onClick={() => setIsQuoteOpen(true)}
                   style={{
                     display: "inline-flex", alignItems: "center", gap: 8,
-                    padding: "14px 30px", borderRadius: 10,
+                    padding: "14px 30px", borderRadius: 10, border: "none", cursor: "pointer",
                     background: "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)", color: "hsl(194 65% 15%)", fontSize: 14, fontWeight: 700,
                     textDecoration: "none", letterSpacing: "0.01em",
                     transition: "all 0.25s",
@@ -168,7 +175,7 @@ export default function HomePage() {
                   onMouseLeave={(e) => { e.currentTarget.style.background = "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 24px hsl(28 95% 52% / 0.45)"; }}
                 >
                   {home.hero.cta} <ArrowUpRight size={16} />
-                </Link>
+                </button>
                 <Link
                   to="/projects"
                   style={{
@@ -278,31 +285,107 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* STATS */}
-        <section className="steel-grid" style={{ padding: "80px 0" }}>
-          <div className="site-container">
-            <div className="responsive-grid-4" style={{ borderRadius: 16, overflow: "hidden", border: "1px solid hsl(179 38% 75% / 0.18)" }}>
-              {stats.map((s, i) => (
-                <motion.div
-                  {...reveal}
-                  transition={{ ...reveal.transition, delay: i * 0.12 }}
-                  key={s.label}
-                  style={{
-                    padding: "48px 32px",
-                    textAlign: "center",
-                    borderRight: i < stats.length - 1 ? "1px solid hsl(179 38% 75% / 0.12)" : "none", background: "hsl(194 62% 11%)",
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
-                >
-                  {/* Subtle amber top border on hover */}
-                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: i === 0 ? "hsl(42 54% 74%)" : "transparent" }} />
-                  <div style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: "clamp(2.6rem, 4vw, 3.8rem)", lineHeight: 1, color: "#fff", letterSpacing: "-0.04em", marginBottom: 10 }}>
-                    <AnimatedCounter target={s.value} suffix={s.suffix} duration={1800} />
-                  </div>
-                  <p style={{ fontSize: 12.5, fontWeight: 600, color: "hsl(215 25% 45%)", letterSpacing: "0.06em", textTransform: "uppercase", fontFamily: '"Space Grotesk", sans-serif' }}>{s.label}</p>
-                </motion.div>
-              ))}
+        {/* METRICS & BENCHMARKS (Authentic PEB Execution) */}
+        <section style={{ background: "hsl(194 65% 10%)", padding: "72px 0", position: "relative", borderTop: "1px solid hsl(179 38% 75% / 0.15)", borderBottom: "1px solid hsl(179 38% 75% / 0.15)" }}>
+          <div className="steel-grid" style={{ position: "absolute", inset: 0, opacity: 0.1, pointerEvents: "none" }} />
+          <div className="site-container" style={{ position: "relative", zIndex: 1 }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                gap: 20,
+              }}
+            >
+              {stats.map((s, i) => {
+                const IconComponent = s.icon;
+                return (
+                  <motion.div
+                    {...reveal}
+                    transition={{ ...reveal.transition, delay: i * 0.1 }}
+                    key={s.label}
+                    style={{
+                      background: "hsl(194 60% 13% / 0.9)",
+                      border: "1px solid hsl(179 38% 75% / 0.2)",
+                      borderRadius: 16,
+                      padding: "28px 24px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      justifyContent: "space-between",
+                      backdropFilter: "blur(12px)",
+                      transition: "all 0.25s ease",
+                      position: "relative",
+                      overflow: "hidden",
+                    }}
+                    whileHover={{ y: -3, borderColor: "hsl(42 54% 74% / 0.5)" }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: 20 }}>
+                      <div
+                        style={{
+                          width: 42,
+                          height: 42,
+                          borderRadius: 10,
+                          background: "hsl(42 54% 74% / 0.14)",
+                          border: "1px solid hsl(42 54% 74% / 0.35)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <IconComponent size={20} color="hsl(42 54% 74%)" />
+                      </div>
+                      <span
+                        style={{
+                          fontSize: 10,
+                          fontWeight: 700,
+                          letterSpacing: "0.12em",
+                          textTransform: "uppercase",
+                          color: "hsl(42 54% 74%)",
+                          background: "hsl(42 54% 74% / 0.08)",
+                          padding: "3px 8px",
+                          borderRadius: 6,
+                          fontFamily: '"Space Grotesk", sans-serif',
+                        }}
+                      >
+                        PEB Benchmark
+                      </span>
+                    </div>
+
+                    <div style={{ marginBottom: 8 }}>
+                      <span
+                        style={{
+                          fontFamily: '"Sora", sans-serif',
+                          fontWeight: 800,
+                          fontSize: "clamp(2rem, 3.2vw, 2.7rem)",
+                          lineHeight: 1.05,
+                          color: "#ffffff",
+                          letterSpacing: "-0.03em",
+                          display: "block",
+                        }}
+                      >
+                        {s.display}
+                      </span>
+                    </div>
+
+                    <p
+                      style={{
+                        fontSize: 14,
+                        fontWeight: 700,
+                        color: "hsl(42 54% 74%)",
+                        letterSpacing: "-0.01em",
+                        marginBottom: 4,
+                        fontFamily: '"Sora", sans-serif',
+                      }}
+                    >
+                      {s.label}
+                    </p>
+
+                    <p style={{ fontSize: 12, lineHeight: 1.5, color: "hsl(180 20% 70%)" }}>
+                      {s.sub}
+                    </p>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -374,7 +457,8 @@ export default function HomePage() {
                   {...reveal}
                   transition={{ ...reveal.transition, delay: i * 0.1 }}
                   key={project.id}
-                  className="interactive-card"
+                  className="interactive-card cursor-pointer"
+                  onClick={() => setSelectedProject(project)}
                   style={{
                     margin: 0,
                     borderRadius: 16,
@@ -409,6 +493,28 @@ export default function HomePage() {
                     }}>
                       {project.sector}
                     </span>
+                    {project.gallery && project.gallery.length > 1 && (
+                      <span
+                        style={{
+                          position: "absolute",
+                          top: 14,
+                          right: 14,
+                          padding: "4px 10px",
+                          borderRadius: 999,
+                          background: "hsl(194 65% 10% / 0.85)",
+                          backdropFilter: "blur(8px)",
+                          border: "1px solid hsl(42 54% 74% / 0.35)",
+                          fontSize: 10,
+                          fontWeight: 700,
+                          color: "hsl(42 54% 74%)",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 4,
+                        }}
+                      >
+                        <Camera size={11} /> {project.gallery.length} Photos
+                      </span>
+                    )}
                   </div>
 
                   {/* Studio Case Body */}
@@ -424,6 +530,11 @@ export default function HomePage() {
                           </span>
                         )}
                       </div>
+                      {project.client && (
+                        <p style={{ fontSize: 11, fontWeight: 700, color: "hsl(42 54% 74%)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 3 }}>
+                          {project.client}
+                        </p>
+                      )}
                       <h3 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 700, fontSize: "1.1rem", letterSpacing: "-0.01em", color: "#fff", marginBottom: 8, lineHeight: 1.3 }}>
                         {project.title}
                       </h3>
@@ -434,23 +545,32 @@ export default function HomePage() {
                       )}
                     </div>
 
-                    <Link
-                      to="/projects"
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedProject(project);
+                      }}
                       className="interactive-arrow"
                       style={{
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        padding: 0,
                         display: "inline-flex",
                         alignItems: "center",
                         gap: 6,
                         fontSize: 12.5,
                         fontWeight: 700,
                         color: "hsl(42 54% 74%)",
-                        textDecoration: "none",
                         paddingTop: 12,
                         borderTop: "1px solid hsl(179 38% 75% / 0.12)",
+                        width: "100%",
+                        textAlign: "left",
                       }}
                     >
-                      View Project Specs <ArrowRight size={13} />
-                    </Link>
+                      Inspect Project Specs <ArrowRight size={13} />
+                    </button>
                   </div>
                 </motion.article>
               ))}
@@ -634,13 +754,16 @@ export default function HomePage() {
                 <p style={{ fontSize: 15.5, lineHeight: 1.8, color: "hsl(215 20% 70%)", maxWidth: 540, marginBottom: 36 }}>
                   {home.cta.description}
                 </p>
-                <Link
-                  to="/proposal"
+                <button
+                  type="button"
+                  onClick={() => setIsQuoteOpen(true)}
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
                     gap: 8,
                     padding: "15px 34px",
+                    border: "none",
+                    cursor: "pointer",
                     borderRadius: 12,
                     background: "linear-gradient(135deg, hsl(28 68% 52%) 0%, hsl(28 75% 46%) 100%)",
                     color: "#fff",
@@ -660,7 +783,7 @@ export default function HomePage() {
                   }}
                 >
                   {home.cta.button} <ArrowUpRight size={17} />
-                </Link>
+                </button>
               </motion.div>
 
               <motion.div {...reveal} style={{ display: "flex", flexDirection: "column", gap: 14 }}>

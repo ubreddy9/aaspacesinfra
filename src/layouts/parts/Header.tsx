@@ -1,12 +1,12 @@
 import { Link, useLocation } from "react-router";
-import { ArrowUpRight, Menu, X, Shield } from "lucide-react";
+import { ArrowUpRight, Menu, X, Shield, Phone, Mail, MapPin, Globe } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About Us" },
-  { href: "/capabilities", label: "Products & Services" },
-  { href: "/projects", label: "Projects" },
+  { href: "/about", label: "Company Profile" },
+  { href: "/capabilities", label: "Capabilities & Plant" },
+  { href: "/projects", label: "Projects Delivered", badge: "11" },
 ];
 
 export default function Header() {
@@ -33,7 +33,7 @@ export default function Header() {
         zIndex: 50,
         transition: "all 0.35s cubic-bezier(0.4,0,0.2,1)",
         background: scrolled
-          ? "hsl(194 62% 12% / 0.94)"
+          ? "hsl(194 62% 12% / 0.96)"
           : "hsl(194 60% 12%)",
         backdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
@@ -41,13 +41,14 @@ export default function Header() {
         boxShadow: scrolled ? "0 4px 32px hsl(194 68% 8% / 0.45)" : "none",
       }}
     >
-      {/* Top notice bar */}
+      {/* Top utility bar (Like PEBSOL PROJECTS) */}
       <div
         style={{
-          background: "hsl(194 68% 18%)",
-          borderBottom: "1px solid hsl(179 38% 75% / 0.15)",
-          padding: "8px 0",
+          background: "hsl(194 68% 10%)",
+          borderBottom: "1px solid hsl(179 38% 75% / 0.14)",
+          padding: "7px 0",
         }}
+        className="hidden md:block"
       >
         <div
           style={{
@@ -57,29 +58,52 @@ export default function Header() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            fontSize: 12,
+            fontSize: 11.5,
             fontWeight: 500,
           }}
         >
-          <p style={{ color: "hsl(179 38% 75%)" }}>
-            Engineering precision. Built for India.
-          </p>
-          <Link
-            to="/proposal"
-            style={{
-              display: "none",
-              alignItems: "center",
-              gap: 4,
-              color: "hsl(42 54% 74%)",
-              fontWeight: 600,
-              textDecoration: "none",
-              fontSize: 11,
-              letterSpacing: "0.04em",
-            }}
-            className="sm:!flex"
-          >
-            Start a project <ArrowUpRight size={11} />
-          </Link>
+          {/* Left contact info */}
+          <div style={{ display: "flex", alignItems: "center", gap: 18, color: "hsl(180 20% 78%)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <Phone size={12} color="hsl(42 54% 74%)" />
+              <a
+                href="tel:+919542445555"
+                style={{ color: "hsl(42 54% 74%)", textDecoration: "none", fontWeight: 700 }}
+              >
+                +91 95424 45555
+              </a>
+              <span style={{ color: "hsl(179 38% 75% / 0.4)" }}>|</span>
+              <a
+                href="tel:+919849028657"
+                style={{ color: "hsl(180 20% 88%)", textDecoration: "none", fontWeight: 600 }}
+              >
+                +91 98490 28657
+              </a>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <Mail size={12} color="hsl(42 54% 74%)" />
+              <a
+                href="mailto:info@aaspacesinfra.com"
+                style={{ color: "hsl(180 20% 88%)", textDecoration: "none" }}
+              >
+                info@aaspacesinfra.com
+              </a>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: 6, color: "hsl(180 20% 70%)" }}>
+              <Globe size={12} color="hsl(179 38% 75% / 0.7)" />
+              <span>Hyderabad • Medak Plant • Pan-India Turnkey</span>
+            </div>
+          </div>
+
+          {/* Right corporate address info */}
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 5, color: "hsl(180 20% 75%)" }}>
+              <MapPin size={12} color="hsl(42 54% 74%)" />
+              <span>HITEX / Shilpa Layout, Hyderabad</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -98,17 +122,34 @@ export default function Header() {
           <Link
             to="/"
             aria-label="AA Spaces home"
-            style={{ flexShrink: 0, display: "flex", alignItems: "center" }}
+            style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}
           >
             <img
               src="/assets/brand/logo-light.png"
               alt="AA Spaces Infra"
-              className="h-10 sm:h-12 md:h-[50px] w-auto max-w-[185px] sm:max-w-[240px]"
+              className="h-10 sm:h-12 md:h-[48px] w-auto max-w-[185px] sm:max-w-[240px]"
               style={{
                 objectFit: "contain",
                 display: "block",
               }}
             />
+            <span
+              className="hidden xl:inline-block"
+              style={{
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                padding: "3px 8px",
+                borderRadius: 4,
+                background: "hsl(42 54% 74% / 0.12)",
+                border: "1px solid hsl(42 54% 74% / 0.3)",
+                color: "hsl(42 54% 74%)",
+                fontFamily: '"Space Grotesk", sans-serif',
+              }}
+            >
+              Pre-Engineered Buildings
+            </span>
           </Link>
 
           {/* Desktop nav */}
@@ -122,12 +163,14 @@ export default function Header() {
                   padding: "8px 16px",
                   borderRadius: 8,
                   fontSize: 13.5,
-                  fontWeight: isActive(item.href) ? 600 : 500,
+                  fontWeight: isActive(item.href) ? 700 : 500,
                   letterSpacing: "0.01em",
                   color: isActive(item.href) ? "hsl(42 54% 74%)" : "hsl(180 20% 82%)",
                   textDecoration: "none",
                   transition: "all 0.2s",
-                  background: isActive(item.href) ? "hsl(42 54% 74% / 0.12)" : "transparent",
+                  background: isActive(item.href) ? "hsl(42 54% 74% / 0.14)" : "transparent",
+                  display: "inline-flex",
+                  alignItems: "center",
                 }}
                 onMouseEnter={(e) => {
                   if (!isActive(item.href)) {
@@ -143,6 +186,21 @@ export default function Header() {
                 }}
               >
                 {item.label}
+                {item.badge && (
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 800,
+                      marginLeft: 6,
+                      padding: "1px 6px",
+                      borderRadius: 999,
+                      background: isActive(item.href) ? "hsl(42 54% 74%)" : "hsl(194 50% 24%)",
+                      color: isActive(item.href) ? "hsl(194 65% 15%)" : "hsl(42 54% 74%)",
+                    }}
+                  >
+                    {item.badge}
+                  </span>
+                )}
                 {isActive(item.href) && (
                   <span
                     style={{
@@ -187,7 +245,8 @@ export default function Header() {
                 padding: "10px 22px",
                 borderRadius: 9,
                 background: "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)",
-                color: "hsl(194 65% 15%)", fontSize: 13.5,
+                color: "hsl(194 65% 15%)",
+                fontSize: 13.5,
                 fontWeight: 700,
                 textDecoration: "none",
                 letterSpacing: "0.01em",
@@ -210,23 +269,38 @@ export default function Header() {
           </div>
 
           {/* Mobile toggle */}
-          <button
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Toggle menu"
-            aria-expanded={mobileOpen}
-            className="lg:hidden"
-            style={{
-              padding: 8,
-              borderRadius: 8,
-              background: "none",
-              border: "none",
-              color: "hsl(215 20% 75%)",
-              cursor: "pointer",
-              display: "flex",
-            }}
-          >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <Link
+              to="/proposal"
+              style={{
+                padding: "7px 14px",
+                borderRadius: 7,
+                background: "hsl(42 54% 74%)",
+                color: "hsl(194 65% 15%)",
+                fontSize: 12,
+                fontWeight: 700,
+                textDecoration: "none",
+              }}
+            >
+              Inquire
+            </Link>
+            <button
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
+              style={{
+                padding: 8,
+                borderRadius: 8,
+                background: "none",
+                border: "none",
+                color: "hsl(180 20% 88%)",
+                cursor: "pointer",
+                display: "flex",
+              }}
+            >
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile drawer */}
@@ -235,7 +309,7 @@ export default function Header() {
             aria-label="Mobile navigation"
             style={{
               borderTop: "1px solid hsl(179 38% 75% / 0.18)",
-              padding: "12px 0 16px",
+              padding: "14px 0 20px",
             }}
             className="lg:hidden flex flex-col gap-1"
           >
@@ -247,20 +321,42 @@ export default function Header() {
                   padding: "11px 14px",
                   borderRadius: 9,
                   fontSize: 14,
-                  fontWeight: isActive(item.href) ? 600 : 500,
+                  fontWeight: isActive(item.href) ? 700 : 500,
                   color: isActive(item.href) ? "hsl(42 54% 74%)" : "hsl(180 20% 88%)",
                   textDecoration: "none",
-                  background: isActive(item.href) ? "hsl(42 54% 74% / 0.12)" : "transparent",
-                  display: "block",
+                  background: isActive(item.href) ? "hsl(42 54% 74% / 0.14)" : "transparent",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                 }}
               >
-                {item.label}
+                <span>{item.label}</span>
+                {item.badge && (
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 800,
+                      padding: "1px 6px",
+                      borderRadius: 999,
+                      background: "hsl(42 54% 74%)",
+                      color: "hsl(194 65% 15%)",
+                    }}
+                  >
+                    {item.badge}
+                  </span>
+                )}
               </Link>
             ))}
+
+            <div style={{ marginTop: 12, padding: "12px 14px", borderTop: "1px solid hsl(179 38% 75% / 0.15)", fontSize: 12, color: "hsl(180 20% 75%)" }}>
+              <p style={{ marginBottom: 4 }}><Phone size={12} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} /> +91 95424 45555 / +91 98490 28657</p>
+              <p><Mail size={12} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} /> info@aaspacesinfra.com</p>
+            </div>
+
             <Link
               to="/proposal"
               style={{
-                marginTop: 10,
+                marginTop: 6,
                 padding: "13px 14px",
                 borderRadius: 9,
                 background: "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)",
