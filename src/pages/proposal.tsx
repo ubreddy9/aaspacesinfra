@@ -7,9 +7,29 @@ import { proposal } from "virtual:content";
 
 const site = "https://aaspacesinfra.com";
 const url = `${site}/proposal`;
-const title = "Request a Building Proposal | AA Spaces";
-const description = "Share your warehouse, industrial, commercial, hospitality or convention building brief with AA Spaces.";
-const jsonLd = { "@context": "https://schema.org", "@type": "ContactPage", "@id": `${url}#webpage`, name: title, url, isPartOf: { "@id": `${site}/#website` }, about: { "@id": `${site}/#organization` } };
+const title = "Request PEB Project Proposal | AA Spaces Infra";
+const description = "Request a structural engineering quote and turnkey schedule for your warehouse, industrial plant, or commercial Pre-Engineered Building from AA Spaces Infra.";
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ContactPage",
+      "@id": `${url}#webpage`,
+      name: title,
+      url,
+      isPartOf: { "@id": `${site}/#website` },
+      about: { "@id": `${site}/#organization` }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${url}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${site}/` },
+        { "@type": "ListItem", "position": 2, "name": "Proposal", "item": url }
+      ]
+    }
+  ]
+};
 const reveal = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.15 }, transition: { duration: 0.5, ease: "easeOut" as const } };
 
 const whyItems = [
@@ -29,11 +49,11 @@ export default function ProposalPage() {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
-        <meta property="og:image" content={`${site}https://aaspacesinfra.com/assets/brand/logo.png`} />
+        <meta property="og:image" content={`${site}/assets/brand/logo.png`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={`${site}https://aaspacesinfra.com/assets/brand/logo.png`} />
+        <meta name="twitter:image" content={`${site}/assets/brand/logo.png`} />
         <script type="application/ld+json">{JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</script>
       </Helmet>
       <main>
@@ -49,7 +69,7 @@ export default function ProposalPage() {
           }}
         >
           <img
-            src="https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1920&q=80"
+            src="/assets/projects/commercial-01.jpg"
             alt="AA Spaces pre-engineered building"
             width={1920}
             height={1080}

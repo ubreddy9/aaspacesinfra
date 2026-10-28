@@ -8,9 +8,29 @@ import { capabilities } from "virtual:content";
 
 const site = "https://aaspacesinfra.com";
 const url = `${site}/capabilities`;
-const title = "PEB Products & Services | AA Spaces";
-const description = "AA Spaces provides coordinated pre-engineered building services shaped around site, sector and operational needs.";
-const jsonLd = { "@context": "https://schema.org", "@type": "WebPage", "@id": `${url}#webpage`, name: title, url, isPartOf: { "@id": `${site}/#website` }, about: { "@id": `${site}/#organization` } };
+const title = "PEB Products & Services | AA Spaces Infra";
+const description = "Explore turnkey Pre-Engineered Building (PEB) capabilities, high-tensile 345 MPa purlins, clear-span portal frames, and heavy industrial sheds across India.";
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      name: title,
+      url,
+      isPartOf: { "@id": `${site}/#website` },
+      about: { "@id": `${site}/#organization` }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${url}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${site}/` },
+        { "@type": "ListItem", "position": 2, "name": "Capabilities", "item": url }
+      ]
+    }
+  ]
+};
 const reveal = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.15 }, transition: { duration: 0.5, ease: "easeOut" as const } };
 
 export default function CapabilitiesPage() {
@@ -27,11 +47,11 @@ export default function CapabilitiesPage() {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
-        <meta property="og:image" content={`${site}https://aaspacesinfra.com/assets/brand/logo.png`} />
+        <meta property="og:image" content={`${site}/assets/brand/logo.png`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={`${site}https://aaspacesinfra.com/assets/brand/logo.png`} />
+        <meta name="twitter:image" content={`${site}/assets/brand/logo.png`} />
         <script type="application/ld+json">{JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</script>
       </Helmet>
       <main>
@@ -101,7 +121,7 @@ export default function CapabilitiesPage() {
                 <h2 style={{ fontFamily: '"Sora", sans-serif', fontSize: "clamp(1.8rem, 3vw, 2.6rem)", lineHeight: 1.1, marginTop: 4, marginBottom: 24 }}>{capabilities.technical.title}</h2>
                 <figure style={{ borderRadius: 16, overflow: "hidden", border: "1px solid hsl(var(--border))" }}>
                   <img
-                    src="https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=1200"
+                    src="/assets/projects/pharma-01.jpg"
                     alt="Industrial steel building fabrication"
                     width={1400}
                     height={1000}

@@ -10,7 +10,27 @@ const site = "https://aaspacesinfra.com";
 const url = `${site}/about`;
 const title = "Company Profile | AA Spaces Infra";
 const description = "Learn how AA Spaces Infra delivers precision-engineered Pre-Engineered Steel Buildings, industrial manufacturing plants, clear-span venues, and warehouse logistics hubs across India.";
-const jsonLd = { "@context": "https://schema.org", "@type": "AboutPage", "@id": `${url}#webpage`, name: title, url, isPartOf: { "@id": `${site}/#website` }, about: { "@id": `${site}/#organization` } };
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": `${url}#webpage`,
+      name: title,
+      url,
+      isPartOf: { "@id": `${site}/#website` },
+      about: { "@id": `${site}/#organization` }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${url}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${site}/` },
+        { "@type": "ListItem", "position": 2, "name": "About Us", "item": url }
+      ]
+    }
+  ]
+};
 const reveal = { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.15 }, transition: { duration: 0.5, ease: "easeOut" as const } };
 
 const engineeringPillars = [

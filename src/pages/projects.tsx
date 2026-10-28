@@ -9,9 +9,29 @@ import QuoteModal from "@/components/QuoteModal";
 
 const site = "https://aaspacesinfra.com";
 const url = `${site}/projects`;
-const title = "PEB Project Studies | AA Spaces Infra";
-const description = "Browse representative AA Spaces pre-engineered building studies across warehouse, commercial, industrial, hospitality and event sectors.";
-const jsonLd = { "@context": "https://schema.org", "@type": "CollectionPage", "@id": `${url}#webpage`, name: title, url, isPartOf: { "@id": `${site}/#website` }, about: { "@id": `${site}/#organization` } };
+const title = "Delivered PEB Projects & Case Studies | AA Spaces Infra";
+const description = "Explore 11+ delivered turnkey Pre-Engineered Building (PEB) projects across India: aerospace manufacturing sheds, 2.5L sq.ft steel plants, and convention centers.";
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": `${url}#webpage`,
+      name: title,
+      url,
+      isPartOf: { "@id": `${site}/#website` },
+      about: { "@id": `${site}/#organization` }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${url}#breadcrumb`,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": `${site}/` },
+        { "@type": "ListItem", "position": 2, "name": "Projects", "item": url }
+      ]
+    }
+  ]
+};
 
 const reveal = {
   initial: { opacity: 0, y: 20 },

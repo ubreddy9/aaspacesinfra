@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
@@ -7,41 +7,41 @@
   <!-- Homepage -->
   <url>
     <loc>https://aaspacesinfra.com/</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- About -->
+  <!-- About / Company Profile -->
   <url>
     <loc>https://aaspacesinfra.com/about</loc>
-    <lastmod>2026-09-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>
 
   <!-- Products & Services / Capabilities -->
   <url>
     <loc>https://aaspacesinfra.com/capabilities</loc>
-    <lastmod>2026-09-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Projects -->
-  <url>
-    <loc>https://aaspacesinfra.com/projects</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- Get a Proposal -->
+  <!-- Delivered Projects & Case Studies -->
+  <url>
+    <loc>https://aaspacesinfra.com/projects</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Project Proposal / Contact -->
   <url>
     <loc>https://aaspacesinfra.com/proposal</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
 
 </urlset>

@@ -16,22 +16,77 @@ const title = "Pre-Engineered Building Solutions | AA Spaces Infra";
 const description = "AA Spaces delivers precision-engineered steel building solutions for warehouse, industrial, commercial, and hospitality projects across India.";
 
 
-// Organization JSON-LD - tells Google to show the logo in search results
+// Comprehensive Schema.org JSON-LD for Google Knowledge Graph & Local SEO
 const orgJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": "https://aaspacesinfra.com/#organization",
-  name: "AA Spaces Infra",
-  url: "https://aaspacesinfra.com",
-  logo: {
-    "@type": "ImageObject",
-    url: "https://aaspacesinfra.com/assets/brand/logo.png",
-    width: 1063,
-    height: 508,
-  },
-  image: "https://aaspacesinfra.com/assets/brand/logo.png",
-  email: "info@aaspacesinfra.com",
-  address: { "@type": "PostalAddress", addressCountry: "IN" },
+  "@graph": [
+    {
+      "@type": ["Organization", "LocalBusiness", "GeneralContractor"],
+      "@id": "https://aaspacesinfra.com/#organization",
+      name: "AA Spaces Infra",
+      alternateName: "AA Spaces Infra Projects",
+      url: "https://aaspacesinfra.com",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://aaspacesinfra.com/assets/brand/logo.png",
+        width: 1063,
+        height: 508,
+      },
+      image: "https://aaspacesinfra.com/assets/brand/logo.png",
+      description: "Leading Pre-Engineered Building (PEB) design-build and turnkey structural steel infrastructure organization in Hyderabad, Telangana. Specializing in warehouse hubs, industrial manufacturing plants, clear-span pavilions, and commercial frames.",
+      telephone: "+91-9542445555",
+      email: "info@aaspacesinfra.com",
+      priceRange: "$$$",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Cyber Elite Suites, Near HITEX Exhibition Center & Shilpa Layout, HITEC City",
+        addressLocality: "Hyderabad",
+        addressRegion: "Telangana",
+        postalCode: "500084",
+        addressCountry: "IN",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: "17.4716",
+        longitude: "78.3756",
+      },
+      areaServed: [
+        { "@type": "AdministrativeArea", name: "Telangana" },
+        { "@type": "AdministrativeArea", name: "Andhra Pradesh" },
+        { "@type": "Country", name: "India" }
+      ],
+      founder: [
+        {
+          "@type": "Person",
+          name: "Mr. B. Upender Reddy",
+          jobTitle: "Managing Director"
+        },
+        {
+          "@type": "Person",
+          name: "Mr. Ch. Gangadhar",
+          jobTitle: "Executive Director"
+        }
+      ],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "PEB Infrastructure Services",
+        itemListElement: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Pre-Engineered Building (PEB) Turnkey Construction" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Industrial Steel Warehouses & Logistics Hubs" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Aerospace & Heavy Manufacturing Sheds" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Clear-Span Grand Convention Pavilions" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Multi-Storey Commercial Steel Frameworks" } }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://aaspacesinfra.com/#website",
+      url: "https://aaspacesinfra.com",
+      name: "AA Spaces Infra",
+      publisher: { "@id": "https://aaspacesinfra.com/#organization" }
+    }
+  ]
 };
 const reveal = {
   initial: { opacity: 0, y: 28 },
@@ -44,7 +99,7 @@ const stats = [
   { value: 12, display: "1.2M+ sq.ft", label: "Annual PEB Execution", sub: "Warehousing & Industrial Sheds", icon: Building2 },
   { value: 80, display: "80,000 sq.ft", label: "Medak Fabrication Plant", sub: "Automated SAW & Roll-Forming", icon: Factory },
   { value: 48, display: "48 Days", label: "Record Turnkey Delivery", sub: "Azad Aerospace Facility", icon: Clock },
-  { value: 15, display: "15+ Years", label: "Structural Leadership", sub: "Est. 2009 • 100% In-House QA", icon: ShieldCheck },
+  { value: 15, display: "15+ Years", label: "Structural Leadership", sub: "Senior PEB Leadership • 100% In-House QA", icon: ShieldCheck },
 ];
 
 const trustMarquee = [
