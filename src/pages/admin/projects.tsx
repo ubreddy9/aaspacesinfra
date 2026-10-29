@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { AnimatePresence, motion } from "motion/react";
 import {
@@ -32,8 +32,21 @@ const FILTER_MAP: Record<string, string> = {
 };
 
 const emptyForm = (): Omit<ProjectInput, "is_default"> => ({
-  code: "", title: "", sector: "Warehouse", filter: "warehouse",
-  location: "", area: "", description: "", image: "", status: "active",
+  code: "",
+  title: "",
+  sector: "Warehouse",
+  filter: "warehouse",
+  client: "",
+  location: "",
+  area: "",
+  tonnage: "",
+  timeline: "",
+  year: "",
+  description: "",
+  image: "",
+  gallery: [] as string[],
+  highlights: [] as string[],
+  status: "active",
 });
 
 export default function AdminProjectsPage() {
@@ -47,10 +60,13 @@ export default function AdminProjectsPage() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [uploadPct, setUploadPct] = useState(0);
+  const [galleryUploading, setGalleryUploading] = useState(false);
+  const [newGalleryUrl, setNewGalleryUrl] = useState("");
   const [saving, setSaving] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [seeding, setSeeding] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const galleryFileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!checkAdminAuth()) { navigate("/admin", { replace: true }); return; }
@@ -76,19 +92,38 @@ export default function AdminProjectsPage() {
     setImageFile(null);
     setImagePreview("");
     setUploadPct(0);
+    setNewGalleryUrl("");
     setDrawerOpen(true);
   }
 
   function openEdit(p: Project) {
     setEditingId(p.id);
+    const existingGallery = (p.gallery && p.gallery.length > 0)
+      ? [...p.gallery]
+      : (p.image ? [p.image] : []);
+    const cover = p.image || existingGallery[0] || "";
+
     setForm({
-      code: p.code, title: p.title, sector: p.sector, filter: p.filter,
-      location: p.location, area: p.area, description: p.description,
-      image: p.image, status: p.status,
+      code: p.code,
+      title: p.title,
+      sector: p.sector,
+      filter: p.filter,
+      client: p.client || "",
+      location: p.location || "",
+      area: p.area || "",
+      tonnage: p.tonnage || "",
+      timeline: p.timeline || "",
+      year: p.year || "",
+      description: p.description || "",
+      image: cover,
+      gallery: existingGallery,
+      highlights: p.highlights || [],
+      status: p.status,
     });
     setImageFile(null);
-    setImagePreview(p.image || "");
+    setImagePreview(cover);
     setUploadPct(0);
+    setNewGalleryUrl("");
     setDrawerOpen(true);
   }
 
@@ -97,37 +132,146 @@ export default function AdminProjectsPage() {
     if (!file) return;
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
-    setForm((f) => ({ ...f, image: "" }));
   }
 
   function onSectorChange(sector: string) {
     setForm((f) => ({ ...f, sector, filter: FILTER_MAP[sector] ?? sector.toLowerCase() }));
   }
 
+  function setAsCover(url: string) {
+    setForm((f) => ({ ...f, image: url }));
+    setImagePreview(url);
+    setImageFile(null);
+    toast("Primary cover photo updated");
+  }
+
+  function deleteGalleryPhoto(urlToDelete: string) {
+    setForm((f) => {
+      const nextGallery = f.gallery.filter((u) => u !== urlToDelete);
+      let nextCover = f.image;
+      if (f.image === urlToDelete) {
+        nextCover = nextGallery[0] || "";
+        setImagePreview(nextCover);
+      }
+      return {
+        ...f,
+        gallery: nextGallery,
+        image: nextCover,
+      };
+    });
+    toast("Photo removed from gallery");
+  }
+
+  function addGalleryUrl() {
+    const trimmed = newGalleryUrl.trim();
+    if (!trimmed) return;
+    if (form.gallery.includes(trimmed)) {
+      toast("Photo already exists in gallery", "error");
+      return;
+    }
+    setForm((f) => {
+      const nextGallery = [...f.gallery, trimmed];
+      const nextCover = f.image || trimmed;
+      if (!f.image) setImagePreview(trimmed);
+      return { ...f, gallery: nextGallery, image: nextCover };
+    });
+    setNewGalleryUrl("");
+    toast("Photo added to gallery");
+  }
+
+  async function handleGalleryFiles(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    setGalleryUploading(true);
+    const newUrls: string[] = [];
+    try {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        try {
+          const url = await uploadProjectImage(file);
+          newUrls.push(url);
+        } catch {
+          // Fallback to data URL if network/storage is unavailable
+          const reader = new FileReader();
+          const dataUrl = await new Promise<string>((resolve) => {
+            reader.onload = () => resolve(reader.result as string);
+            reader.readAsDataURL(file);
+          });
+          newUrls.push(dataUrl);
+        }
+      }
+      setForm((f) => {
+        const updated = [...f.gallery, ...newUrls];
+        const nextCover = f.image || updated[0] || "";
+        if (!f.image && updated[0]) setImagePreview(updated[0]);
+        return { ...f, gallery: updated, image: nextCover };
+      });
+      toast(`Added ${newUrls.length} photo${newUrls.length > 1 ? "s" : ""} to gallery`);
+    } catch {
+      toast("Failed to process gallery photos", "error");
+    } finally {
+      setGalleryUploading(false);
+      if (galleryFileRef.current) galleryFileRef.current.value = "";
+    }
+  }
+
   async function handleSave() {
     if (!form.title || !form.code) { toast("Title and Code are required", "error"); return; }
     setSaving(true);
     try {
-      let imageUrl = form.image;
+      let currentGallery = [...form.gallery];
+      let primaryCover = form.image;
 
-      // Upload new image if selected
+      // Upload new image if selected in main image area
       if (imageFile) {
-        setUploadPct(5);
-        imageUrl = await uploadProjectImage(imageFile, (pct) => setUploadPct(pct));
+        setUploadPct(10);
+        try {
+          primaryCover = await uploadProjectImage(imageFile, (pct) => setUploadPct(pct));
+        } catch {
+          const reader = new FileReader();
+          primaryCover = await new Promise<string>((resolve) => {
+            reader.onload = () => resolve(reader.result as string);
+            reader.readAsDataURL(imageFile);
+          });
+        }
+        if (!currentGallery.includes(primaryCover)) {
+          currentGallery.unshift(primaryCover);
+        }
+      }
+
+      // Ensure gallery and cover are consistent
+      if (primaryCover && !currentGallery.includes(primaryCover)) {
+        currentGallery.unshift(primaryCover);
+      }
+      if (!primaryCover && currentGallery.length > 0) {
+        primaryCover = currentGallery[0];
       }
 
       const payload: ProjectInput = {
-        ...form,
-        image: imageUrl,
+        code: form.code,
+        title: form.title,
+        sector: form.sector,
+        filter: form.filter,
+        client: form.client || "",
+        location: form.location || "",
+        area: form.area || "",
+        tonnage: form.tonnage || "",
+        timeline: form.timeline || "",
+        year: form.year || "",
+        description: form.description || "",
+        highlights: form.highlights || [],
+        image: primaryCover || "",
+        gallery: currentGallery,
+        status: form.status,
         is_default: false,
       };
 
       if (editingId) {
         await updateProject(editingId, payload);
-        toast("Project updated successfully");
+        toast("Project & photo gallery saved successfully");
       } else {
         await addProject(payload);
-        toast("Project added successfully");
+        toast("Project created successfully");
       }
 
       setDrawerOpen(false);
@@ -330,7 +474,7 @@ export default function AdminProjectsPage() {
 
                 {/* Image upload */}
                 <div>
-                  <label style={labelStyle}>Project Image</label>
+                  <label style={labelStyle}>Primary Cover Image</label>
                   <div
                     onClick={() => fileRef.current?.click()}
                     style={{ width: "100%", height: 160, borderRadius: 10, border: "2px dashed hsl(215 35% 24%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "pointer", overflow: "hidden", position: "relative", background: imagePreview ? "transparent" : "hsl(215 35% 13%)", transition: "border-color 0.2s" }}
@@ -344,13 +488,13 @@ export default function AdminProjectsPage() {
                           onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
                           onMouseLeave={(e) => (e.currentTarget.style.opacity = "0")}
                         >
-                          <span style={{ color: "#fff", fontSize: 13, fontWeight: 600 }}>Change image</span>
+                          <span style={{ color: "#fff", fontSize: 13, fontWeight: 600 }}>Change Cover Image</span>
                         </div>
                       </>
                     ) : (
                       <>
                         <ImagePlus size={28} color="hsl(215 25% 45%)" />
-                        <p style={{ fontSize: 13, color: "hsl(215 25% 45%)", marginTop: 10 }}>Click to upload image</p>
+                        <p style={{ fontSize: 13, color: "hsl(215 25% 45%)", marginTop: 10 }}>Click to upload cover image</p>
                         <p style={{ fontSize: 11, color: "hsl(215 25% 35%)", marginTop: 4 }}>JPG, PNG, WEBP — max 5 MB</p>
                       </>
                     )}
@@ -358,12 +502,15 @@ export default function AdminProjectsPage() {
                   <input ref={fileRef} type="file" accept="image/*" onChange={onFileChange} style={{ display: "none" }} />
 
                   {/* OR paste URL */}
-                  <p style={{ fontSize: 11, color: "hsl(215 25% 40%)", marginTop: 8 }}>— or paste an image URL below —</p>
+                  <p style={{ fontSize: 11, color: "hsl(215 25% 40%)", marginTop: 8 }}>— or paste cover image URL / path —</p>
                   <input
                     type="url"
-                    placeholder="https://example.com/photo.jpg"
+                    placeholder="https://example.com/photo.jpg or /assets/projects/..."
                     value={form.image}
-                    onChange={(e) => { setForm((f) => ({ ...f, image: e.target.value })); if (e.target.value) { setImagePreview(e.target.value); setImageFile(null); } }}
+                    onChange={(e) => {
+                      setForm((f) => ({ ...f, image: e.target.value }));
+                      if (e.target.value) { setImagePreview(e.target.value); setImageFile(null); }
+                    }}
                     style={{ ...fieldStyle, marginTop: 6 }}
                   />
 
@@ -375,30 +522,209 @@ export default function AdminProjectsPage() {
                   )}
                 </div>
 
+                {/* ─── MULTI-PHOTO GALLERY MANAGER ──────────────────────── */}
+                <div style={{ padding: "18px 20px", borderRadius: 12, background: "hsl(215 35% 12%)", border: "1px solid hsl(215 35% 20%)" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14, flexWrap: "wrap", gap: 10 }}>
+                    <div>
+                      <label style={{ ...labelStyle, marginBottom: 2 }}>Project Gallery Photos</label>
+                      <p style={{ fontSize: 12, color: "hsl(215 25% 65%)" }}>
+                        {form.gallery.length} photo{form.gallery.length !== 1 ? "s" : ""} in gallery &bull; Select which to keep, delete, or set as primary cover
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => galleryFileRef.current?.click()}
+                      disabled={galleryUploading}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 6,
+                        padding: "7px 14px",
+                        borderRadius: 8,
+                        background: "hsl(28 95% 52% / 0.15)",
+                        border: "1px solid hsl(28 95% 52% / 0.4)",
+                        color: "hsl(28 95% 62%)",
+                        fontSize: 12,
+                        fontWeight: 700,
+                        cursor: galleryUploading ? "not-allowed" : "pointer",
+                      }}
+                    >
+                      <Plus size={14} /> {galleryUploading ? "Processing..." : "Add Photos"}
+                    </button>
+                    <input
+                      ref={galleryFileRef}
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleGalleryFiles}
+                      style={{ display: "none" }}
+                    />
+                  </div>
+
+                  {/* Photo Grid */}
+                  {form.gallery.length === 0 ? (
+                    <div style={{ padding: "20px 14px", textAlign: "center", borderRadius: 8, background: "hsl(215 35% 14%)", border: "1px dashed hsl(215 35% 24%)", color: "hsl(215 25% 50%)", fontSize: 12.5 }}>
+                      No photos in this gallery yet. Upload photos or paste URLs below.
+                    </div>
+                  ) : (
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: 12, marginBottom: 14 }}>
+                      {form.gallery.map((photoUrl, idx) => {
+                        const isCover = (form.image === photoUrl) || (!form.image && idx === 0);
+                        return (
+                          <div
+                            key={`${photoUrl}-${idx}`}
+                            style={{
+                              position: "relative",
+                              borderRadius: 8,
+                              overflow: "hidden",
+                              border: isCover ? "2px solid hsl(28 95% 52%)" : "1px solid hsl(215 35% 24%)",
+                              background: "hsl(215 35% 15%)",
+                              boxShadow: isCover ? "0 0 12px hsl(28 95% 52% / 0.3)" : "none",
+                            }}
+                          >
+                            <div style={{ width: "100%", height: 95, overflow: "hidden", position: "relative" }}>
+                              <img
+                                src={photoUrl}
+                                alt={`Photo ${idx + 1}`}
+                                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                              />
+                              {isCover && (
+                                <span
+                                  style={{
+                                    position: "absolute",
+                                    top: 4,
+                                    left: 4,
+                                    background: "hsl(28 95% 52%)",
+                                    color: "#fff",
+                                    fontSize: 9.5,
+                                    fontWeight: 800,
+                                    padding: "2px 6px",
+                                    borderRadius: 4,
+                                    letterSpacing: "0.04em",
+                                    textTransform: "uppercase",
+                                  }}
+                                >
+                                  Cover
+                                </span>
+                              )}
+                              {/* Delete button on thumbnail */}
+                              <button
+                                type="button"
+                                title="Delete this photo from project"
+                                onClick={() => deleteGalleryPhoto(photoUrl)}
+                                style={{
+                                  position: "absolute",
+                                  top: 4,
+                                  right: 4,
+                                  width: 26,
+                                  height: 26,
+                                  borderRadius: 6,
+                                  background: "hsl(0 80% 50% / 0.85)",
+                                  border: "none",
+                                  color: "#fff",
+                                  cursor: "pointer",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  transition: "all 0.15s",
+                                }}
+                                onMouseEnter={(e) => (e.currentTarget.style.background = "hsl(0 85% 55%)")}
+                                onMouseLeave={(e) => (e.currentTarget.style.background = "hsl(0 80% 50% / 0.85)")}
+                              >
+                                <Trash2 size={13} />
+                              </button>
+                            </div>
+
+                            {/* Action bar below thumbnail */}
+                            <div style={{ padding: "6px 8px", background: "hsl(215 35% 10%)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                              <span style={{ fontSize: 10, color: "hsl(215 25% 60%)", fontWeight: 600 }}>
+                                #{idx + 1}
+                              </span>
+                              {!isCover ? (
+                                <button
+                                  type="button"
+                                  onClick={() => setAsCover(photoUrl)}
+                                  style={{
+                                    background: "none",
+                                    border: "none",
+                                    color: "hsl(28 95% 62%)",
+                                    fontSize: 10,
+                                    fontWeight: 700,
+                                    cursor: "pointer",
+                                    padding: "2px 4px",
+                                  }}
+                                >
+                                  Make Cover
+                                </button>
+                              ) : (
+                                <span style={{ fontSize: 10, fontWeight: 700, color: "hsl(28 95% 62%)" }}>
+                                  &bull; Cover
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Add by URL input */}
+                  <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+                    <input
+                      type="text"
+                      placeholder="Add photo URL or path (e.g. /assets/projects/azad-05.jpg)"
+                      value={newGalleryUrl}
+                      onChange={(e) => setNewGalleryUrl(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          addGalleryUrl();
+                        }
+                      }}
+                      style={{ ...fieldStyle, flex: 1, padding: "8px 12px", fontSize: 12.5 }}
+                    />
+                    <button
+                      type="button"
+                      onClick={addGalleryUrl}
+                      disabled={!newGalleryUrl.trim()}
+                      style={{
+                        padding: "8px 14px",
+                        borderRadius: 8,
+                        background: newGalleryUrl.trim() ? "hsl(215 35% 22%)" : "hsl(215 35% 16%)",
+                        border: "1px solid hsl(215 35% 28%)",
+                        color: newGalleryUrl.trim() ? "#fff" : "hsl(215 25% 45%)",
+                        fontSize: 12,
+                        fontWeight: 700,
+                        cursor: newGalleryUrl.trim() ? "pointer" : "not-allowed",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      + Add Photo
+                    </button>
+                  </div>
+                </div>
+
                 {/* Two-column fields */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                   <div>
                     <label style={labelStyle}>Project Title *</label>
-                    <input style={fieldStyle} value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} placeholder="e.g. Industrial Warehouse" />
+                    <input style={fieldStyle} value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} placeholder="e.g. Azad Engineering Aerospace" />
                   </div>
                   <div>
                     <label style={labelStyle}>Project Code *</label>
-                    <input style={fieldStyle} value={form.code} onChange={(e) => setForm((f) => ({ ...f, code: e.target.value }))} placeholder="e.g. WH-007" />
+                    <input style={fieldStyle} value={form.code} onChange={(e) => setForm((f) => ({ ...f, code: e.target.value }))} placeholder="e.g. AA / AERO-01" />
                   </div>
                 </div>
 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                   <div>
+                    <label style={labelStyle}>Client / Enterprise</label>
+                    <input style={fieldStyle} value={form.client} onChange={(e) => setForm((f) => ({ ...f, client: e.target.value }))} placeholder="e.g. Azad Engineering Limited" />
+                  </div>
+                  <div>
                     <label style={labelStyle}>Sector</label>
                     <select style={fieldStyle} value={form.sector} onChange={(e) => onSectorChange(e.target.value)}>
                       {SECTORS.map((s) => <option key={s} value={s}>{s}</option>)}
-                    </select>
-                  </div>
-                  <div>
-                    <label style={labelStyle}>Status</label>
-                    <select style={fieldStyle} value={form.status} onChange={(e) => setForm((f) => ({ ...f, status: e.target.value as "active" | "draft" }))}>
-                      <option value="active">Active (visible on site)</option>
-                      <option value="draft">Draft (hidden)</option>
                     </select>
                   </div>
                 </div>
@@ -406,11 +732,36 @@ export default function AdminProjectsPage() {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                   <div>
                     <label style={labelStyle}>Location</label>
-                    <input style={fieldStyle} value={form.location} onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))} placeholder="e.g. Hyderabad, Telangana" />
+                    <input style={fieldStyle} value={form.location} onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))} placeholder="e.g. Jeedimetla, Hyderabad" />
                   </div>
                   <div>
-                    <label style={labelStyle}>Area</label>
-                    <input style={fieldStyle} value={form.area} onChange={(e) => setForm((f) => ({ ...f, area: e.target.value }))} placeholder="e.g. 18,000 sq ft" />
+                    <label style={labelStyle}>Built-up Area</label>
+                    <input style={fieldStyle} value={form.area} onChange={(e) => setForm((f) => ({ ...f, area: e.target.value }))} placeholder="e.g. 65,000 Sq. Ft." />
+                  </div>
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                  <div>
+                    <label style={labelStyle}>Steel Tonnage</label>
+                    <input style={fieldStyle} value={form.tonnage} onChange={(e) => setForm((f) => ({ ...f, tonnage: e.target.value }))} placeholder="e.g. 620 MT" />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Execution Timeline</label>
+                    <input style={fieldStyle} value={form.timeline} onChange={(e) => setForm((f) => ({ ...f, timeline: e.target.value }))} placeholder="e.g. 48 Days" />
+                  </div>
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                  <div>
+                    <label style={labelStyle}>Year</label>
+                    <input style={fieldStyle} value={form.year} onChange={(e) => setForm((f) => ({ ...f, year: e.target.value }))} placeholder="e.g. 2023" />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>Status</label>
+                    <select style={fieldStyle} value={form.status} onChange={(e) => setForm((f) => ({ ...f, status: e.target.value as "active" | "draft" }))}>
+                      <option value="active">Active (visible on site)</option>
+                      <option value="draft">Draft (hidden)</option>
+                    </select>
                   </div>
                 </div>
 

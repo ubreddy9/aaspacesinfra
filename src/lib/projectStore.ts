@@ -56,9 +56,7 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
     image: '/assets/projects/azad-01.jpg',
     gallery: [
       '/assets/projects/azad-01.jpg',
-      '/assets/projects/azad-02.jpg',
-      '/assets/projects/project-photo-42-PM.jpeg',
-      '/assets/projects/project-photo-42-PM-(1).jpeg'
+      '/assets/projects/azad-02.jpg'
     ],
     status: 'active',
     is_default: true,
@@ -119,8 +117,7 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
       '/assets/projects/geekay-02.jpg',
       '/assets/projects/geekay-03.jpg',
       '/assets/projects/geekay-04.jpg',
-      '/assets/projects/geekay-05.jpg',
-      '/assets/projects/project-photo-44-PM.jpeg'
+      '/assets/projects/geekay-05.jpg'
     ],
     status: 'active',
     is_default: true,
@@ -148,8 +145,7 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
     image: '/assets/projects/reliance-01.jpg',
     gallery: [
       '/assets/projects/reliance-01.jpg',
-      '/assets/projects/reliance-02.jpg',
-      '/assets/projects/project-photo-43-PM.jpeg'
+      '/assets/projects/reliance-02.jpg'
     ],
     status: 'active',
     is_default: true,
@@ -173,12 +169,10 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
       'Integrated customized ventilation and acoustic thermal insulation for occupant comfort',
       'Delivered within tight schedules to meet client commercial event launch timelines'
     ],
-    image: '/assets/projects/ananda-01.jpg',
+    image: '/assets/projects/ananda-02.jpg',
     gallery: [
-      '/assets/projects/ananda-01.jpg',
       '/assets/projects/ananda-02.jpg',
-      '/assets/projects/ananda-03.jpg',
-      '/assets/projects/project-photo-44-PM-(1).jpeg'
+      '/assets/projects/ananda-03.jpg'
     ],
     status: 'active',
     is_default: true,
@@ -234,11 +228,7 @@ export const DEFAULT_PROJECTS_SEED: Omit<Project, 'id'>[] = [
     ],
     image: '/assets/projects/devi-01.jpg',
     gallery: [
-      '/assets/projects/devi-01.jpg',
-      '/assets/projects/project-photo-46-PM.jpeg',
-      '/assets/projects/project-photo-45-PM.jpeg',
-      '/assets/projects/project-photo-45-PM-(1).jpeg',
-      '/assets/projects/project-photo-45-PM-(2).jpeg'
+      '/assets/projects/devi-01.jpg'
     ],
     status: 'active',
     is_default: true,
@@ -495,6 +485,7 @@ export async function getProjects(): Promise<Project[]> {
       ...fb,
       ...(dbMatch || {}),
       ...(localEdit || {}),
+      image: localEdit?.image || dbMatch?.image || fb.image,
       client: localEdit?.client || dbMatch?.client || fb.client,
       tonnage: localEdit?.tonnage || dbMatch?.tonnage || fb.tonnage,
       timeline: localEdit?.timeline || dbMatch?.timeline || fb.timeline,
@@ -504,8 +495,9 @@ export async function getProjects(): Promise<Project[]> {
           ? dbMatch.highlights
           : fb.highlights),
       gallery:
-        localEdit?.gallery ||
-        (dbMatch?.gallery && dbMatch.gallery.length > 0 ? dbMatch.gallery : fb.gallery),
+        localEdit?.gallery !== undefined
+          ? localEdit.gallery
+          : (dbMatch?.gallery && dbMatch.gallery.length > 0 ? dbMatch.gallery : fb.gallery),
     };
   });
 
@@ -566,6 +558,12 @@ export async function uploadProjectImage(
 
 // ─── WRITE ──────────────────────────────────────────────────────────────────
 
+function notifyProjectsChanged() {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('projects-updated'));
+  }
+}
+
 export type ProjectInput = Omit<Project, 'id' | 'created_at' | 'updated_at'>;
 
 export async function addProject(data: ProjectInput): Promise<Project> {
@@ -587,6 +585,7 @@ export async function addProject(data: ProjectInput): Promise<Project> {
       .maybeSingle();
 
     if (!error && row) {
+      notifyProjectsChanged();
       return row as Project;
     }
   } catch (err) {
@@ -601,6 +600,7 @@ export async function addProject(data: ProjectInput): Promise<Project> {
     updated_at: new Date().toISOString(),
   };
   saveCustomProject(localProject);
+  notifyProjectsChanged();
   return localProject;
 }
 
@@ -610,8 +610,9 @@ export async function updateProject(
 ): Promise<Project> {
   saveEditedOverride(id, data);
 
-  // If valid UUID, attempt to update in Supabase
-  if (isUuid(id)) {
+  // If valid UUID and not a synthetic seed UUID, attempt to update in Supabase
+  const isSeedId = SEED_UUIDS.includes(id);
+  if (isUuid(id) && !isSeedId) {
     try {
       const { data: row } = await supabase
         .from('projects')
@@ -620,13 +621,17 @@ export async function updateProject(
         .select()
         .maybeSingle();
 
-      if (row) return row as Project;
+      if (row) {
+        notifyProjectsChanged();
+        return row as Project;
+      }
     } catch (err) {
       console.warn('Supabase update warning:', err);
     }
   }
 
   const all = await getProjects();
+  notifyProjectsChanged();
   const found = all.find((p) => p.id === id);
   if (found) return { ...found, ...data };
 
@@ -646,8 +651,8 @@ export async function deleteProject(id: string): Promise<void> {
     addDeletedId(seed.id);
   }
 
-  // Only send to Supabase if valid UUID to avoid Postgres "invalid input syntax for type uuid" error
-  if (isUuid(id)) {
+  // Only send to Supabase if valid custom UUID to avoid unnecessary requests for client seed projects
+  if (isUuid(id) && !SEED_UUIDS.includes(id)) {
     try {
       const { error } = await supabase.from('projects').delete().eq('id', id);
       if (error && error.code !== 'PGRST116') {
@@ -657,6 +662,7 @@ export async function deleteProject(id: string): Promise<void> {
       console.warn('Supabase delete error:', err);
     }
   }
+  notifyProjectsChanged();
 }
 
 export async function seedDefaultProjects(): Promise<string> {
@@ -668,6 +674,7 @@ export async function seedDefaultProjects(): Promise<string> {
     }
   } catch {}
 
+  notifyProjectsChanged();
   return `Reset and restored all ${FALLBACK_PROJECTS.length} verified projects.`;
 }
 

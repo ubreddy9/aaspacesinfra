@@ -863,6 +863,23 @@ export default function HomePage() {
           </div>
         </section>
       </main>
+
+      {/* Elevated Project Detail Modal */}
+      <ProjectDetailModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+        onRequestQuote={(p) => {
+          setQuoteBaseline(p || null);
+          setIsQuoteOpen(true);
+        }}
+      />
+
+      {/* Interactive PEB Project Estimation Modal */}
+      <QuoteModal
+        isOpen={isQuoteOpen}
+        onClose={() => setIsQuoteOpen(false)}
+        initialProject={quoteBaseline}
+      />
     </>
   );
 }

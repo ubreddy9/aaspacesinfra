@@ -1,18 +1,40 @@
 import { Link, useLocation } from "react-router";
 import { ArrowUpRight, Menu, X, Shield, Phone, Mail, MapPin, Globe } from "lucide-react";
 import { useEffect, useState } from "react";
-
-const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "Company Profile" },
-  { href: "/capabilities", label: "Capabilities & Plant" },
-  { href: "/projects", label: "Projects Delivered", badge: "11" },
-];
+import { getActiveProjects } from "@/lib/projectStore";
 
 export default function Header() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [projectCount, setProjectCount] = useState<number>(11);
+
+  useEffect(() => {
+    function syncProjectCount() {
+      getActiveProjects()
+        .then((list) => {
+          if (typeof list?.length === "number") {
+            setProjectCount(list.length);
+          }
+        })
+        .catch(() => {});
+    }
+
+    syncProjectCount();
+    window.addEventListener("projects-updated", syncProjectCount);
+    window.addEventListener("storage", syncProjectCount);
+    return () => {
+      window.removeEventListener("projects-updated", syncProjectCount);
+      window.removeEventListener("storage", syncProjectCount);
+    };
+  }, [location.pathname]);
+
+  const navItems = [
+    { href: "/", label: "Home" },
+    { href: "/about", label: "Company Profile" },
+    { href: "/capabilities", label: "Capabilities & Plant" },
+    { href: "/projects", label: "Projects Delivered", badge: String(projectCount) },
+  ];
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
