@@ -413,7 +413,7 @@ export default function ClientsSection({ onOpenQuote }: { onOpenQuote?: () => vo
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "hsl(180 20% 88%)" }}>
                   <CheckCircle2 size={15} color="hsl(42 54% 74%)" style={{ flexShrink: 0 }} />
-                  <span>100% In-House Medak Plant Fabrication QA</span>
+                  <span>100% In-House Shadnagar Plant Fabrication QA</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "hsl(180 20% 88%)" }}>
                   <CheckCircle2 size={15} color="hsl(42 54% 74%)" style={{ flexShrink: 0 }} />

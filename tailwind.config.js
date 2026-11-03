@@ -61,6 +61,17 @@ export default {
   			info: {
   				DEFAULT: 'hsl(var(--info))',
   				foreground: 'hsl(var(--info-foreground))'
+  			},
+  			pebsol: {
+  				navy: '#0f2b48',
+  				navyLight: '#1a3d66',
+  				navyDark: '#081a2e',
+  				surface: '#ffffff',
+  				slate: '#f8fafc',
+  				card: '#ffffff',
+  				border: '#e2e8f0',
+  				textDark: '#0f172a',
+  				textMuted: '#64748b'
   			}
   		},
   		borderRadius: {
@@ -69,8 +80,10 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
 		fontFamily: {
-			sans: ['var(--font-sans)'],
-			heading: ['var(--font-heading)'],
+			sans: ['Inter', 'Space Grotesk', 'system-ui', 'sans-serif'],
+			heading: ['Barlow', 'Sora', 'sans-serif'],
+			barlow: ['Barlow', 'sans-serif'],
+			inter: ['Inter', 'sans-serif'],
 			serif: ['var(--font-serif)'],
 			mono: ['var(--font-mono)']
 		},

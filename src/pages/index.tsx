@@ -1,22 +1,34 @@
 import { Helmet } from "@dr.pogodin/react-helmet";
-import { ArrowRight, ArrowUpRight, CheckCircle2, ChevronRight, MapPin, Star, Building2, Factory, Clock, ShieldCheck, Award, Camera } from "lucide-react";
-import { motion, useScroll, useTransform } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { 
+  Building2, 
+  Factory, 
+  Clock, 
+  ShieldCheck, 
+  Award, 
+  ArrowRight, 
+  ArrowUpRight, 
+  CheckCircle2, 
+  Check, 
+  MapPin, 
+  Camera, 
+  ChevronRight,
+  Layers,
+  Wrench,
+  Compass
+} from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { home } from "virtual:content";
-import AnimatedCounter from "@/components/AnimatedCounter";
 import ClientsSection from "@/components/ClientsSection";
+import TeamSection from "@/components/TeamSection";
 import ProjectDetailModal from "@/components/ProjectDetailModal";
 import QuoteModal from "@/components/QuoteModal";
 import { getActiveProjects, type Project } from "@/lib/projectStore";
 
 const site = "https://aaspacesinfra.com";
 const url = `${site}/`;
-const title = "Pre-Engineered Building Solutions | AA Spaces Infra";
-const description = "AA Spaces delivers precision-engineered steel building solutions for warehouse, industrial, commercial, and hospitality projects across India.";
+const title = "AA Spaces | Pre-Engineered Buildings — Engineered to Strength";
+const description = "AA Spaces delivers precision-engineered Pre-Engineered Steel Buildings (PEB), industrial manufacturing plants, clear-span pavilions, and warehouse logistics hubs across India with an automated plant at Shadnagar, Telangana.";
 
-
-// Comprehensive Schema.org JSON-LD for Google Knowledge Graph & Local SEO
 const orgJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -26,20 +38,15 @@ const orgJsonLd = {
       name: "AA Spaces Infra",
       alternateName: "AA Spaces Infra Projects",
       url: "https://aaspacesinfra.com",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://aaspacesinfra.com/assets/brand/logo.png",
-        width: 1063,
-        height: 508,
-      },
-      image: "https://aaspacesinfra.com/assets/brand/logo.png",
-      description: "Leading Pre-Engineered Building (PEB) design-build and turnkey structural steel infrastructure organization in Hyderabad, Telangana. Specializing in warehouse hubs, industrial manufacturing plants, clear-span pavilions, and commercial frames.",
+      logo: "https://aaspacesinfra.com/assets/brand/logo.png",
+      image: "https://aaspacesinfra.com/assets/factory/shadnagar-plant-aerial.jpg",
+      description: "Leading Pre-Engineered Building (PEB) design-build and turnkey structural steel infrastructure organization. 4-Acre automated manufacturing plant in Shadnagar, Telangana and Corporate Office at HITEX / Shilpa Layout, Hyderabad.",
       telephone: "+91-9542445555",
       email: "info@aaspacesinfra.com",
       priceRange: "$$$",
       address: {
         "@type": "PostalAddress",
-        streetAddress: "Cyber Elite Suites, Near HITEX Exhibition Center & Shilpa Layout, HITEC City",
+        streetAddress: "301, 3rd Floor, Cyber Elite Suites, near HITEX Exhibition Center & Shilpa Layout, Izzathnagar",
         addressLocality: "Hyderabad",
         addressRegion: "Telangana",
         postalCode: "500084",
@@ -49,78 +56,81 @@ const orgJsonLd = {
         "@type": "GeoCoordinates",
         latitude: "17.4716",
         longitude: "78.3756",
-      },
-      areaServed: [
-        { "@type": "AdministrativeArea", name: "Telangana" },
-        { "@type": "AdministrativeArea", name: "Andhra Pradesh" },
-        { "@type": "Country", name: "India" }
-      ],
-      founder: [
-        {
-          "@type": "Person",
-          name: "Mr. B. Upender Reddy",
-          jobTitle: "Managing Director"
-        },
-        {
-          "@type": "Person",
-          name: "Mr. Ch. Gangadhar",
-          jobTitle: "Executive Director"
-        }
-      ],
-      hasOfferCatalog: {
-        "@type": "OfferCatalog",
-        name: "PEB Infrastructure Services",
-        itemListElement: [
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Pre-Engineered Building (PEB) Turnkey Construction" } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Industrial Steel Warehouses & Logistics Hubs" } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Aerospace & Heavy Manufacturing Sheds" } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Clear-Span Grand Convention Pavilions" } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Multi-Storey Commercial Steel Frameworks" } }
-        ]
       }
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://aaspacesinfra.com/#website",
-      url: "https://aaspacesinfra.com",
-      name: "AA Spaces Infra",
-      publisher: { "@id": "https://aaspacesinfra.com/#organization" }
     }
   ]
 };
-const reveal = {
-  initial: { opacity: 0, y: 28 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.12 },
-  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-};
-
-const stats = [
-  { value: 12, display: "1.2M+ sq.ft", label: "Annual PEB Execution", sub: "Warehousing & Industrial Sheds", icon: Building2 },
-  { value: 80, display: "80,000 sq.ft", label: "Medak Fabrication Plant", sub: "Automated SAW & Roll-Forming", icon: Factory },
-  { value: 48, display: "48 Days", label: "Record Turnkey Delivery", sub: "Azad Aerospace Facility", icon: Clock },
-  { value: 15, display: "15+ Years", label: "Structural Leadership", sub: "Senior PEB Leadership • 100% In-House QA", icon: ShieldCheck },
-];
-
-const trustMarquee = [
-  "IS:800 Certified", "Earthquake Resistant", "Wind Rated Design", "Fast Erection",
-  "Clear-Span Frames", "Crane-Ready Bays", "Energy Efficient Cladding", "Turnkey Delivery",
-  "IS:800 Certified", "Earthquake Resistant", "Wind Rated Design", "Fast Erection",
-  "Clear-Span Frames", "Crane-Ready Bays", "Energy Efficient Cladding", "Turnkey Delivery",
-];
 
 export default function HomePage() {
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.2]);
-    const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [quoteBaseline, setQuoteBaseline] = useState<Project | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
   useEffect(() => {
     getActiveProjects().then((list) => setProjects(list.slice(0, 6)));
   }, []);
+
+  // Exact Pebsol Projects style hero carousel with authentic AA Spaces photos
+  const slides = [
+    {
+      title: "PEB- ENGINEERED TO STRENGTH",
+      subtitle: "Turnkey Pre-Engineered Steel Buildings & Infrastructure Delivered Across India",
+      desc: "Complete end-to-end design-build solutions under one roof. From structural Tekla 3D detailing to automated submerged arc welding at our Shadnagar manufacturing plant and rapid on-site erection.",
+      image: "/assets/factory/shadnagar-plant-aerial.jpg",
+      tag: "PRE-ENGINEERED STEEL BUILDINGS"
+    },
+    {
+      title: "SHADNAGAR HEAVY MANUFACTURING PLANT",
+      subtitle: "4-Acre Industrial Campus • Automated SAW Welding & Continuous Roll-Forming",
+      desc: "Equipped with high-capacity portal welding lines, 30T heavy gantry bays, CNC beam drilling, and expansive raw steel staging yards engineered for multi-thousand MT annual production.",
+      image: "/assets/factory/shadnagar-plant-front.jpg",
+      tag: "STATE-OF-THE-ART MANUFACTURING"
+    },
+    {
+      title: "RECORD-SPEED TURNKEY EXECUTION",
+      subtitle: "65,000 Sq.Ft Aerospace Facility Delivered in Just 48 Days",
+      desc: "Proven execution across demanding aerospace tolerances (Azad Engineering), 2.5L sq.ft heavy steel plants (Shri Raj Udyog), tight night-shift logistics (Reliance Retail), and clear-span convention centers.",
+      image: "/assets/projects/sri-raj-01.jpg",
+      tag: "PROVEN TRACK RECORD"
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 6500);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  const testimonials = [
+    {
+      client: "Azad Engineering Limited",
+      role: "Head of Operations",
+      quote: "We are thoroughly impressed with AA Spaces' ability to deliver our 65,000 sq.ft aerospace manufacturing facility within just 48 days. From foundation civil works to final PEB structure, their team ensured flawless execution while adhering to our stringent aerospace tolerances."
+    },
+    {
+      client: "Reliance Retail",
+      role: "Senior Project Manager",
+      quote: "Executing a project adjacent to the temple in a bustling market zone under night-only work constraints was no small feat. AA Spaces' planning, structural detailing & professionalism helped us complete the project on time without disrupting daily pilgrimage activity."
+    },
+    {
+      client: "Geekay Wires Limited",
+      role: "Head of Plant Operations",
+      quote: "From prefab structural design to turnkey execution, AA Spaces delivered everything ahead of schedule. Their automated fabrication quality and heavy crane gantry integration were outstanding."
+    },
+    {
+      client: "Shri Raj Udyog Pvt Ltd",
+      role: "Managing Director",
+      quote: "AA Spaces is an exceptional partner for massive industrial manufacturing sheds. Their engineering quality across our 250,000 sq.ft integrated steel plant, erection speed, and post-completion service are unmatched."
+    },
+    {
+      client: "Ananda Convention Center",
+      role: "Executive Director",
+      quote: "AA Spaces delivered a top-class structure that perfectly balances column-free functionality with architectural elegance for our grand convention hall. The team's attention to detail made the entire handover smooth and stress-free."
+    }
+  ];
 
   return (
     <>
@@ -132,733 +142,508 @@ export default function HomePage() {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={url} />
-        <meta property="og:image" content="https://aaspacesinfra.com/assets/brand/logo.png" />
-        <meta property="og:image:width" content="1063" />
-        <meta property="og:image:height" content="508" />
+        <meta property="og:image" content="https://aaspacesinfra.com/assets/factory/shadnagar-plant-aerial.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content="https://aaspacesinfra.com/assets/brand/logo.png" />
-        <script type="application/ld+json">{JSON.stringify(orgJsonLd).replace(/</g, "\u003c")}</script>
+        <meta name="twitter:image" content="https://aaspacesinfra.com/assets/factory/shadnagar-plant-aerial.jpg" />
+        <script type="application/ld+json">{JSON.stringify(orgJsonLd).replace(/</g, "\\u003c")}</script>
       </Helmet>
-      <main>
-        {/* HERO */}
-        <section ref={heroRef} style={{ position: "relative", minHeight: "94vh", overflow: "hidden", display: "flex", alignItems: "center", background: "hsl(215 40% 7%)" }}>
-          {/* Parallax image */}
-          <motion.div style={{ y: heroY, opacity: heroOpacity, position: "absolute", inset: 0 }}>
-            <img
-              src="/airo-assets/images/pages/home/hero"
-              alt="Pre-engineered steel warehouse"
-              width={1920} height={1080}
-              loading="eager" fetchPriority="high"
-              style={{ width: "100%", height: "115%", objectFit: "cover", objectPosition: "center" }}
-            />
-            {/* Gradient overlays */}
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(105deg, hsl(215 40% 7% / 0.96) 0%, hsl(215 40% 7% / 0.72) 45%, hsl(215 40% 7% / 0.35) 100%)" }} />
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, hsl(215 40% 7%) 0%, transparent 55%)" }} />
-          </motion.div>
 
-          {/* Amber accent glow in BG */}
-          <div style={{ position: "absolute", top: "30%", left: "5%", width: 500, height: 400, borderRadius: "50%", background: "radial-gradient(ellipse, hsl(28 95% 52% / 0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <main className="w-full bg-white text-slate-800 font-sans">
+        {/* ─── HERO SECTION (Pebsol Projects Layout) ───────────────── */}
+        <section className="relative min-h-[580px] lg:h-[650px] bg-slate-900 overflow-hidden text-white flex items-center">
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+              }`}
+            >
+              <img
+                src={slide.image}
+                alt={slide.title}
+                className="w-full h-full object-cover object-center filter brightness-[0.38] scale-100 transition-transform duration-10000"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0f2b48]/95 via-[#0f2b48]/70 to-transparent" />
+            </div>
+          ))}
 
-          {/* Content */}
-          <div className="site-container" style={{ position: "relative", zIndex: 1 }}>
-            <div style={{ maxWidth: 760 }}>
-              {/* Badge */}
-              <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }}>
-                <span style={{
-                  display: "inline-flex", alignItems: "center", gap: 7,
-                  padding: "6px 14px", borderRadius: 999,
-                  background: "hsl(28 95% 52% / 0.12)",
-                  border: "1px solid hsl(28 95% 52% / 0.3)",
-                  fontSize: 11.5, fontWeight: 700, letterSpacing: "0.1em",
-                  textTransform: "uppercase", color: "hsl(42 54% 74%)",
-                  marginBottom: 28, fontFamily: '"Space Grotesk", sans-serif',
-                }}>
-                  <Star size={11} fill="hsl(28 95% 62%)" />
-                  India&apos;s Trusted PEB Partner
-                </span>
-              </motion.div>
+          <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+            <div className="max-w-2xl space-y-6">
+              
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/40 text-blue-300 text-xs font-bold uppercase tracking-wider">
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
+                <span>{slides[currentSlide].tag}</span>
+              </div>
 
-              {/* H1 */}
-              <motion.h1
-                initial={{ opacity: 0, y: 32 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.75, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                style={{
-                  fontFamily: '"Sora", sans-serif',
-                  fontWeight: 800,
-                  fontSize: "clamp(2rem, 5.5vw, 4.8rem)",
-                  lineHeight: 1.08,
-                  letterSpacing: "-0.03em",
-                  color: "#ffffff",
-                  marginBottom: 28,
-                }}
-              >
-                {home.hero.title}
-              </motion.h1>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-['Barlow'] leading-tight tracking-tight text-white uppercase">
+                {slides[currentSlide].title}
+              </h1>
 
-              {/* Description */}
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                style={{ fontSize: "clamp(1rem, 1.3vw, 1.15rem)", lineHeight: 1.8, color: "hsl(215 20% 65%)", maxWidth: 580, marginBottom: 44 }}
-              >
-                {home.hero.description}
-              </motion.p>
+              <p className="text-xl sm:text-2xl text-blue-300 font-semibold font-['Barlow']">
+                {slides[currentSlide].subtitle}
+              </p>
 
-              {/* CTAs */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.65 }}
-                style={{ display: "flex", flexWrap: "wrap", gap: 14 }}
-              >
+              <p className="text-slate-200 text-sm sm:text-base leading-relaxed max-w-xl">
+                {slides[currentSlide].desc}
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 pt-2">
                 <button
                   type="button"
                   onClick={() => setIsQuoteOpen(true)}
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: 8,
-                    padding: "14px 30px", borderRadius: 10, border: "none", cursor: "pointer",
-                    background: "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)", color: "hsl(194 65% 15%)", fontSize: 14, fontWeight: 700,
-                    textDecoration: "none", letterSpacing: "0.01em",
-                    transition: "all 0.25s",
-                    boxShadow: "0 4px 24px hsl(42 54% 74% / 0.35)",
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = "linear-gradient(135deg, hsl(42 54% 78%) 0%, hsl(42 50% 68%) 100%)"; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 32px hsl(28 95% 52% / 0.55)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 24px hsl(28 95% 52% / 0.45)"; }}
+                  className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-7 py-3.5 rounded-lg text-sm shadow-md transition-all flex items-center space-x-2 active:scale-95 cursor-pointer border-none"
                 >
-                  {home.hero.cta} <ArrowUpRight size={16} />
+                  <span>Get In Touch</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
+
                 <Link
                   to="/projects"
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: 8,
-                    padding: "14px 28px", borderRadius: 10,
-                    background: "hsl(194 60% 16% / 0.8)", border: "1px solid hsl(179 38% 75% / 0.3)", color: "hsl(180 20% 92%)", fontSize: 14, fontWeight: 600,
-                    textDecoration: "none",
-                    transition: "all 0.25s",
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = "hsl(215 40% 22%)"; e.currentTarget.style.borderColor = "hsl(215 35% 35%)"; e.currentTarget.style.color = "#fff"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = "hsl(215 40% 18%)"; e.currentTarget.style.borderColor = "hsl(215 35% 28%)"; e.currentTarget.style.color = "hsl(215 15% 85%)"; }}
+                  className="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-3.5 rounded-lg text-sm border border-white/20 transition-all flex items-center space-x-2 no-underline"
                 >
-                  View Projects <ArrowRight size={16} />
+                  <span>Projects Delivered</span>
                 </Link>
-              </motion.div>
+              </div>
+
             </div>
-
-            {/* Rail trust pills */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.85 }}
-              style={{ marginTop: "clamp(32px, 6vh, 48px)", display: "flex", flexWrap: "wrap", gap: 8 }}
-            >
-              {home.hero.rail.map((item: string) => (
-                <span key={item} style={{
-                  display: "inline-flex", alignItems: "center", gap: 6,
-                  padding: "7px 14px", borderRadius: 8,
-                  background: "hsl(215 40% 13%)",
-                  border: "1px solid hsl(215 35% 22%)",
-                  fontSize: 11.5, fontWeight: 600, color: "hsl(215 20% 68%)",
-                  fontFamily: '"Space Grotesk", sans-serif',
-                }}>
-                  <CheckCircle2 size={11} color="hsl(28 95% 55%)" />
-                  {item}
-                </span>
-              ))}
-            </motion.div>
           </div>
-        </section>
 
-        {/* MARQUEE */}
-        <div style={{ background: "hsl(194 60% 12%)", borderTop: "1px solid hsl(179 38% 75% / 0.15)", borderBottom: "1px solid hsl(179 38% 75% / 0.15)", padding: "13px 0", overflow: "hidden" }}>
-          <div className="marquee-track">
-            {trustMarquee.map((item, i) => (
-              <span key={i} style={{ padding: "0 32px", fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: i % 2 === 0 ? "hsl(42 54% 74%)" : "hsl(180 20% 45%)", whiteSpace: "nowrap" }}>
-                {i % 2 === 0 && <span style={{ width: 5, height: 5, borderRadius: "50%", background: "hsl(42 54% 74%)", display: "inline-block", marginRight: 8 }} />}{item}
-              </span>
+          {/* Slide Indicators */}
+          <div className="absolute bottom-6 right-8 z-30 flex items-center space-x-2">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setCurrentSlide(idx)}
+                className={`h-2 rounded-full transition-all duration-300 cursor-pointer border-none ${
+                  currentSlide === idx ? "w-8 bg-blue-500" : "w-2.5 bg-white/40 hover:bg-white/70"
+                }`}
+                aria-label={`Slide ${idx + 1}`}
+              />
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* SECTORS */}
-        <section style={{ background: "hsl(210 20% 97%)", padding: "88px 0" }}>
-          <div className="site-container">
-            <motion.div {...reveal} style={{ marginBottom: 56 }}>
-              <p style={{ fontSize: 11, fontWeight: 700, color: "hsl(194 68% 23%)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 14, fontFamily: '"Space Grotesk", sans-serif' }}>
-                What We Build
-              </p>
-              <h2 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: "clamp(2rem, 3.5vw, 3.2rem)", lineHeight: 1.05, letterSpacing: "-0.03em", color: "hsl(215 35% 12%)", maxWidth: 600 }}>
-                Practical building systems. Clear project thinking.
-              </h2>
-            </motion.div>
+        {/* ─── METRICS BANNER (PebSol Projects Benchmarks) ─────────── */}
+        <section className="bg-slate-50 border-b border-slate-200 py-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-slate-200">
+              
+              <div className="pt-2 md:pt-0">
+                <div className="text-3xl sm:text-4xl font-black text-[#0f2b48] font-['Barlow']">
+                  1.2M+ sq.ft
+                </div>
+                <div className="text-xs uppercase tracking-wider text-slate-500 font-bold mt-1">
+                  PEB Projects Executed Annually
+                </div>
+              </div>
 
-            <div className="responsive-grid-cards">
-              {home.sectors.map((sector: { number: string; name: string; detail: string }, i: number) => (
-                <motion.article
-                  {...reveal}
-                  transition={{ ...reveal.transition, delay: i * 0.1 }}
-                  key={sector.number}
-                  className="glass-card interactive-card"
-                  style={{ padding: "32px" }}
-                  whileHover={{ y: -4, transition: { duration: 0.25 } }}
-                >
-                  {/* Number badge */}
-                  <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 40, height: 40, borderRadius: 10, background: "hsl(194 65% 23% / 0.08)", border: "1px solid hsl(179 38% 75% / 0.3)", marginBottom: 22 }}>
-                    <span style={{ fontSize: 13, fontWeight: 800, color: "hsl(194 68% 23%)", fontFamily: '"Sora", sans-serif' }}>{sector.number}</span>
+              <div className="pt-2 md:pt-0">
+                <div className="text-3xl sm:text-4xl font-black text-blue-600 font-['Barlow']">
+                  4-Acre Plant
+                </div>
+                <div className="text-xs uppercase tracking-wider text-slate-500 font-bold mt-1">
+                  Shadnagar Manufacturing Campus
+                </div>
+              </div>
+
+              <div className="pt-2 md:pt-0">
+                <div className="text-3xl sm:text-4xl font-black text-[#0f2b48] font-['Barlow']">
+                  48 Days
+                </div>
+                <div className="text-xs uppercase tracking-wider text-slate-500 font-bold mt-1">
+                  Record Turnkey Delivery (Azad Aero)
+                </div>
+              </div>
+
+              <div className="pt-2 md:pt-0">
+                <div className="text-3xl sm:text-4xl font-black text-blue-600 font-['Barlow']">
+                  15+ Years
+                </div>
+                <div className="text-xs uppercase tracking-wider text-slate-500 font-bold mt-1">
+                  Structural Steel Leadership
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* ─── SHADNAGAR MANUFACTURING CAMPUS SHOWCASE ─────────────── */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              
+              <div className="space-y-6">
+                <span className="text-blue-700 font-bold text-xs uppercase tracking-wider bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+                  Heavy Industrial Infrastructure
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0f2b48] font-['Barlow'] uppercase">
+                  Manufacturing Plant at Shadnagar, Telangana
+                </h2>
+                <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
+                  At <strong>AA Spaces</strong>, we don’t just erect buildings — we manufacture precision structural steel from first principles. Our <strong>4-acre heavy manufacturing campus in Shadnagar, Telangana</strong> operates automated submerged arc welding lines, heavy plate cutting bays, and continuous cold roll-forming purlin machines.
+                </p>
+                <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
+                  From foundation civil design and Tekla 3D BIM structural modeling to automated factory fabrication and certified site erection, our integrated model guarantees maximum speed, structural safety, and uncompromised quality.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  <div className="flex items-center space-x-2 text-sm text-slate-700 font-semibold">
+                    <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
+                    <span>Automated Submerged Arc Welding (SAW)</span>
                   </div>
-                  <h3 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 700, fontSize: "1.25rem", letterSpacing: "-0.02em", color: "hsl(215 35% 12%)", marginBottom: 12 }}>{sector.name}</h3>
-                  <p style={{ fontSize: 14, lineHeight: 1.75, color: "hsl(215 15% 48%)", marginBottom: 22 }}>{sector.detail}</p>
-                  <Link to="/capabilities" style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 13, fontWeight: 700, color: "hsl(194 68% 28%)", textDecoration: "none" }}>
-                    Explore <ChevronRight size={14} />
+                  <div className="flex items-center space-x-2 text-sm text-slate-700 font-semibold">
+                    <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
+                    <span>345 MPa Galvanized C &amp; Z Purlins</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-sm text-slate-700 font-semibold">
+                    <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
+                    <span>30T Heavy Gantry Crane Bays</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-sm text-slate-700 font-semibold">
+                    <CheckCircle2 className="w-5 h-5 text-blue-600 shrink-0" />
+                    <span>Tekla 3D Detailing &amp; Ultrasonic QA</span>
+                  </div>
+                </div>
+
+                <div className="pt-2 flex items-center space-x-4">
+                  <Link
+                    to="/capabilities"
+                    className="bg-[#0f2b48] hover:bg-[#1a3d66] text-white font-bold px-6 py-3 rounded-lg text-sm transition-all inline-flex items-center space-x-2 no-underline"
+                  >
+                    <span>Explore Plant Capabilities</span>
+                    <ArrowRight className="w-4 h-4" />
                   </Link>
-                </motion.article>
-              ))}
-
-              {/* CTA card */}
-              <motion.article
-                {...reveal}
-                transition={{ ...reveal.transition, delay: home.sectors.length * 0.1 }}
-                style={{ padding: "32px", borderRadius: 16, background: "linear-gradient(135deg, hsl(194 68% 23%) 0%, hsl(194 60% 14%) 100%)", border: "1px solid hsl(179 38% 75% / 0.25)", position: "relative", overflow: "hidden" }}
-                whileHover={{ y: -4, transition: { duration: 0.25 } }}
-              >
-                <div className="stripe-accent" style={{ position: "absolute", inset: 0, borderRadius: "inherit" }} />
-                <div style={{ position: "relative", zIndex: 1 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 10, background: "hsl(42 54% 74% / 0.2)", border: "1px solid hsl(42 54% 74% / 0.4)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 22 }}>
-                    <ArrowUpRight size={18} color="hsl(28 95% 62%)" />
-                  </div>
-                  <p style={{ fontSize: 11, fontWeight: 700, color: "hsl(42 54% 74%)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 10, fontFamily: '"Space Grotesk", sans-serif' }}>From brief to build</p>
-                  <h3 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 700, fontSize: "1.25rem", color: "#fff", letterSpacing: "-0.02em", marginBottom: 10 }}>Coordinated approach for every stage.</h3>
-                  <Link to="/proposal" style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 13, fontWeight: 700, color: "hsl(42 54% 74%)", textDecoration: "none", marginTop: 8 }}>
-                    Start conversation <ArrowUpRight size={14} />
+                  <Link
+                    to="/about"
+                    className="text-slate-600 hover:text-[#0f2b48] font-semibold text-sm inline-flex items-center space-x-1 no-underline"
+                  >
+                    <span>Company Profile &rarr;</span>
                   </Link>
                 </div>
-              </motion.article>
-            </div>
-          </div>
-        </section>
-
-        {/* METRICS & BENCHMARKS (Authentic PEB Execution) */}
-        <section style={{ background: "hsl(194 65% 10%)", padding: "72px 0", position: "relative", borderTop: "1px solid hsl(179 38% 75% / 0.15)", borderBottom: "1px solid hsl(179 38% 75% / 0.15)" }}>
-          <div className="steel-grid" style={{ position: "absolute", inset: 0, opacity: 0.1, pointerEvents: "none" }} />
-          <div className="site-container" style={{ position: "relative", zIndex: 1 }}>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-                gap: 20,
-              }}
-            >
-              {stats.map((s, i) => {
-                const IconComponent = s.icon;
-                return (
-                  <motion.div
-                    {...reveal}
-                    transition={{ ...reveal.transition, delay: i * 0.1 }}
-                    key={s.label}
-                    style={{
-                      background: "hsl(194 60% 13% / 0.9)",
-                      border: "1px solid hsl(179 38% 75% / 0.2)",
-                      borderRadius: 16,
-                      padding: "28px 24px",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      justifyContent: "space-between",
-                      backdropFilter: "blur(12px)",
-                      transition: "all 0.25s ease",
-                      position: "relative",
-                      overflow: "hidden",
-                    }}
-                    whileHover={{ y: -3, borderColor: "hsl(42 54% 74% / 0.5)" }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: 20 }}>
-                      <div
-                        style={{
-                          width: 42,
-                          height: 42,
-                          borderRadius: 10,
-                          background: "hsl(42 54% 74% / 0.14)",
-                          border: "1px solid hsl(42 54% 74% / 0.35)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <IconComponent size={20} color="hsl(42 54% 74%)" />
-                      </div>
-                      <span
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 700,
-                          letterSpacing: "0.12em",
-                          textTransform: "uppercase",
-                          color: "hsl(42 54% 74%)",
-                          background: "hsl(42 54% 74% / 0.08)",
-                          padding: "3px 8px",
-                          borderRadius: 6,
-                          fontFamily: '"Space Grotesk", sans-serif',
-                        }}
-                      >
-                        PEB Benchmark
-                      </span>
-                    </div>
-
-                    <div style={{ marginBottom: 8 }}>
-                      <span
-                        style={{
-                          fontFamily: '"Sora", sans-serif',
-                          fontWeight: 800,
-                          fontSize: "clamp(2rem, 3.2vw, 2.7rem)",
-                          lineHeight: 1.05,
-                          color: "#ffffff",
-                          letterSpacing: "-0.03em",
-                          display: "block",
-                        }}
-                      >
-                        {s.display}
-                      </span>
-                    </div>
-
-                    <p
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 700,
-                        color: "hsl(42 54% 74%)",
-                        letterSpacing: "-0.01em",
-                        marginBottom: 4,
-                        fontFamily: '"Sora", sans-serif',
-                      }}
-                    >
-                      {s.label}
-                    </p>
-
-                    <p style={{ fontSize: 12, lineHeight: 1.5, color: "hsl(180 20% 70%)" }}>
-                      {s.sub}
-                    </p>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* APPROACH / PROCESS */}
-        <section style={{ background: "hsl(210 20% 97%)", padding: "88px 0" }}>
-          <div className="site-container">
-            <div className="responsive-grid-2" style={{ alignItems: "start" }}>
-              <motion.div {...reveal}>
-                <p style={{ fontSize: 11, fontWeight: 700, color: "hsl(194 68% 23%)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 14, fontFamily: '"Space Grotesk", sans-serif' }}>{home.approach.eyebrow}</p>
-                <h2 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: "clamp(1.9rem, 3vw, 2.8rem)", letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: 20, color: "hsl(215 35% 12%)" }}>{home.approach.title}</h2>
-                <p style={{ fontSize: 15, lineHeight: 1.8, color: "hsl(215 15% 45%)", marginBottom: 32 }}>
-                  Our delivery approach connects every stage &mdash; from the initial brief to the completed structure &mdash; with one coordinated team.
-                </p>
-                <Link
-                  to="/capabilities"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", borderRadius: 9, background: "hsl(215 72% 18%)", color: "#fff", fontSize: 13.5, fontWeight: 700, textDecoration: "none", transition: "all 0.2s" }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = "hsl(215 72% 22%)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = "hsl(215 72% 18%)"; e.currentTarget.style.transform = "translateY(0)"; }}
-                >
-                  How we work <ArrowRight size={15} />
-                </Link>
-              </motion.div>
-
-              <ol style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                {home.approach.steps.map((step: { number: string; title: string; text: string }, i: number) => (
-                  <motion.li
-                    {...reveal}
-                    transition={{ ...reveal.transition, delay: i * 0.12 }}
-                    key={step.number}
-                    style={{ display: "flex", gap: 18, paddingBottom: 32, position: "relative" }}
-                  >
-                    {i < home.approach.steps.length - 1 && (
-                      <div style={{ position: "absolute", left: 17, top: 44, bottom: 0, width: 1, background: "linear-gradient(to bottom, hsl(215 72% 35%), transparent)" }} />
-                    )}
-                    <div style={{ width: 36, height: 36, borderRadius: 10, background: "hsl(28 95% 52%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "#fff", flexShrink: 0, position: "relative", zIndex: 1, fontFamily: '"Sora", sans-serif' }}>
-                      {step.number}
-                    </div>
-                    <div>
-                      <h3 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 700, fontSize: "1.15rem", letterSpacing: "-0.02em", marginBottom: 6, color: "hsl(215 35% 12%)" }}>{step.title}</h3>
-                      <p style={{ fontSize: 14, lineHeight: 1.75, color: "hsl(215 15% 48%)" }}>{step.text}</p>
-                    </div>
-                  </motion.li>
-                ))}
-              </ol>
-            </div>
-          </div>
-        </section>
-
-        {/* FEATURED PROJECTS */}
-        <section style={{ background: "hsl(215 35% 10%)", padding: "88px 0" }}>
-          <div className="site-container">
-            <motion.div {...reveal} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 48, flexWrap: "wrap", gap: 16 }}>
-              <div>
-                <p style={{ fontSize: 11, fontWeight: 700, color: "hsl(42 54% 74%)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 14, fontFamily: '"Space Grotesk", sans-serif' }}>{home.gallery.eyebrow}</p>
-                <h2 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 800, fontSize: "clamp(1.9rem, 3vw, 2.8rem)", color: "#fff", letterSpacing: "-0.03em", lineHeight: 1.05 }}>{home.gallery.title}</h2>
               </div>
-              <Link to="/projects" style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 13, fontWeight: 700, color: "hsl(215 25% 60%)", textDecoration: "none", padding: "9px 18px", borderRadius: 9, border: "1px solid hsl(215 35% 20%)", transition: "all 0.2s" }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "hsl(215 35% 32%)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = "hsl(215 25% 60%)"; e.currentTarget.style.borderColor = "hsl(215 35% 20%)"; }}
-              >
-                All projects <ArrowRight size={14} />
-              </Link>
-            </motion.div>
 
-            <div className="responsive-grid-cards">
-              {projects.map((project, i) => (
-                <motion.article
-                  {...reveal}
-                  transition={{ ...reveal.transition, delay: i * 0.1 }}
+              {/* Plant Photo Card */}
+              <div className="relative">
+                <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200">
+                  <img
+                    src="/assets/factory/shadnagar-plant-aerial-2.jpg"
+                    alt="AA Spaces Shadnagar Manufacturing Campus"
+                    className="w-full h-[440px] object-cover"
+                  />
+                  <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                      <span className="text-xs font-bold text-blue-700 uppercase">Automated Fabrication Plant</span>
+                      <h4 className="text-base font-bold text-[#0f2b48] font-['Barlow']">Shadnagar Campus • Telangana</h4>
+                    </div>
+                    <span className="text-xs bg-blue-100 text-blue-800 font-bold px-3 py-1 rounded">
+                      ISO 9001:2015
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* ─── SPECIALIZED PEB SECTORS (Pebsol Projects Clean Cards) ─ */}
+        <section className="py-20 bg-slate-50 border-y border-slate-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div className="text-center max-w-2xl mx-auto mb-16 space-y-2">
+              <span className="text-blue-700 font-bold uppercase tracking-wider text-xs bg-blue-100 px-3 py-1 rounded-full">
+                What We Build
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0f2b48] font-['Barlow'] uppercase">
+                Specialized PEB Solutions
+              </h2>
+              <p className="text-slate-600 text-sm">
+                Engineered for structural durability, column-free operational volume, and rapid on-site commissioning.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              
+              {/* Sector 1: Industrial & Aerospace */}
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src="/assets/projects/azad-01.jpg"
+                    alt="Industrial & Aerospace Manufacturing Plants"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 left-4 bg-[#0f2b48]/90 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">
+                    Aerospace &amp; Manufacturing
+                  </div>
+                </div>
+                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-[#0f2b48] font-['Barlow'] uppercase">
+                      Industrial &amp; Aerospace Manufacturing Sheds
+                    </h3>
+                    <p className="text-slate-600 text-sm mt-2 leading-relaxed">
+                      High-precision industrial factories designed to house heavy machinery, automated gantry crane systems (up to 30T), and strict climate control. Proven through Azad Engineering&apos;s 65,000 sq.ft facility delivered in 48 days.
+                    </p>
+                  </div>
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-semibold">
+                    <span>Clear Spans Up to 60m</span>
+                    <span>Automated SAW Welding</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sector 2: Warehousing & Logistics */}
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src="/assets/projects/sri-raj-01.jpg"
+                    alt="Heavy Warehousing & Logistics Hubs"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 left-4 bg-blue-700/90 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">
+                    Logistics &amp; Heavy Steel
+                  </div>
+                </div>
+                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-[#0f2b48] font-['Barlow'] uppercase">
+                      Integrated Steel Plants &amp; Mega Logistics Hubs
+                    </h3>
+                    <p className="text-slate-600 text-sm mt-2 leading-relaxed">
+                      Massive warehousing distribution hubs and steel manufacturing plants. Built to accommodate high-traffic forklift logistics, automated dock levelers, and seamless continuous operations across 2.5L+ sq.ft scales.
+                    </p>
+                  </div>
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-semibold">
+                    <span>FM2 Superflat Floors</span>
+                    <span>100% Leak-Proof Seam Roof</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sector 3: Convention & Grand Halls */}
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src="/assets/projects/ananda-02.jpg"
+                    alt="Convention & Grand Event Centers"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 left-4 bg-[#0f2b48]/90 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">
+                    Grand Event Centers
+                  </div>
+                </div>
+                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-[#0f2b48] font-['Barlow'] uppercase">
+                      Column-Free Grand Convention Pavilions
+                    </h3>
+                    <p className="text-slate-600 text-sm mt-2 leading-relaxed">
+                      Aesthetic structural architecture combining massive 45m+ clear spans with acoustic sandwich insulation, glass facade framing, and grand porticos built to host thousands of guests.
+                    </p>
+                  </div>
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-semibold">
+                    <span>Acoustic Thermal Insulation</span>
+                    <span>Architectural Glazing Tie-ins</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sector 4: Commercial Retail & Multi-Storey */}
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src="/assets/projects/reliance-01.jpg"
+                    alt="Commercial Retail Hypermarkets"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 left-4 bg-blue-700/90 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">
+                    Commercial &amp; Retail
+                  </div>
+                </div>
+                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-[#0f2b48] font-['Barlow'] uppercase">
+                      Commercial Hypermarkets &amp; Multi-Storey Frames
+                    </h3>
+                    <p className="text-slate-600 text-sm mt-2 leading-relaxed">
+                      Multi-storey structural steel frameworks with composite metal decking, rapid erection timelines, and 50% lighter foundation loads compared to conventional RCC. Demonstrated by Reliance Retail in Tirupati.
+                    </p>
+                  </div>
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-semibold">
+                    <span>Fast-Track Night Shifts</span>
+                    <span>High Customer Footfall Design</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        {/* ─── FEATURED DELIVERED PROJECTS (Interactive Grid) ─────── */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+              <div>
+                <span className="text-blue-700 font-bold uppercase tracking-wider text-xs bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+                  Delivered Portfolio
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0f2b48] font-['Barlow'] uppercase mt-3">
+                  Featured PEB Projects
+                </h2>
+                <p className="text-slate-600 text-sm mt-1">
+                  Click any project card to inspect technical specifications, tonnage, timelines, and photo gallery.
+                </p>
+              </div>
+
+              <Link
+                to="/projects"
+                className="inline-flex items-center space-x-1.5 text-blue-700 hover:text-blue-800 font-bold text-sm no-underline"
+              >
+                <span>View All Projects</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((project) => (
+                <article
                   key={project.id}
-                  className="interactive-card cursor-pointer"
                   onClick={() => setSelectedProject(project)}
-                  style={{
-                    margin: 0,
-                    borderRadius: 16,
-                    overflow: "hidden",
-                    background: "hsl(194 65% 14%)",
-                    border: "1px solid hsl(179 38% 75% / 0.18)",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
+                  className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer flex flex-col justify-between group"
                 >
-                  {/* Studio Image Header */}
-                  <div style={{ position: "relative", height: 230, overflow: "hidden", background: "hsl(194 60% 10%)" }}>
-                    <motion.img
+                  <div className="relative h-56 overflow-hidden bg-slate-100">
+                    <img
                       src={project.image}
                       alt={project.title}
-                      width={1200}
-                      height={900}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                      whileHover={{ scale: 1.06, transition: { duration: 0.45 } }}
                     />
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, hsl(194 65% 14% / 0.8) 0%, transparent 40%)" }} />
-                    <span style={{
-                      position: "absolute", top: 14, left: 14,
-                      padding: "4px 12px", borderRadius: 999,
-                      background: "hsl(194 65% 10% / 0.8)",
-                      backdropFilter: "blur(8px)",
-                      border: "1px solid hsl(42 54% 74% / 0.35)",
-                      fontSize: 10.5, fontWeight: 700,
-                      color: "hsl(42 54% 74%)",
-                      letterSpacing: "0.1em", textTransform: "uppercase"
-                    }}>
+                    <div className="absolute top-3 left-3 bg-[#0f2b48]/90 text-white text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide backdrop-blur-sm">
                       {project.sector}
-                    </span>
+                    </div>
                     {project.gallery && project.gallery.length > 1 && (
-                      <span
-                        style={{
-                          position: "absolute",
-                          top: 14,
-                          right: 14,
-                          padding: "4px 10px",
-                          borderRadius: 999,
-                          background: "hsl(194 65% 10% / 0.85)",
-                          backdropFilter: "blur(8px)",
-                          border: "1px solid hsl(42 54% 74% / 0.35)",
-                          fontSize: 10,
-                          fontWeight: 700,
-                          color: "hsl(42 54% 74%)",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 4,
-                        }}
-                      >
-                        <Camera size={11} /> {project.gallery.length} Photos
-                      </span>
+                      <div className="absolute top-3 right-3 bg-white/90 text-slate-800 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+                        <Camera className="w-3 h-3 text-blue-600" />
+                        <span>{project.gallery.length} Photos</span>
+                      </div>
                     )}
                   </div>
 
-                  {/* Studio Case Body */}
-                  <div style={{ padding: "22px 24px 24px", flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                  <div className="p-5 flex-1 flex flex-col justify-between">
                     <div>
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-                        <span style={{ fontSize: 11, fontWeight: 700, color: "hsl(42 54% 74%)", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: '"Space Grotesk", sans-serif' }}>
-                          {project.code}
-                        </span>
-                        {project.area && (
-                          <span style={{ fontSize: 11, fontWeight: 600, color: "hsl(179 38% 75%)", background: "hsl(179 38% 75% / 0.1)", padding: "2px 8px", borderRadius: 4 }}>
-                            {project.area}
-                          </span>
-                        )}
+                      <div className="flex items-center justify-between text-xs text-slate-500 mb-2 font-medium">
+                        <span className="text-blue-700 font-bold">{project.code}</span>
+                        {project.area && <span className="bg-slate-100 px-2 py-0.5 rounded text-slate-700 font-semibold">{project.area}</span>}
                       </div>
+
                       {project.client && (
-                        <p style={{ fontSize: 11, fontWeight: 700, color: "hsl(42 54% 74%)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 3 }}>
+                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-1">
                           {project.client}
                         </p>
                       )}
-                      <h3 style={{ fontFamily: '"Sora", sans-serif', fontWeight: 700, fontSize: "1.1rem", letterSpacing: "-0.01em", color: "#fff", marginBottom: 8, lineHeight: 1.3 }}>
+
+                      <h3 className="text-base font-bold text-[#0f2b48] font-['Barlow'] line-clamp-2 leading-snug">
                         {project.title}
                       </h3>
+
                       {project.location && (
-                        <p style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12.5, color: "hsl(179 38% 75% / 0.85)", marginBottom: 16 }}>
-                          <MapPin size={12} color="hsl(42 54% 74%)" /> {project.location}
+                        <p className="flex items-center text-xs text-slate-500 mt-2 gap-1">
+                          <MapPin className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                          <span>{project.location}</span>
                         </p>
                       )}
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedProject(project);
-                      }}
-                      className="interactive-arrow"
-                      style={{
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        padding: 0,
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: 6,
-                        fontSize: 12.5,
-                        fontWeight: 700,
-                        color: "hsl(42 54% 74%)",
-                        paddingTop: 12,
-                        borderTop: "1px solid hsl(179 38% 75% / 0.12)",
-                        width: "100%",
-                        textAlign: "left",
-                      }}
-                    >
-                      Inspect Project Specs <ArrowRight size={13} />
-                    </button>
+                    <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-700">
+                      <span>Inspect Technical Specs</span>
+                      <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </div>
                   </div>
-                </motion.article>
+                </article>
               ))}
             </div>
+
           </div>
         </section>
 
-        {/* OUR TEAM */}
-        <section style={{ background: "hsl(210 20% 97%)", padding: "96px 0" }}>
-          <div className="site-container">
-            {/* Header */}
-            <motion.div {...reveal} style={{ textAlign: "center", marginBottom: 64 }}>
-              <span style={{
-                display: "inline-block", fontSize: 11, fontWeight: 700,
-                color: "hsl(215 72% 38%)", letterSpacing: "0.14em",
-                textTransform: "uppercase", background: "hsl(194 65% 23% / 0.08)", border: "1px solid hsl(179 38% 75% / 0.3)",
-                padding: "5px 16px", borderRadius: 999, marginBottom: 18,
-              }}>Executive Leadership</span>
-              <h2 style={{
-                fontFamily: '"Sora", sans-serif',
-                fontSize: "clamp(2rem, 4vw, 2.8rem)",
-                fontWeight: 800, color: "hsl(215 40% 12%)",
-                letterSpacing: "-0.02em", marginBottom: 16,
-              }}>
-                Meet Our Team
+        {/* ─── CLIENT TESTIMONIALS (PebSol Endorsements) ───────────── */}
+        <section className="py-20 bg-slate-50 border-y border-slate-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div className="text-center max-w-2xl mx-auto mb-16 space-y-2">
+              <span className="text-blue-700 font-bold uppercase tracking-wider text-xs bg-blue-100 px-3 py-1 rounded-full">
+                Client Endorsements
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0f2b48] font-['Barlow'] uppercase">
+                Trusted by Industry Leaders
               </h2>
-              <p style={{ fontSize: 16, color: "hsl(215 20% 45%)", maxWidth: 480, margin: "0 auto", lineHeight: 1.7 }}>
-                The people behind every AA Spaces structure - decades of expertise, precision, and trust.
+              <p className="text-slate-600 text-sm">
+                Real feedback from corporate leaders on our engineering precision and turnkey execution.
               </p>
-            </motion.div>
+            </div>
 
-            {/* Cards */}
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 360px))", gap: 24, justifyContent: "center",
-            }}>
-              {[
-                {
-                  name: "Mr. B. Upender Reddy",
-                  role: "Managing Director",
-                  experience: "28+ Years",
-                  email: "info@aaspacesinfra.com",
-                  photo: "/assets/team/upender-reddy.jpg",
-                  accent: "hsl(42 54% 74%)",
-                  qualification: "",
-                },
-                {
-                  name: "Mr. Ch. Gangadhar",
-                  role: "Executive Director",
-                  qualification: "M.Tech. Structures",
-                  experience: "10+ Years",
-                  email: "info@aaspacesinfra.com",
-                  photo: "/assets/team/gangadhar.jpg",
-                  accent: "hsl(179 45% 55%)",
-                },
-              ].map((member, i) => (
-                <motion.div
-                  key={member.name}
-                  initial={{ opacity: 0, y: 32 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.15 }}
-                  transition={{ duration: 0.55, delay: i * 0.14, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                  style={{
-                    borderRadius: 24, overflow: "hidden", background: "#fff",
-                    boxShadow: "0 8px 40px hsl(215 40% 18% / 0.13)",
-                    border: "1px solid hsl(215 18% 90%)",
-                    display: "flex", flexDirection: "column",
-                  }}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {testimonials.map((t, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow"
                 >
-                  {/* Photo */}
-                  <div style={{ position: "relative", height: 340, overflow: "hidden", background: "hsl(215 20% 92%)" }}>
-                    <img
-                      src={member.photo}
-                      alt={member.name}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block" }}
-                    />
-                    {/* Experience badge */}
-                    <div style={{
-                      position: "absolute", top: 16, left: 16,
-                      background: "hsl(215 40% 7% / 0.65)",
-                      backdropFilter: "blur(8px)",
-                      border: "1px solid hsl(0 0% 100% / 0.18)",
-                      borderRadius: 999, padding: "5px 14px",
-                      fontSize: 11.5, fontWeight: 700, color: "#fff",
-                      letterSpacing: "0.05em",
-                    }}>
-                      {member.experience}
-                    </div>
-                    {/* Bottom fade */}
-                    <div style={{
-                      position: "absolute", bottom: 0, left: 0, right: 0, height: 80,
-                      background: "linear-gradient(to top, #fff, transparent)",
-                    }} />
+                  <p className="text-slate-600 text-sm leading-relaxed italic mb-6">
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
+                  <div className="pt-4 border-t border-slate-100">
+                    <h4 className="text-sm font-bold text-[#0f2b48] font-['Barlow'] uppercase">
+                      {t.client}
+                    </h4>
+                    <span className="text-xs text-blue-700 font-medium">{t.role}</span>
                   </div>
-
-                  {/* Info */}
-                  <div style={{ padding: "20px 28px 28px", display: "flex", flexDirection: "column", gap: 12 }}>
-                    <div>
-                      <h3 style={{ fontFamily: '"Sora", sans-serif', fontSize: "1.15rem", fontWeight: 800, color: "hsl(215 40% 12%)", marginBottom: 4 }}>
-                        {member.name}
-                      </h3>
-                      <p style={{ fontSize: 13, fontWeight: 700, color: member.accent, marginBottom: 2 }}>
-                        {member.role}
-                      </p>
-                      {member.qualification && (
-                        <p style={{ fontSize: 12, color: "hsl(215 20% 55%)", fontWeight: 500 }}>{member.qualification}</p>
-                      )}
-                    </div>
-                    <a
-                      href={`mailto:${member.email}`}
-                      style={{
-                        display: "inline-flex", alignItems: "center", gap: 7,
-                        fontSize: 13, fontWeight: 600, color: "hsl(215 72% 38%)",
-                        textDecoration: "none", padding: "10px 16px", borderRadius: 10,
-                        background: "hsl(215 72% 18% / 0.06)",
-                        border: "1px solid hsl(215 72% 18% / 0.12)",
-                      }}
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                      {member.email}
-                    </a>
-                  </div>
-                </motion.div>
+                </div>
               ))}
             </div>
+
           </div>
         </section>
 
-        {/* FINAL CTA */}
-        <section style={{
-          background: "linear-gradient(135deg, hsl(215 38% 12%) 0%, hsl(215 32% 16%) 50%, hsl(28 35% 13%) 100%)",
-          padding: "96px 0",
-          position: "relative",
-          overflow: "hidden",
-          borderTop: "1px solid hsl(215 30% 20%)"
-        }}>
-          {/* Ambient copper glow */}
-          <div style={{
-            position: "absolute",
-            top: "-20%",
-            right: "0%",
-            width: 600,
-            height: 600,
-            borderRadius: "50%",
-            background: "radial-gradient(circle, hsl(28 65% 50% / 0.16) 0%, transparent 70%)",
-            pointerEvents: "none"
-          }} />
-          <div className="steel-grid" style={{ position: "absolute", inset: 0, opacity: 0.18, pointerEvents: "none" }} />
-          
-          <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 32px", position: "relative", zIndex: 1 }}>
-            <div className="responsive-grid-cta" style={{ alignItems: "center" }}>
-              <motion.div {...reveal}>
-                <span style={{
-                  display: "inline-block",
-                  fontSize: 11,
-                  fontWeight: 700,
-                  color: "hsl(28 65% 58%)",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  background: "hsl(28 65% 50% / 0.12)",
-                  border: "1px solid hsl(28 65% 50% / 0.25)",
-                  padding: "5px 14px",
-                  borderRadius: 999,
-                  marginBottom: 16,
-                  fontFamily: '"Space Grotesk", sans-serif'
-                }}>
-                  {home.cta.eyebrow}
-                </span>
-                <h2 style={{
-                  fontFamily: '"Sora", sans-serif',
-                  fontWeight: 800,
-                  fontSize: "clamp(2.2rem, 3.8vw, 3.4rem)",
-                  color: "#fff",
-                  letterSpacing: "-0.03em",
-                  lineHeight: 1.05,
-                  marginBottom: 16
-                }}>
-                  {home.cta.title}
-                </h2>
-                <p style={{ fontSize: 15.5, lineHeight: 1.8, color: "hsl(215 20% 70%)", maxWidth: 540, marginBottom: 36 }}>
-                  {home.cta.description}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setIsQuoteOpen(true)}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 8,
-                    padding: "15px 34px",
-                    border: "none",
-                    cursor: "pointer",
-                    borderRadius: 12,
-                    background: "linear-gradient(135deg, hsl(28 68% 52%) 0%, hsl(28 75% 46%) 100%)",
-                    color: "#fff",
-                    fontSize: 14.5,
-                    fontWeight: 700,
-                    textDecoration: "none",
-                    transition: "all 0.25s",
-                    boxShadow: "0 6px 28px hsl(28 68% 50% / 0.45)"
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-2px)";
-                    e.currentTarget.style.boxShadow = "0 10px 36px hsl(28 68% 50% / 0.6)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow = "0 6px 28px hsl(28 68% 50% / 0.45)";
-                  }}
-                >
-                  {home.cta.button} <ArrowUpRight size={17} />
-                </button>
-              </motion.div>
+        {/* ─── EXECUTIVE LEADERSHIP (Gangadhar & Upendra Sir) ────── */}
+        <TeamSection bgLight={true} />
 
-              <motion.div {...reveal} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                {["Scope-led project conversation", "Integrated structural thinking", "Clear path to proposal", "Site-specific engineering"].map((item) => (
-                  <div key={item} style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 14,
-                    padding: "16px 20px",
-                    borderRadius: 12,
-                    background: "hsl(215 35% 15% / 0.7)",
-                    border: "1px solid hsl(215 30% 24%)",
-                    backdropFilter: "blur(12px)",
-                    boxShadow: "0 4px 20px hsl(215 40% 6% / 0.3)"
-                  }}>
-                    <CheckCircle2 size={18} color="hsl(28 65% 58%)" />
-                    <span style={{ fontSize: 14.5, fontWeight: 600, color: "#fff" }}>{item}</span>
-                  </div>
-                ))}
-              </motion.div>
+        {/* ─── VERIFIED CLIENT LOGOS ───────────────────────────────── */}
+        <ClientsSection />
+
+        {/* ─── BOTTOM CALL TO ACTION (PebSol Projects Style) ───────── */}
+        <section className="py-16 bg-[#0f2b48] text-white">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <span className="text-blue-300 font-bold uppercase tracking-widest text-xs">
+              Take the Next Step
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black font-['Barlow'] uppercase tracking-tight">
+              Ready to Build Your Pre-Engineered Steel Building?
+            </h2>
+            <p className="text-slate-200 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+              Contact our engineering team today for Tekla 3D layout consultation, preliminary tonnage estimation, and site-specific proposal discussions.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+              <button
+                type="button"
+                onClick={() => setIsQuoteOpen(true)}
+                className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-lg text-sm shadow-xl transition-all cursor-pointer border-none flex items-center space-x-2"
+              >
+                <span>Get Project Estimation</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <a
+                href="tel:+919542445555"
+                className="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-4 rounded-lg text-sm border border-white/20 transition-all flex items-center space-x-2 no-underline"
+              >
+                <span>Call: +91 95424 45555</span>
+              </a>
             </div>
           </div>
         </section>
@@ -883,9 +668,3 @@ export default function HomePage() {
     </>
   );
 }
-
-
-
-
-
-

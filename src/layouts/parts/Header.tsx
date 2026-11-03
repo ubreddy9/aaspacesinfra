@@ -1,13 +1,12 @@
 import { Link, useLocation } from "react-router";
-import { ArrowUpRight, Menu, X, Shield, Phone, Mail, MapPin, Globe } from "lucide-react";
+import { ArrowUpRight, Menu, X, Shield, Phone, Mail, MapPin, Factory } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getActiveProjects } from "@/lib/projectStore";
 
 export default function Header() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [projectCount, setProjectCount] = useState<number>(11);
+  const [projectCount, setProjectCount] = useState<number>(7);
 
   useEffect(() => {
     function syncProjectCount() {
@@ -29,18 +28,13 @@ export default function Header() {
     };
   }, [location.pathname]);
 
-  const navItems = [
+  const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/about", label: "Company Profile" },
+    { href: "/about", label: "About Us" },
     { href: "/capabilities", label: "Capabilities & Plant" },
     { href: "/projects", label: "Projects Delivered", badge: String(projectCount) },
+    { href: "/proposal", label: "Contact Us" },
   ];
-
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 24);
-    window.addEventListener("scroll", fn, { passive: true });
-    return () => window.removeEventListener("scroll", fn);
-  }, []);
 
   useEffect(() => { setMobileOpen(false); }, [location.pathname]);
 
@@ -48,355 +42,204 @@ export default function Header() {
     href === "/" ? location.pathname === "/" : location.pathname.startsWith(href);
 
   return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-        transition: "all 0.35s cubic-bezier(0.4,0,0.2,1)",
-        background: scrolled
-          ? "hsl(194 62% 12% / 0.96)"
-          : "hsl(194 60% 12%)",
-        backdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
-        borderBottom: "1px solid hsl(179 38% 75% / 0.18)",
-        boxShadow: scrolled ? "0 4px 32px hsl(194 68% 8% / 0.45)" : "none",
-      }}
-    >
-      {/* Top utility bar (Like PEBSOL PROJECTS) */}
-      <div
-        style={{
-          background: "hsl(194 68% 10%)",
-          borderBottom: "1px solid hsl(179 38% 75% / 0.14)",
-          padding: "7px 0",
-        }}
-        className="hidden md:block"
-      >
-        <div
-          style={{
-            maxWidth: 1280,
-            margin: "0 auto",
-            padding: "0 24px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            fontSize: 11.5,
-            fontWeight: 500,
-          }}
-        >
+    <header className="w-full z-50 sticky top-0 shadow-sm bg-white font-sans">
+      {/* Top Simple Utility Bar (Exact PebSol Projects layout) */}
+      <div className="bg-slate-50 text-slate-600 text-xs py-2 px-4 border-b border-slate-200 hidden md:block">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
           {/* Left contact info */}
-          <div style={{ display: "flex", alignItems: "center", gap: 18, color: "hsl(180 20% 78%)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <Phone size={12} color="hsl(42 54% 74%)" />
+          <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-2">
               <a
                 href="tel:+919542445555"
-                style={{ color: "hsl(42 54% 74%)", textDecoration: "none", fontWeight: 700 }}
+                className="flex items-center space-x-1.5 hover:text-blue-700 transition-colors font-medium text-slate-700"
               >
-                +91 95424 45555
+                <Phone className="w-3.5 h-3.5 text-blue-700" />
+                <span>+91 95424 45555</span>
               </a>
-              <span style={{ color: "hsl(179 38% 75% / 0.4)" }}>|</span>
+              <span className="text-slate-300">|</span>
               <a
                 href="tel:+919849028657"
-                style={{ color: "hsl(180 20% 88%)", textDecoration: "none", fontWeight: 600 }}
+                className="hover:text-blue-700 transition-colors font-medium text-slate-700"
               >
                 +91 98490 28657
               </a>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <Mail size={12} color="hsl(42 54% 74%)" />
-              <a
-                href="mailto:info@aaspacesinfra.com"
-                style={{ color: "hsl(180 20% 88%)", textDecoration: "none" }}
-              >
-                info@aaspacesinfra.com
-              </a>
-            </div>
+            <a
+              href="mailto:info@aaspacesinfra.com"
+              className="flex items-center space-x-1.5 hover:text-blue-700 transition-colors"
+            >
+              <Mail className="w-3.5 h-3.5 text-blue-700" />
+              <span>info@aaspacesinfra.com</span>
+            </a>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 6, color: "hsl(180 20% 70%)" }}>
-              <Globe size={12} color="hsl(179 38% 75% / 0.7)" />
-              <span>Hyderabad • Medak Plant • Pan-India Turnkey</span>
+            <div className="flex items-center space-x-1.5 text-slate-500">
+              <Factory className="w-3.5 h-3.5 text-blue-700" />
+              <span>Factory: Shadnagar, Telangana</span>
             </div>
           </div>
 
-          {/* Right corporate address info */}
-          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 5, color: "hsl(180 20% 75%)" }}>
-              <MapPin size={12} color="hsl(42 54% 74%)" />
+          {/* Right corporate address */}
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-1.5 text-slate-600">
+              <MapPin className="w-3.5 h-3.5 text-blue-700" />
               <span>HITEX / Shilpa Layout, Hyderabad</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main nav */}
-      <div className="site-container">
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            minHeight: 68,
-            gap: 20,
-          }}
-        >
-          {/* Logo */}
-          <Link
-            to="/"
-            aria-label="AA Spaces home"
-            style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}
-          >
-            <img
-              src="/assets/brand/logo-light.png"
-              alt="AA Spaces Infra"
-              className="h-10 sm:h-12 md:h-[48px] w-auto max-w-[185px] sm:max-w-[240px]"
-              style={{
-                objectFit: "contain",
-                display: "block",
-              }}
-            />
-            <span
-              className="hidden xl:inline-block"
-              style={{
-                fontSize: 10,
-                fontWeight: 700,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                padding: "3px 8px",
-                borderRadius: 4,
-                background: "hsl(42 54% 74% / 0.12)",
-                border: "1px solid hsl(42 54% 74% / 0.3)",
-                color: "hsl(42 54% 74%)",
-                fontFamily: '"Space Grotesk", sans-serif',
-              }}
+      {/* Main Clean White Navbar */}
+      <nav className="bg-white border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo + Tagline */}
+            <Link
+              to="/"
+              className="flex items-center space-x-3 cursor-pointer group no-underline"
+              aria-label="AA Spaces Home"
             >
-              Pre-Engineered Buildings
-            </span>
-          </Link>
+              <div className="w-11 h-11 rounded-lg bg-[#0f2b48] flex items-center justify-center p-1.5 shadow-sm group-hover:bg-[#1a3d66] transition-colors shrink-0">
+                <img
+                  src="/assets/brand/logo.png"
+                  alt="AA Spaces"
+                  className="w-full h-full object-contain filter brightness-0 invert"
+                />
+              </div>
 
-          {/* Desktop nav */}
-          <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                to={item.href}
-                style={{
-                  position: "relative",
-                  padding: "8px 16px",
-                  borderRadius: 8,
-                  fontSize: 13.5,
-                  fontWeight: isActive(item.href) ? 700 : 500,
-                  letterSpacing: "0.01em",
-                  color: isActive(item.href) ? "hsl(42 54% 74%)" : "hsl(180 20% 82%)",
-                  textDecoration: "none",
-                  transition: "all 0.2s",
-                  background: isActive(item.href) ? "hsl(42 54% 74% / 0.14)" : "transparent",
-                  display: "inline-flex",
-                  alignItems: "center",
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive(item.href)) {
-                    e.currentTarget.style.color = "#fff";
-                    e.currentTarget.style.background = "hsl(194 50% 20%)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive(item.href)) {
-                    e.currentTarget.style.color = "hsl(180 20% 82%)";
-                    e.currentTarget.style.background = "transparent";
-                  }
-                }}
-              >
-                {item.label}
-                {item.badge && (
-                  <span
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 800,
-                      marginLeft: 6,
-                      padding: "1px 6px",
-                      borderRadius: 999,
-                      background: isActive(item.href) ? "hsl(42 54% 74%)" : "hsl(194 50% 24%)",
-                      color: isActive(item.href) ? "hsl(194 65% 15%)" : "hsl(42 54% 74%)",
-                    }}
-                  >
-                    {item.badge}
+              <div className="flex flex-col">
+                <div className="flex items-center space-x-2">
+                  <span className="text-2xl font-black tracking-tight text-[#0f2b48] font-['Barlow'] uppercase">
+                    AA <span className="text-blue-700">Spaces</span>
                   </span>
-                )}
-                {isActive(item.href) && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      bottom: 3,
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      width: 18,
-                      height: 2,
-                      borderRadius: 999,
-                      background: "hsl(42 54% 74%)",
-                    }}
-                  />
-                )}
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-[#0f2b48] border border-slate-200 tracking-wide uppercase">
+                    PEB- Engineered to strength
+                  </span>
+                </div>
+                <span className="text-[10px] text-slate-500 tracking-wider uppercase font-semibold">
+                  Pre-Engineered Buildings & Infrastructure
+                </span>
+              </div>
+            </Link>
+
+            {/* Desktop Navigation Links */}
+            <div className="hidden lg:flex items-center space-x-1">
+              {navLinks.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-all flex items-center space-x-1.5 no-underline ${
+                      active
+                        ? "text-[#0f2b48] bg-slate-100 font-bold border border-slate-200"
+                        : "text-slate-600 hover:text-[#0f2b48] hover:bg-slate-50"
+                    }`}
+                  >
+                    <span>{link.label}</span>
+                    {link.badge && (
+                      <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                        active
+                          ? "bg-[#0f2b48] text-white"
+                          : "bg-slate-200 text-slate-700"
+                      }`}>
+                        {link.badge}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Right Action Buttons */}
+            <div className="hidden sm:flex items-center space-x-3">
+              <Link
+                to="/admin"
+                aria-label="Admin Portal"
+                className="p-2 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+                title="Admin Portal"
+              >
+                <Shield className="w-4 h-4" />
               </Link>
-            ))}
-          </nav>
+              <Link
+                to="/proposal"
+                className="bg-[#0f2b48] hover:bg-[#1a3d66] text-white font-bold px-5 py-2.5 rounded-lg text-sm transition-all shadow-sm flex items-center space-x-1.5 no-underline"
+              >
+                <span>Get In Touch</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+            </div>
 
-          {/* Right actions */}
-          <div className="hidden sm:flex items-center gap-3">
-            <Link
-              to="/admin"
-              aria-label="Admin"
-              style={{
-                color: "hsl(215 30% 50%)",
-                padding: "8px",
-                borderRadius: 8,
-                transition: "color 0.2s",
-                display: "flex",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "hsl(180 20% 82%)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "hsl(215 30% 50%)")}
-            >
-              <Shield size={15} />
-            </Link>
-            <Link
-              to="/proposal"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 7,
-                padding: "10px 22px",
-                borderRadius: 9,
-                background: "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)",
-                color: "hsl(194 65% 15%)",
-                fontSize: 13.5,
-                fontWeight: 700,
-                textDecoration: "none",
-                letterSpacing: "0.01em",
-                transition: "all 0.2s",
-                boxShadow: "0 2px 16px hsl(42 54% 74% / 0.35)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "linear-gradient(135deg, hsl(42 54% 78%) 0%, hsl(42 50% 68%) 100%)";
-                e.currentTarget.style.transform = "translateY(-1px)";
-                e.currentTarget.style.boxShadow = "0 6px 24px hsl(42 54% 74% / 0.5)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)";
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 2px 16px hsl(42 54% 74% / 0.35)";
-              }}
-            >
-              Get a Proposal <ArrowUpRight size={14} />
-            </Link>
-          </div>
-
-          {/* Mobile toggle */}
-          <div className="flex items-center gap-2 lg:hidden">
-            <Link
-              to="/proposal"
-              style={{
-                padding: "7px 14px",
-                borderRadius: 7,
-                background: "hsl(42 54% 74%)",
-                color: "hsl(194 65% 15%)",
-                fontSize: 12,
-                fontWeight: 700,
-                textDecoration: "none",
-              }}
-            >
-              Inquire
-            </Link>
-            <button
-              onClick={() => setMobileOpen((v) => !v)}
-              aria-label="Toggle menu"
-              aria-expanded={mobileOpen}
-              style={{
-                padding: 8,
-                borderRadius: 8,
-                background: "none",
-                border: "none",
-                color: "hsl(180 20% 88%)",
-                cursor: "pointer",
-                display: "flex",
-              }}
-            >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
+            {/* Mobile Menu Button */}
+            <div className="flex items-center space-x-2 lg:hidden">
+              <Link
+                to="/proposal"
+                className="bg-[#0f2b48] text-white text-xs font-bold px-3 py-1.5 rounded-md no-underline"
+              >
+                Inquire
+              </Link>
+              <button
+                onClick={() => setMobileOpen((v) => !v)}
+                className="p-2 rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none"
+                aria-label="Toggle navigation"
+              >
+                {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Mobile drawer */}
+        {/* Mobile menu dropdown */}
         {mobileOpen && (
-          <nav
-            aria-label="Mobile navigation"
-            style={{
-              borderTop: "1px solid hsl(179 38% 75% / 0.18)",
-              padding: "14px 0 20px",
-            }}
-            className="lg:hidden flex flex-col gap-1"
-          >
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                to={item.href}
-                style={{
-                  padding: "11px 14px",
-                  borderRadius: 9,
-                  fontSize: 14,
-                  fontWeight: isActive(item.href) ? 700 : 500,
-                  color: isActive(item.href) ? "hsl(42 54% 74%)" : "hsl(180 20% 88%)",
-                  textDecoration: "none",
-                  background: isActive(item.href) ? "hsl(42 54% 74% / 0.14)" : "transparent",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <span>{item.label}</span>
-                {item.badge && (
-                  <span
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 800,
-                      padding: "1px 6px",
-                      borderRadius: 999,
-                      background: "hsl(42 54% 74%)",
-                      color: "hsl(194 65% 15%)",
-                    }}
-                  >
-                    {item.badge}
-                  </span>
-                )}
-              </Link>
-            ))}
+          <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg animate-in slide-in-from-top-2 duration-200">
+            {navLinks.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className={`flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold no-underline ${
+                    active
+                      ? "bg-slate-100 text-[#0f2b48] font-bold"
+                      : "text-slate-700 hover:bg-slate-50"
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  {link.badge && (
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-800">
+                      {link.badge}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
 
-            <div style={{ marginTop: 12, padding: "12px 14px", borderTop: "1px solid hsl(179 38% 75% / 0.15)", fontSize: 12, color: "hsl(180 20% 75%)" }}>
-              <p style={{ marginBottom: 4 }}><Phone size={12} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} /> +91 95424 45555 / +91 98490 28657</p>
-              <p><Mail size={12} style={{ display: "inline", verticalAlign: "middle", marginRight: 6 }} /> info@aaspacesinfra.com</p>
+            <div className="pt-3 border-t border-slate-100 text-xs text-slate-500 space-y-1.5 px-2">
+              <div className="flex items-center space-x-2">
+                <Factory className="w-3.5 h-3.5 text-blue-700" />
+                <span>Plant: Shadnagar Industrial Area, Telangana</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Phone className="w-3.5 h-3.5 text-blue-700" />
+                <span>+91 95424 45555 / +91 98490 28657</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Mail className="w-3.5 h-3.5 text-blue-700" />
+                <span>info@aaspacesinfra.com</span>
+              </div>
             </div>
 
-            <Link
-              to="/proposal"
-              style={{
-                marginTop: 6,
-                padding: "13px 14px",
-                borderRadius: 9,
-                background: "linear-gradient(135deg, hsl(42 54% 74%) 0%, hsl(42 50% 64%) 100%)",
-                color: "hsl(194 65% 15%)",
-                fontSize: 14,
-                fontWeight: 700,
-                textDecoration: "none",
-                textAlign: "center",
-                display: "block",
-              }}
-            >
-              Get a Proposal
-            </Link>
-          </nav>
+            <div className="pt-2">
+              <Link
+                to="/proposal"
+                className="w-full bg-[#0f2b48] text-white font-bold py-2.5 rounded-lg text-sm text-center block no-underline shadow-sm"
+              >
+                Get Project Estimation
+              </Link>
+            </div>
+          </div>
         )}
-      </div>
+      </nav>
     </header>
   );
 }
-
-

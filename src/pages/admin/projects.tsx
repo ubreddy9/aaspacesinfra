@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { AnimatePresence, motion } from "motion/react";
 import {
   ArrowLeft, Check, Edit2, ImagePlus, Loader2,
-  LogOut, Plus, Trash2, Upload, X
+  LogOut, Plus, Trash2, Upload, X, Users, RotateCcw, Camera
 } from "lucide-react";
 import {
   type Project,
@@ -17,6 +17,12 @@ import {
   updateProject,
   uploadProjectImage,
 } from "@/lib/projectStore";
+import {
+  getTeamMembers,
+  updateTeamMember,
+  resetTeamMembers,
+  type TeamMember,
+} from "@/lib/teamStore";
 
 type Toast = { id: number; msg: string; type: "success" | "error" };
 let toastId = 0;
@@ -68,9 +74,17 @@ export default function AdminProjectsPage() {
   const fileRef = useRef<HTMLInputElement>(null);
   const galleryFileRef = useRef<HTMLInputElement>(null);
 
+  const [activeTab, setActiveTab] = useState<"projects" | "team">("projects");
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [editingTeamMember, setEditingTeamMember] = useState<TeamMember | null>(null);
+  const [teamDrawerOpen, setTeamDrawerOpen] = useState(false);
+  const [teamPhotoPreview, setTeamPhotoPreview] = useState<string>("");
+  const teamFileRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     if (!checkAdminAuth()) { navigate("/admin", { replace: true }); return; }
     loadProjects();
+    setTeamMembers(getTeamMembers());
   }, []);
 
   async function loadProjects() {
@@ -143,6 +157,47 @@ export default function AdminProjectsPage() {
     setImagePreview(url);
     setImageFile(null);
     toast("Primary cover photo updated");
+  }
+
+  function openEditTeam(m: TeamMember) {
+    setEditingTeamMember({ ...m });
+    setTeamPhotoPreview(m.photo);
+    setTeamDrawerOpen(true);
+  }
+
+  function onTeamFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result as string;
+      setTeamPhotoPreview(dataUrl);
+      setEditingTeamMember((prev) => (prev ? { ...prev, photo: dataUrl } : null));
+    };
+    reader.readAsDataURL(f);
+  }
+
+  function handleSaveTeamMember() {
+    if (!editingTeamMember) return;
+    updateTeamMember(editingTeamMember.id, {
+      name: editingTeamMember.name,
+      role: editingTeamMember.role,
+      qualification: editingTeamMember.qualification,
+      experience: editingTeamMember.experience,
+      email: editingTeamMember.email,
+      photo: teamPhotoPreview || editingTeamMember.photo,
+    });
+    setTeamMembers(getTeamMembers());
+    setTeamDrawerOpen(false);
+    toast(`${editingTeamMember.name} updated successfully!`);
+  }
+
+  function handleResetTeam() {
+    if (confirm("Reset leadership team photos and info to original defaults?")) {
+      resetTeamMembers();
+      setTeamMembers(getTeamMembers());
+      toast("Leadership team reset to defaults");
+    }
   }
 
   function deleteGalleryPhoto(urlToDelete: string) {
@@ -330,118 +385,244 @@ export default function AdminProjectsPage() {
   return (
     <div style={{ minHeight: "100vh", background: "hsl(215 40% 7%)", fontFamily: '"Space Grotesk", sans-serif' }}>
       {/* Header */}
-      <header style={{ background: "hsl(215 35% 10%)", borderBottom: "1px solid hsl(215 35% 16%)", padding: "0 28px", display: "flex", alignItems: "center", justifyContent: "space-between", minHeight: 64 }}>
+      <header style={{ background: "hsl(215 35% 10%)", borderBottom: "1px solid hsl(215 35% 16%)", padding: "0 28px", display: "flex", alignItems: "center", justifyContent: "space-between", minHeight: 64, flexWrap: "wrap", gap: 12 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <button onClick={() => navigate("/")} style={{ display: "flex", alignItems: "center", gap: 6, background: "none", border: "none", color: "hsl(215 25% 55%)", cursor: "pointer", fontSize: 13, fontWeight: 600 }}>
             <ArrowLeft size={15} /> Back to site
           </button>
           <span style={{ color: "hsl(215 35% 28%)" }}>|</span>
-          <span style={{ fontSize: 15, fontWeight: 700, color: "#fff", fontFamily: '"Sora", sans-serif' }}>Project Manager</span>
-          <span style={{ padding: "3px 10px", borderRadius: 6, background: "hsl(28 95% 52% / 0.12)", border: "1px solid hsl(28 95% 52% / 0.3)", fontSize: 11, fontWeight: 700, color: "hsl(28 95% 62%)" }}>
-            {projects.length} projects
-          </span>
+          
+          {/* Admin Navigation Tabs */}
+          <div style={{ display: "flex", background: "hsl(215 35% 14%)", padding: 3, borderRadius: 8, border: "1px solid hsl(215 35% 20%)", gap: 4 }}>
+            <button
+              onClick={() => setActiveTab("projects")}
+              style={{
+                display: "flex", alignItems: "center", gap: 6,
+                padding: "6px 14px", borderRadius: 6,
+                border: "none", cursor: "pointer", fontSize: 13, fontWeight: 700,
+                background: activeTab === "projects" ? "hsl(28 95% 52%)" : "transparent",
+                color: activeTab === "projects" ? "#fff" : "hsl(215 20% 70%)",
+                transition: "all 0.2s",
+              }}
+            >
+              Projects ({projects.length})
+            </button>
+            <button
+              onClick={() => setActiveTab("team")}
+              style={{
+                display: "flex", alignItems: "center", gap: 6,
+                padding: "6px 14px", borderRadius: 6,
+                border: "none", cursor: "pointer", fontSize: 13, fontWeight: 700,
+                background: activeTab === "team" ? "hsl(28 95% 52%)" : "transparent",
+                color: activeTab === "team" ? "#fff" : "hsl(215 20% 70%)",
+                transition: "all 0.2s",
+              }}
+            >
+              <Users size={14} /> Leadership Team (2)
+            </button>
+          </div>
         </div>
-        <div style={{ display: "flex", gap: 10 }}>
-          <button
-            onClick={handleSeed}
-            disabled={seeding}
-            style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 8, background: "hsl(215 35% 16%)", border: "1px solid hsl(215 35% 24%)", color: "hsl(215 20% 70%)", fontSize: 13, fontWeight: 600, cursor: "pointer" }}
-          >
-            {seeding ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
-            Seed Defaults
-          </button>
-          <button
-            onClick={openAdd}
-            style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 18px", borderRadius: 8, background: "hsl(28 95% 52%)", border: "none", color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
-          >
-            <Plus size={15} /> Add Project
-          </button>
+
+        {/* Action Buttons */}
+        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          {activeTab === "projects" ? (
+            <>
+              <button
+                onClick={handleSeed}
+                disabled={seeding}
+                style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 8, background: "hsl(215 35% 16%)", border: "1px solid hsl(215 35% 24%)", color: "hsl(215 20% 70%)", fontSize: 13, fontWeight: 600, cursor: "pointer" }}
+              >
+                {seeding ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+                Seed Defaults
+              </button>
+              <button
+                onClick={openAdd}
+                style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 18px", borderRadius: 8, background: "hsl(28 95% 52%)", border: "none", color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
+              >
+                <Plus size={15} /> Add Project
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={handleResetTeam}
+              style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 8, background: "hsl(215 35% 16%)", border: "1px solid hsl(215 35% 24%)", color: "hsl(215 20% 70%)", fontSize: 13, fontWeight: 600, cursor: "pointer" }}
+            >
+              <RotateCcw size={14} /> Reset Team Defaults
+            </button>
+          )}
+
           <button onClick={handleLogout} style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, background: "hsl(215 35% 16%)", border: "1px solid hsl(215 35% 24%)", color: "hsl(215 20% 60%)", fontSize: 13, cursor: "pointer" }}>
             <LogOut size={14} />
           </button>
         </div>
       </header>
 
-      {/* Table */}
+      {/* Main Container */}
       <div style={{ maxWidth: 1100, margin: "32px auto", padding: "0 24px" }}>
-        {loading ? (
-          <div style={{ textAlign: "center", padding: 80, color: "hsl(215 25% 40%)" }}>
-            <Loader2 size={32} style={{ animation: "spin 1s linear infinite", margin: "0 auto 12px" }} />
-            <p>Loading projects from cloud...</p>
-          </div>
-        ) : projects.length === 0 ? (
-          <div style={{ textAlign: "center", padding: 80, borderRadius: 16, border: "1px dashed hsl(215 35% 20%)" }}>
-            <p style={{ color: "hsl(215 25% 45%)", marginBottom: 20 }}>No projects yet. Click "Seed Defaults" to load the 5 built-in projects, or add your own.</p>
-            <button onClick={handleSeed} style={{ padding: "10px 24px", borderRadius: 9, background: "hsl(28 95% 52%)", border: "none", color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
-              Seed Default Projects
-            </button>
-          </div>
-        ) : (
-          <div style={{ borderRadius: 14, overflow: "hidden", border: "1px solid hsl(215 35% 16%)" }}>
-            {/* Table head */}
-            <div style={{ display: "grid", gridTemplateColumns: "56px 1fr 120px 140px 100px 90px 100px", padding: "11px 20px", background: "hsl(215 35% 12%)", borderBottom: "1px solid hsl(215 35% 18%)", fontSize: 11, fontWeight: 700, color: "hsl(215 25% 45%)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
-              <span>Image</span>
-              <span>Title / Code</span>
-              <span>Sector</span>
-              <span>Location</span>
-              <span>Area</span>
-              <span>Status</span>
-              <span style={{ textAlign: "right" }}>Actions</span>
+        {activeTab === "team" ? (
+          /* ─── LEADERSHIP TEAM MANAGEMENT ────────────────────────── */
+          <div>
+            <div style={{ marginBottom: 28, background: "hsl(215 35% 11%)", padding: "20px 24px", borderRadius: 12, border: "1px solid hsl(215 35% 18%)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
+              <div>
+                <h2 style={{ fontSize: 20, fontWeight: 700, color: "#fff", fontFamily: '"Sora", sans-serif', margin: "0 0 6px" }}>
+                  Leadership Team Photos & Details
+                </h2>
+                <p style={{ fontSize: 13, color: "hsl(215 20% 60%)", margin: 0 }}>
+                  Manage executive profile photos for Mr. B. Upender Reddy and Mr. Ch. Gangadhar. Updates take effect immediately across the Homepage and About Us page.
+                </p>
+              </div>
+              <span style={{ padding: "4px 12px", borderRadius: 999, background: "hsl(160 84% 39% / 0.15)", border: "1px solid hsl(160 84% 39% / 0.3)", color: "hsl(160 84% 50%)", fontSize: 12, fontWeight: 700 }}>
+                2 Executive Profiles Active
+              </span>
             </div>
 
-            {projects.map((p) => (
-              <div
-                key={p.id}
-                style={{ display: "grid", gridTemplateColumns: "56px 1fr 120px 140px 100px 90px 100px", padding: "14px 20px", borderBottom: "1px solid hsl(215 35% 13%)", alignItems: "center", gap: 8, background: "hsl(215 40% 8%)", transition: "background 0.15s" }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "hsl(215 40% 10%)")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "hsl(215 40% 8%)")}
-              >
-                {/* Thumb */}
-                <div style={{ width: 44, height: 36, borderRadius: 7, overflow: "hidden", background: "hsl(215 35% 14%)", flexShrink: 0 }}>
-                  {p.image && <img src={p.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
-                </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
+              {teamMembers.map((member) => (
+                <div
+                  key={member.id}
+                  style={{
+                    background: "hsl(215 35% 11%)",
+                    border: "1px solid hsl(215 35% 18%)",
+                    borderRadius: 16,
+                    overflow: "hidden",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  {/* Photo with edit overlay */}
+                  <div style={{ position: "relative", height: 260, background: "hsl(215 40% 6%)", overflow: "hidden" }}>
+                    <img
+                      src={member.photo}
+                      alt={member.name}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src =
+                          member.id === "upender" ? "/assets/team/upender-reddy.jpg" : "/assets/team/gangadhar.jpg";
+                      }}
+                    />
+                    <div style={{ position: "absolute", top: 14, right: 14, background: "hsl(215 40% 8% / 0.8)", backdropFilter: "blur(6px)", border: "1px solid hsl(0 0% 100% / 0.15)", padding: "4px 12px", borderRadius: 999, fontSize: 11, fontWeight: 700, color: "#fff" }}>
+                      {member.experience}
+                    </div>
+                  </div>
 
-                {/* Title */}
-                <div>
-                  <p style={{ fontSize: 13.5, fontWeight: 600, color: "#fff", marginBottom: 2 }}>{p.title}</p>
-                  <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                    <span style={{ fontSize: 11, color: "hsl(28 95% 58%)", fontWeight: 700 }}>{p.code}</span>
-                    {p.is_default && (
-                      <span style={{ fontSize: 9.5, fontWeight: 700, padding: "1px 7px", borderRadius: 4, background: "hsl(215 72% 18% / 0.6)", border: "1px solid hsl(215 50% 35%)", color: "hsl(215 60% 65%)" }}>DEFAULT</span>
-                    )}
+                  {/* Body */}
+                  <div style={{ padding: "20px 24px", flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 16 }}>
+                    <div>
+                      <h3 style={{ fontSize: 18, fontWeight: 700, color: "#fff", fontFamily: '"Sora", sans-serif', margin: "0 0 4px" }}>
+                        {member.name}
+                      </h3>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+                        <span style={{ fontSize: 12, fontWeight: 700, color: "hsl(28 95% 58%)", textTransform: "uppercase" }}>
+                          {member.role}
+                        </span>
+                        {member.qualification && (
+                          <span style={{ fontSize: 11, color: "hsl(215 20% 65%)", background: "hsl(215 35% 16%)", padding: "1px 8px", borderRadius: 4 }}>
+                            {member.qualification}
+                          </span>
+                        )}
+                      </div>
+                      <p style={{ fontSize: 12.5, color: "hsl(215 20% 60%)", margin: 0 }}>
+                        Email: <span style={{ color: "#fff" }}>{member.email}</span>
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => openEditTeam(member)}
+                      style={{
+                        display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                        width: "100%", padding: "11px 16px", borderRadius: 10,
+                        background: "hsl(28 95% 52%)", border: "none", color: "#fff",
+                        fontSize: 13, fontWeight: 700, cursor: "pointer",
+                      }}
+                    >
+                      <Camera size={15} /> Edit Photo & Details
+                    </button>
                   </div>
                 </div>
-
-                <span style={{ fontSize: 13, color: "hsl(215 20% 60%)" }}>{p.sector}</span>
-                <span style={{ fontSize: 12.5, color: "hsl(215 20% 55%)" }}>{p.location || "—"}</span>
-                <span style={{ fontSize: 12.5, color: "hsl(215 20% 55%)" }}>{p.area || "—"}</span>
-
-                {/* Status badge */}
-                <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 10px", borderRadius: 999, fontSize: 11, fontWeight: 700, background: p.status === "active" ? "hsl(160 84% 39% / 0.1)" : "hsl(215 35% 16%)", color: p.status === "active" ? "hsl(160 84% 50%)" : "hsl(215 25% 45%)", border: `1px solid ${p.status === "active" ? "hsl(160 84% 39% / 0.3)" : "hsl(215 35% 22%)"}` }}>
-                  <span style={{ width: 5, height: 5, borderRadius: "50%", background: "currentColor" }} />
-                  {p.status}
-                </span>
-
-                {/* Actions */}
-                <div style={{ display: "flex", gap: 6, justifyContent: "flex-end" }}>
-                  <button
-                    onClick={() => openEdit(p)}
-                    title="Edit"
-                    style={{ padding: "6px 10px", borderRadius: 7, background: "hsl(215 35% 16%)", border: "1px solid hsl(215 35% 22%)", color: "hsl(215 20% 65%)", cursor: "pointer", display: "flex", alignItems: "center" }}
-                  >
-                    <Edit2 size={13} />
-                  </button>
-                  <button
-                    onClick={() => setDeleteTarget(p.id)}
-                    title="Delete"
-                    style={{ padding: "6px 10px", borderRadius: 7, background: "hsl(0 80% 60% / 0.08)", border: "1px solid hsl(0 80% 60% / 0.2)", color: "hsl(0 80% 65%)", cursor: "pointer", display: "flex", alignItems: "center" }}
-                  >
-                    <Trash2 size={13} />
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+        ) : (
+          /* ─── PROJECTS TABLE ────────────────────────────────────── */
+          loading ? (
+            <div style={{ textAlign: "center", padding: 80, color: "hsl(215 25% 40%)" }}>
+              <Loader2 size={32} style={{ animation: "spin 1s linear infinite", margin: "0 auto 12px" }} />
+              <p>Loading projects from cloud...</p>
+            </div>
+          ) : projects.length === 0 ? (
+            <div style={{ textAlign: "center", padding: 80, borderRadius: 16, border: "1px dashed hsl(215 35% 20%)" }}>
+              <p style={{ color: "hsl(215 25% 45%)", marginBottom: 20 }}>No projects yet. Click "Seed Defaults" to load the 5 built-in projects, or add your own.</p>
+              <button onClick={handleSeed} style={{ padding: "10px 24px", borderRadius: 9, background: "hsl(28 95% 52%)", border: "none", color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+                Seed Default Projects
+              </button>
+            </div>
+          ) : (
+            <div style={{ borderRadius: 14, overflow: "hidden", border: "1px solid hsl(215 35% 16%)" }}>
+              {/* Table head */}
+              <div style={{ display: "grid", gridTemplateColumns: "56px 1fr 120px 140px 100px 90px 100px", padding: "11px 20px", background: "hsl(215 35% 12%)", borderBottom: "1px solid hsl(215 35% 18%)", fontSize: 11, fontWeight: 700, color: "hsl(215 25% 45%)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                <span>Image</span>
+                <span>Title / Code</span>
+                <span>Sector</span>
+                <span>Location</span>
+                <span>Area</span>
+                <span>Status</span>
+                <span style={{ textAlign: "right" }}>Actions</span>
+              </div>
+
+              {projects.map((p) => (
+                <div
+                  key={p.id}
+                  style={{ display: "grid", gridTemplateColumns: "56px 1fr 120px 140px 100px 90px 100px", padding: "14px 20px", borderBottom: "1px solid hsl(215 35% 13%)", alignItems: "center", gap: 8, background: "hsl(215 40% 8%)", transition: "background 0.15s" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "hsl(215 40% 10%)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "hsl(215 40% 8%)")}
+                >
+                  {/* Thumb */}
+                  <div style={{ width: 44, height: 36, borderRadius: 7, overflow: "hidden", background: "hsl(215 35% 14%)", flexShrink: 0 }}>
+                    {p.image && <img src={p.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
+                  </div>
+
+                  {/* Title */}
+                  <div>
+                    <p style={{ fontSize: 13.5, fontWeight: 600, color: "#fff", marginBottom: 2 }}>{p.title}</p>
+                    <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                      <span style={{ fontSize: 11, color: "hsl(28 95% 58%)", fontWeight: 700 }}>{p.code}</span>
+                      {p.is_default && (
+                        <span style={{ fontSize: 9.5, fontWeight: 700, padding: "1px 7px", borderRadius: 4, background: "hsl(215 72% 18% / 0.6)", border: "1px solid hsl(215 50% 35%)", color: "hsl(215 60% 65%)" }}>DEFAULT</span>
+                      )}
+                    </div>
+                  </div>
+
+                  <span style={{ fontSize: 13, color: "hsl(215 20% 60%)" }}>{p.sector}</span>
+                  <span style={{ fontSize: 12.5, color: "hsl(215 20% 55%)" }}>{p.location || "—"}</span>
+                  <span style={{ fontSize: 12.5, color: "hsl(215 20% 55%)" }}>{p.area || "—"}</span>
+
+                  {/* Status badge */}
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 10px", borderRadius: 999, fontSize: 11, fontWeight: 700, background: p.status === "active" ? "hsl(160 84% 39% / 0.1)" : "hsl(215 35% 16%)", color: p.status === "active" ? "hsl(160 84% 50%)" : "hsl(215 25% 45%)", border: `1px solid ${p.status === "active" ? "hsl(160 84% 39% / 0.3)" : "hsl(215 35% 22%)"}` }}>
+                    <span style={{ width: 5, height: 5, borderRadius: "50%", background: "currentColor" }} />
+                    {p.status}
+                  </span>
+
+                  {/* Actions */}
+                  <div style={{ display: "flex", gap: 6, justifyContent: "flex-end" }}>
+                    <button
+                      onClick={() => openEdit(p)}
+                      title="Edit"
+                      style={{ padding: "6px 10px", borderRadius: 7, background: "hsl(215 35% 16%)", border: "1px solid hsl(215 35% 22%)", color: "hsl(215 20% 65%)", cursor: "pointer", display: "flex", alignItems: "center" }}
+                    >
+                      <Edit2 size={13} />
+                    </button>
+                    <button
+                      onClick={() => setDeleteTarget(p.id)}
+                      title="Delete"
+                      style={{ padding: "6px 10px", borderRadius: 7, background: "hsl(0 80% 60% / 0.08)", border: "1px solid hsl(0 80% 60% / 0.2)", color: "hsl(0 80% 65%)", cursor: "pointer", display: "flex", alignItems: "center" }}
+                    >
+                      <Trash2 size={13} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )
         )}
       </div>
 
@@ -788,6 +969,341 @@ export default function AdminProjectsPage() {
                   ) : (
                     <><Check size={16} /> {editingId ? "Save Changes" : "Add Project"}</>
                   )}
+                </button>
+              </div>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* ─── TEAM MEMBER EDIT DRAWER ─────────────────────────────── */}
+      <AnimatePresence>
+        {teamDrawerOpen && editingTeamMember && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setTeamDrawerOpen(false)}
+              style={{
+                position: "fixed",
+                inset: 0,
+                background: "hsl(215 40% 5% / 0.7)",
+                zIndex: 40,
+                backdropFilter: "blur(4px)",
+              }}
+            />
+            <motion.aside
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 320, damping: 32 }}
+              style={{
+                position: "fixed",
+                top: 0,
+                right: 0,
+                bottom: 0,
+                width: "min(480px, 98vw)",
+                background: "hsl(215 35% 10%)",
+                borderLeft: "1px solid hsl(215 35% 18%)",
+                zIndex: 50,
+                overflowY: "auto",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              {/* Drawer header */}
+              <div
+                style={{
+                  padding: "22px 28px",
+                  borderBottom: "1px solid hsl(215 35% 16%)",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  position: "sticky",
+                  top: 0,
+                  background: "hsl(215 35% 10%)",
+                  zIndex: 1,
+                }}
+              >
+                <div>
+                  <h2
+                    style={{
+                      fontFamily: '"Sora", sans-serif',
+                      fontWeight: 700,
+                      fontSize: "1.1rem",
+                      color: "#fff",
+                      margin: 0,
+                    }}
+                  >
+                    Edit Leader Profile
+                  </h2>
+                  <p
+                    style={{
+                      fontSize: 12,
+                      color: "hsl(28 95% 58%)",
+                      margin: "3px 0 0",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {editingTeamMember.name}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setTeamDrawerOpen(false)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "hsl(215 25% 50%)",
+                    cursor: "pointer",
+                    display: "flex",
+                  }}
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Form */}
+              <div
+                style={{
+                  padding: "24px 28px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 18,
+                  flex: 1,
+                }}
+              >
+                {/* Photo upload / preview */}
+                <div>
+                  <label style={labelStyle}>Profile Photo</label>
+                  <div
+                    onClick={() => teamFileRef.current?.click()}
+                    style={{
+                      width: "100%",
+                      height: 240,
+                      borderRadius: 12,
+                      border: "2px dashed hsl(215 35% 24%)",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                      overflow: "hidden",
+                      position: "relative",
+                      background: teamPhotoPreview ? "transparent" : "hsl(215 35% 13%)",
+                      transition: "border-color 0.2s",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.borderColor = "hsl(28 95% 52%)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.borderColor = "hsl(215 35% 24%)")
+                    }
+                  >
+                    {teamPhotoPreview ? (
+                      <>
+                        <img
+                          src={teamPhotoPreview}
+                          alt="preview"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            objectPosition: "top center",
+                          }}
+                        />
+                        <div
+                          style={{
+                            position: "absolute",
+                            inset: 0,
+                            background: "hsl(215 40% 7% / 0.55)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            opacity: 0,
+                            transition: "opacity 0.2s",
+                          }}
+                          onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                          onMouseLeave={(e) => (e.currentTarget.style.opacity = "0")}
+                        >
+                          <span
+                            style={{
+                              color: "#fff",
+                              fontSize: 13,
+                              fontWeight: 600,
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 6,
+                            }}
+                          >
+                            <Camera size={16} /> Click to Upload New Photo
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <ImagePlus size={28} color="hsl(215 25% 45%)" />
+                        <p style={{ fontSize: 13, color: "hsl(215 25% 45%)", marginTop: 10 }}>
+                          Click to upload profile photo
+                        </p>
+                        <p style={{ fontSize: 11, color: "hsl(215 25% 35%)", marginTop: 4 }}>
+                          JPG, PNG, WEBP
+                        </p>
+                      </>
+                    )}
+                  </div>
+                  <input
+                    ref={teamFileRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={onTeamFileChange}
+                    style={{ display: "none" }}
+                  />
+
+                  {/* OR paste URL / path */}
+                  <p style={{ fontSize: 11, color: "hsl(215 25% 40%)", marginTop: 8 }}>
+                    — or paste photo URL / path —
+                  </p>
+                  <input
+                    type="text"
+                    placeholder="/assets/team/... or https://..."
+                    value={editingTeamMember.photo}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setEditingTeamMember((prev) => (prev ? { ...prev, photo: val } : null));
+                      setTeamPhotoPreview(val);
+                    }}
+                    style={{ ...fieldStyle, marginTop: 6 }}
+                  />
+                </div>
+
+                {/* Name */}
+                <div>
+                  <label style={labelStyle}>Full Name</label>
+                  <input
+                    type="text"
+                    value={editingTeamMember.name}
+                    onChange={(e) =>
+                      setEditingTeamMember((prev) =>
+                        prev ? { ...prev, name: e.target.value } : null
+                      )
+                    }
+                    style={fieldStyle}
+                  />
+                </div>
+
+                {/* Role / Designation */}
+                <div>
+                  <label style={labelStyle}>Role / Designation</label>
+                  <input
+                    type="text"
+                    value={editingTeamMember.role}
+                    onChange={(e) =>
+                      setEditingTeamMember((prev) =>
+                        prev ? { ...prev, role: e.target.value } : null
+                      )
+                    }
+                    style={fieldStyle}
+                  />
+                </div>
+
+                {/* Qualification */}
+                <div>
+                  <label style={labelStyle}>Qualification (Optional)</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. M.Tech. Structures"
+                    value={editingTeamMember.qualification || ""}
+                    onChange={(e) =>
+                      setEditingTeamMember((prev) =>
+                        prev ? { ...prev, qualification: e.target.value } : null
+                      )
+                    }
+                    style={fieldStyle}
+                  />
+                </div>
+
+                {/* Experience */}
+                <div>
+                  <label style={labelStyle}>Experience Tag</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 28+ Years or 10+ Years"
+                    value={editingTeamMember.experience}
+                    onChange={(e) =>
+                      setEditingTeamMember((prev) =>
+                        prev ? { ...prev, experience: e.target.value } : null
+                      )
+                    }
+                    style={fieldStyle}
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label style={labelStyle}>Email Address</label>
+                  <input
+                    type="email"
+                    value={editingTeamMember.email}
+                    onChange={(e) =>
+                      setEditingTeamMember((prev) =>
+                        prev ? { ...prev, email: e.target.value } : null
+                      )
+                    }
+                    style={fieldStyle}
+                  />
+                </div>
+              </div>
+
+              {/* Drawer footer actions */}
+              <div
+                style={{
+                  padding: "18px 28px",
+                  borderTop: "1px solid hsl(215 35% 16%)",
+                  display: "flex",
+                  gap: 12,
+                  position: "sticky",
+                  bottom: 0,
+                  background: "hsl(215 35% 10%)",
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setTeamDrawerOpen(false)}
+                  style={{
+                    flex: 1,
+                    padding: "11px",
+                    borderRadius: 8,
+                    background: "hsl(215 35% 16%)",
+                    border: "1px solid hsl(215 35% 24%)",
+                    color: "hsl(215 20% 70%)",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSaveTeamMember}
+                  style={{
+                    flex: 2,
+                    padding: "11px",
+                    borderRadius: 8,
+                    background: "hsl(28 95% 52%)",
+                    border: "none",
+                    color: "#fff",
+                    fontSize: 14,
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 7,
+                  }}
+                >
+                  <Check size={16} /> Save Profile & Photo
                 </button>
               </div>
             </motion.aside>
