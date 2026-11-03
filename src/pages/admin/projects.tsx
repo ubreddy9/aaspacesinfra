@@ -19,6 +19,7 @@ import {
 } from "@/lib/projectStore";
 import {
   getTeamMembers,
+  fetchTeamFromCloud,
   addTeamMember,
   updateTeamMember,
   deleteTeamMember,
@@ -90,6 +91,9 @@ export default function AdminProjectsPage() {
     if (!checkAdminAuth()) { navigate("/admin", { replace: true }); return; }
     loadProjects();
     setTeamMembers(getTeamMembers());
+    fetchTeamFromCloud().then((m) => {
+      if (m && m.length > 0) setTeamMembers(m);
+    });
   }, []);
 
   async function loadProjects() {
@@ -187,19 +191,34 @@ export default function AdminProjectsPage() {
     setTeamDrawerOpen(true);
   }
 
-  function onTeamFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+  async function onTeamFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0];
     if (!f) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const dataUrl = reader.result as string;
-      setTeamPhotoPreview(dataUrl);
-      setEditingTeamMember((prev) => (prev ? { ...prev, photo: dataUrl } : null));
-    };
-    reader.readAsDataURL(f);
+
+    // Immediate preview
+    const previewUrl = URL.createObjectURL(f);
+    setTeamPhotoPreview(previewUrl);
+
+    // Upload directly to Supabase cloud storage so all devices can see it
+    try {
+      toast("Uploading photo to cloud storage...");
+      const publicUrl = await uploadProjectImage(f);
+      setTeamPhotoPreview(publicUrl);
+      setEditingTeamMember((prev) => (prev ? { ...prev, photo: publicUrl } : null));
+      toast("Photo uploaded to cloud successfully!");
+    } catch (err) {
+      console.warn("Cloud storage upload fallback:", err);
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataUrl = reader.result as string;
+        setTeamPhotoPreview(dataUrl);
+        setEditingTeamMember((prev) => (prev ? { ...prev, photo: dataUrl } : null));
+      };
+      reader.readAsDataURL(f);
+    }
   }
 
-  function handleSaveTeamMember() {
+  async function handleSaveTeamMember() {
     if (!editingTeamMember) return;
     if (!editingTeamMember.name.trim()) {
       toast("Name is required", "error");
@@ -213,7 +232,7 @@ export default function AdminProjectsPage() {
     const finalPhoto = teamPhotoPreview || editingTeamMember.photo || "/assets/brand/logo.png";
 
     if (isAddingNewTeam) {
-      addTeamMember({
+      await addTeamMember({
         name: editingTeamMember.name,
         role: editingTeamMember.role,
         qualification: editingTeamMember.qualification || "",
@@ -222,9 +241,9 @@ export default function AdminProjectsPage() {
         photo: finalPhoto,
         accent: "#0f2b48",
       });
-      toast(`Added ${editingTeamMember.name} to team!`);
+      toast(`Added ${editingTeamMember.name} to cloud!`);
     } else {
-      updateTeamMember(editingTeamMember.id, {
+      await updateTeamMember(editingTeamMember.id, {
         name: editingTeamMember.name,
         role: editingTeamMember.role,
         qualification: editingTeamMember.qualification,
@@ -232,24 +251,27 @@ export default function AdminProjectsPage() {
         email: editingTeamMember.email,
         photo: finalPhoto,
       });
-      toast(`Updated ${editingTeamMember.name} successfully!`);
+      toast(`Updated ${editingTeamMember.name} in cloud!`);
     }
 
-    setTeamMembers(getTeamMembers());
+    const updated = await fetchTeamFromCloud();
+    setTeamMembers(updated);
     setTeamDrawerOpen(false);
   }
 
-  function handleDeleteTeam(id: string) {
-    deleteTeamMember(id);
-    setTeamMembers(getTeamMembers());
+  async function handleDeleteTeam(id: string) {
+    await deleteTeamMember(id);
+    const updated = await fetchTeamFromCloud();
+    setTeamMembers(updated);
     setDeleteTeamTarget(null);
-    toast("Team member removed");
+    toast("Team member removed from cloud");
   }
 
-  function handleResetTeam() {
+  async function handleResetTeam() {
     if (confirm("Reset leadership team photos and info to original defaults?")) {
-      resetTeamMembers();
-      setTeamMembers(getTeamMembers());
+      await resetTeamMembers();
+      const updated = await fetchTeamFromCloud();
+      setTeamMembers(updated);
       toast("Leadership team reset to defaults");
     }
   }

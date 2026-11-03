@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { Mail, Award, ShieldCheck, Briefcase } from "lucide-react";
-import { getTeamMembers, type TeamMember } from "@/lib/teamStore";
+import { getTeamMembers, fetchTeamFromCloud, type TeamMember } from "@/lib/teamStore";
 
 interface TeamSectionProps {
   className?: string;
@@ -12,6 +12,10 @@ export default function TeamSection({ className = "", bgLight = true }: TeamSect
   const [team, setTeam] = useState<TeamMember[]>(getTeamMembers());
 
   useEffect(() => {
+    fetchTeamFromCloud().then((members) => {
+      if (members && members.length > 0) setTeam(members);
+    });
+
     const handleUpdate = () => {
       setTeam(getTeamMembers());
     };

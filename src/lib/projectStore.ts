@@ -442,7 +442,94 @@ const DUMMY_TITLES = new Set([
   'sanathan industries',
 ]);
 
-/** Fetch all active projects from Supabase, merging with verified seed projects so all 11 delivered projects are always visible. */
+interface PackedDescription {
+  text: string;
+  client?: string;
+  tonnage?: string;
+  timeline?: string;
+  year?: string;
+  highlights?: string[];
+  gallery?: string[];
+}
+
+export function unpackProjectRow(row: any): Project {
+  let descriptionText = row.description || "";
+  let client = row.client || "";
+  let tonnage = row.tonnage || "";
+  let timeline = row.timeline || "";
+  let year = row.year || "";
+  let highlights: string[] = Array.isArray(row.highlights) ? row.highlights : [];
+  let gallery: string[] = Array.isArray(row.gallery) ? row.gallery : (row.image ? [row.image] : []);
+
+  if (typeof row.description === "string" && row.description.trim().startsWith("{")) {
+    try {
+      const parsed: PackedDescription = JSON.parse(row.description);
+      if (parsed && typeof parsed === "object") {
+        descriptionText = parsed.text ?? descriptionText;
+        if (!client && parsed.client) client = parsed.client;
+        if (!tonnage && parsed.tonnage) tonnage = parsed.tonnage;
+        if (!timeline && parsed.timeline) timeline = parsed.timeline;
+        if (!year && parsed.year) year = parsed.year;
+        if (highlights.length === 0 && Array.isArray(parsed.highlights)) highlights = parsed.highlights;
+        if (gallery.length === 0 && Array.isArray(parsed.gallery)) gallery = parsed.gallery;
+      }
+    } catch {}
+  }
+
+  return {
+    id: row.id,
+    code: row.code,
+    title: row.title,
+    sector: row.sector || "Warehouse",
+    filter: row.filter || "warehouse",
+    client,
+    location: row.location || "",
+    area: row.area || "",
+    tonnage,
+    timeline,
+    year,
+    description: descriptionText,
+    highlights,
+    image: row.image || (gallery.length > 0 ? gallery[0] : ""),
+    gallery,
+    status: row.status || "active",
+    is_default: Boolean(row.is_default),
+    created_at: row.created_at,
+    updated_at: row.updated_at,
+  };
+}
+
+export function packProjectForSupabase(data: Partial<ProjectInput> & { id?: string; is_default?: boolean }) {
+  const packedDesc: PackedDescription = {
+    text: data.description || "",
+    client: data.client || "",
+    tonnage: data.tonnage || "",
+    timeline: data.timeline || "",
+    year: data.year || "",
+    highlights: data.highlights || [],
+    gallery: data.gallery || (data.image ? [data.image] : []),
+  };
+
+  const payload: Record<string, any> = {
+    code: data.code,
+    title: data.title,
+    sector: data.sector || "Warehouse",
+    filter: data.filter || "warehouse",
+    location: data.location || "",
+    area: data.area || "",
+    description: JSON.stringify(packedDesc),
+    image: data.image || (data.gallery && data.gallery.length > 0 ? data.gallery[0] : ""),
+    status: data.status || "active",
+    is_default: Boolean(data.is_default),
+    updated_at: new Date().toISOString(),
+  };
+
+  if (data.id) payload.id = data.id;
+
+  return payload;
+}
+
+/** Fetch all active projects from Supabase, merging with verified seed projects so all delivered projects are always visible. */
 export async function getProjects(): Promise<Project[]> {
   const deletedIds = getDeletedIds();
   const editedOverrides = getEditedOverrides();
@@ -451,17 +538,18 @@ export async function getProjects(): Promise<Project[]> {
   let remoteProjects: Project[] = [];
   try {
     const { data, error } = await supabase
-      .from('projects')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .from("projects")
+      .select("*")
+      .neq("sector", "team")
+      .order("created_at", { ascending: false });
 
     if (!error && data) {
-      remoteProjects = (data as Project[]).filter(
-        (r) => !DUMMY_TITLES.has((r.title || '').trim().toLowerCase())
-      );
+      remoteProjects = (data as any[])
+        .map(unpackProjectRow)
+        .filter((r) => !DUMMY_TITLES.has((r.title || "").trim().toLowerCase()));
     }
   } catch (err) {
-    console.warn('Supabase fetch failed, falling back:', err);
+    console.warn("Supabase fetch failed, falling back:", err);
   }
 
   // Fallback codes
@@ -573,26 +661,25 @@ export async function addProject(data: ProjectInput): Promise<Project> {
       ? crypto.randomUUID()
       : `b0000000-${Math.random().toString(16).slice(2, 6)}-4000-8000-${Date.now().toString(16).padStart(12, '0')}`;
 
+  const payload = packProjectForSupabase({ ...data, id: newId });
+
   try {
     const { data: row, error } = await supabase
       .from('projects')
-      .insert({
-        id: newId,
-        ...data,
-        updated_at: new Date().toISOString(),
-      })
+      .insert(payload)
       .select()
       .maybeSingle();
 
     if (!error && row) {
       notifyProjectsChanged();
-      return row as Project;
+      return unpackProjectRow(row);
     }
+    if (error) console.warn('Supabase add returned error:', error);
   } catch (err) {
     console.warn('Supabase add error, saving locally:', err);
   }
 
-  // Fallback to local storage if Supabase fails or schema restricts columns
+  // Fallback to local storage if Supabase fails
   const localProject: Project = {
     id: newId,
     ...data,
@@ -610,24 +697,44 @@ export async function updateProject(
 ): Promise<Project> {
   saveEditedOverride(id, data);
 
-  // If valid UUID and not a synthetic seed UUID, attempt to update in Supabase
-  const isSeedId = SEED_UUIDS.includes(id);
-  if (isUuid(id) && !isSeedId) {
-    try {
-      const { data: row } = await supabase
-        .from('projects')
-        .update({ ...data, updated_at: new Date().toISOString() })
-        .eq('id', id)
-        .select()
-        .maybeSingle();
+  // Upsert to Supabase so changes reflect across all browsers and devices
+  try {
+    const all = await getProjects();
+    const existing = all.find((p) => p.id === id);
+    const fullMerged: ProjectInput = {
+      code: data.code ?? existing?.code ?? 'AA / PEB',
+      title: data.title ?? existing?.title ?? 'PEB Project',
+      sector: data.sector ?? existing?.sector ?? 'Warehouse',
+      filter: data.filter ?? existing?.filter ?? 'warehouse',
+      client: data.client ?? existing?.client ?? '',
+      location: data.location ?? existing?.location ?? '',
+      area: data.area ?? existing?.area ?? '',
+      tonnage: data.tonnage ?? existing?.tonnage ?? '',
+      timeline: data.timeline ?? existing?.timeline ?? '',
+      year: data.year ?? existing?.year ?? '',
+      description: data.description ?? existing?.description ?? '',
+      highlights: data.highlights ?? existing?.highlights ?? [],
+      image: data.image ?? existing?.image ?? '',
+      gallery: data.gallery ?? existing?.gallery ?? [],
+      status: data.status ?? existing?.status ?? 'active',
+      is_default: data.is_default ?? existing?.is_default ?? false,
+    };
 
-      if (row) {
-        notifyProjectsChanged();
-        return row as Project;
-      }
-    } catch (err) {
-      console.warn('Supabase update warning:', err);
+    const payload = packProjectForSupabase({ ...fullMerged, id });
+
+    const { data: row, error } = await supabase
+      .from('projects')
+      .upsert(payload)
+      .select()
+      .maybeSingle();
+
+    if (!error && row) {
+      notifyProjectsChanged();
+      return unpackProjectRow(row);
     }
+    if (error) console.warn('Supabase update returned error:', error);
+  } catch (err) {
+    console.warn('Supabase update warning:', err);
   }
 
   const all = await getProjects();
@@ -651,17 +758,16 @@ export async function deleteProject(id: string): Promise<void> {
     addDeletedId(seed.id);
   }
 
-  // Only send to Supabase if valid custom UUID to avoid unnecessary requests for client seed projects
-  if (isUuid(id) && !SEED_UUIDS.includes(id)) {
-    try {
-      const { error } = await supabase.from('projects').delete().eq('id', id);
-      if (error && error.code !== 'PGRST116') {
-        console.warn('Supabase delete warning:', error.message);
-      }
-    } catch (err) {
-      console.warn('Supabase delete error:', err);
+  // Delete from Supabase cloud database
+  try {
+    await supabase.from('projects').delete().eq('id', id);
+    if (seed?.code) {
+      await supabase.from('projects').delete().eq('code', seed.code);
     }
+  } catch (err) {
+    console.warn('Supabase delete error:', err);
   }
+
   notifyProjectsChanged();
 }
 
