@@ -19,7 +19,9 @@ import {
 } from "@/lib/projectStore";
 import {
   getTeamMembers,
+  addTeamMember,
   updateTeamMember,
+  deleteTeamMember,
   resetTeamMembers,
   type TeamMember,
 } from "@/lib/teamStore";
@@ -80,6 +82,9 @@ export default function AdminProjectsPage() {
   const [teamDrawerOpen, setTeamDrawerOpen] = useState(false);
   const [teamPhotoPreview, setTeamPhotoPreview] = useState<string>("");
   const teamFileRef = useRef<HTMLInputElement>(null);
+
+  const [isAddingNewTeam, setIsAddingNewTeam] = useState(false);
+  const [deleteTeamTarget, setDeleteTeamTarget] = useState<string | null>(null);
 
   useEffect(() => {
     if (!checkAdminAuth()) { navigate("/admin", { replace: true }); return; }
@@ -159,7 +164,24 @@ export default function AdminProjectsPage() {
     toast("Primary cover photo updated");
   }
 
+  function openAddTeam() {
+    setIsAddingNewTeam(true);
+    setEditingTeamMember({
+      id: "",
+      name: "",
+      role: "",
+      qualification: "",
+      experience: "5+ Years",
+      email: "",
+      photo: "",
+      accent: "#0f2b48",
+    });
+    setTeamPhotoPreview("");
+    setTeamDrawerOpen(true);
+  }
+
   function openEditTeam(m: TeamMember) {
+    setIsAddingNewTeam(false);
     setEditingTeamMember({ ...m });
     setTeamPhotoPreview(m.photo);
     setTeamDrawerOpen(true);
@@ -179,17 +201,49 @@ export default function AdminProjectsPage() {
 
   function handleSaveTeamMember() {
     if (!editingTeamMember) return;
-    updateTeamMember(editingTeamMember.id, {
-      name: editingTeamMember.name,
-      role: editingTeamMember.role,
-      qualification: editingTeamMember.qualification,
-      experience: editingTeamMember.experience,
-      email: editingTeamMember.email,
-      photo: teamPhotoPreview || editingTeamMember.photo,
-    });
+    if (!editingTeamMember.name.trim()) {
+      toast("Name is required", "error");
+      return;
+    }
+    if (!editingTeamMember.role.trim()) {
+      toast("Role / Designation is required", "error");
+      return;
+    }
+
+    const finalPhoto = teamPhotoPreview || editingTeamMember.photo || "/assets/brand/logo.png";
+
+    if (isAddingNewTeam) {
+      addTeamMember({
+        name: editingTeamMember.name,
+        role: editingTeamMember.role,
+        qualification: editingTeamMember.qualification || "",
+        experience: editingTeamMember.experience || "1+ Years",
+        email: editingTeamMember.email || "info@aaspacesinfra.com",
+        photo: finalPhoto,
+        accent: "#0f2b48",
+      });
+      toast(`Added ${editingTeamMember.name} to team!`);
+    } else {
+      updateTeamMember(editingTeamMember.id, {
+        name: editingTeamMember.name,
+        role: editingTeamMember.role,
+        qualification: editingTeamMember.qualification,
+        experience: editingTeamMember.experience,
+        email: editingTeamMember.email,
+        photo: finalPhoto,
+      });
+      toast(`Updated ${editingTeamMember.name} successfully!`);
+    }
+
     setTeamMembers(getTeamMembers());
     setTeamDrawerOpen(false);
-    toast(`${editingTeamMember.name} updated successfully!`);
+  }
+
+  function handleDeleteTeam(id: string) {
+    deleteTeamMember(id);
+    setTeamMembers(getTeamMembers());
+    setDeleteTeamTarget(null);
+    toast("Team member removed");
   }
 
   function handleResetTeam() {
@@ -418,7 +472,7 @@ export default function AdminProjectsPage() {
                 transition: "all 0.2s",
               }}
             >
-              <Users size={14} /> Leadership Team (2)
+              <Users size={14} /> Leadership Team ({teamMembers.length})
             </button>
           </div>
         </div>
@@ -443,12 +497,20 @@ export default function AdminProjectsPage() {
               </button>
             </>
           ) : (
-            <button
-              onClick={handleResetTeam}
-              style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 8, background: "hsl(215 35% 16%)", border: "1px solid hsl(215 35% 24%)", color: "hsl(215 20% 70%)", fontSize: 13, fontWeight: 600, cursor: "pointer" }}
-            >
-              <RotateCcw size={14} /> Reset Team Defaults
-            </button>
+            <>
+              <button
+                onClick={handleResetTeam}
+                style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 8, background: "hsl(215 35% 16%)", border: "1px solid hsl(215 35% 24%)", color: "hsl(215 20% 70%)", fontSize: 13, fontWeight: 600, cursor: "pointer" }}
+              >
+                <RotateCcw size={14} /> Reset Defaults
+              </button>
+              <button
+                onClick={openAddTeam}
+                style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 18px", borderRadius: 8, background: "hsl(28 95% 52%)", border: "none", color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
+              >
+                <Plus size={15} /> Add Team Member
+              </button>
+            </>
           )}
 
           <button onClick={handleLogout} style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, background: "hsl(215 35% 16%)", border: "1px solid hsl(215 35% 24%)", color: "hsl(215 20% 60%)", fontSize: 13, cursor: "pointer" }}>
@@ -465,15 +527,23 @@ export default function AdminProjectsPage() {
             <div style={{ marginBottom: 28, background: "hsl(215 35% 11%)", padding: "20px 24px", borderRadius: 12, border: "1px solid hsl(215 35% 18%)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
               <div>
                 <h2 style={{ fontSize: 20, fontWeight: 700, color: "#fff", fontFamily: '"Sora", sans-serif', margin: "0 0 6px" }}>
-                  Leadership Team Photos & Details
+                  Leadership Team Photos & Profiles
                 </h2>
                 <p style={{ fontSize: 13, color: "hsl(215 20% 60%)", margin: 0 }}>
-                  Manage executive profile photos for Mr. B. Upender Reddy and Mr. Ch. Gangadhar. Updates take effect immediately across the Homepage and About Us page.
+                  Add or manage profiles for directors, senior structural engineers, and project leads. Updates take effect immediately across the Homepage and About Us page.
                 </p>
               </div>
-              <span style={{ padding: "4px 12px", borderRadius: 999, background: "hsl(160 84% 39% / 0.15)", border: "1px solid hsl(160 84% 39% / 0.3)", color: "hsl(160 84% 50%)", fontSize: 12, fontWeight: 700 }}>
-                2 Executive Profiles Active
-              </span>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ padding: "4px 12px", borderRadius: 999, background: "hsl(160 84% 39% / 0.15)", border: "1px solid hsl(160 84% 39% / 0.3)", color: "hsl(160 84% 50%)", fontSize: 12, fontWeight: 700 }}>
+                  {teamMembers.length} Profiles Active
+                </span>
+                <button
+                  onClick={openAddTeam}
+                  style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "7px 16px", borderRadius: 8, background: "hsl(28 95% 52%)", border: "none", color: "#fff", fontSize: 12.5, fontWeight: 700, cursor: "pointer" }}
+                >
+                  <Plus size={14} /> Add Member
+                </button>
+              </div>
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
@@ -497,7 +567,11 @@ export default function AdminProjectsPage() {
                       style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }}
                       onError={(e) => {
                         (e.target as HTMLImageElement).src =
-                          member.id === "upender" ? "/assets/team/upender-reddy.jpg" : "/assets/team/gangadhar.jpg";
+                          member.id === "upender"
+                            ? "/assets/team/upender-reddy.jpg"
+                            : member.id === "gangadhar"
+                            ? "/assets/team/gangadhar.jpg"
+                            : "/assets/brand/logo.png";
                       }}
                     />
                     <div style={{ position: "absolute", top: 14, right: 14, background: "hsl(215 40% 8% / 0.8)", backdropFilter: "blur(6px)", border: "1px solid hsl(0 0% 100% / 0.15)", padding: "4px 12px", borderRadius: 999, fontSize: 11, fontWeight: 700, color: "#fff" }}>
@@ -526,20 +600,70 @@ export default function AdminProjectsPage() {
                       </p>
                     </div>
 
-                    <button
-                      onClick={() => openEditTeam(member)}
-                      style={{
-                        display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                        width: "100%", padding: "11px 16px", borderRadius: 10,
-                        background: "hsl(28 95% 52%)", border: "none", color: "#fff",
-                        fontSize: 13, fontWeight: 700, cursor: "pointer",
-                      }}
-                    >
-                      <Camera size={15} /> Edit Photo & Details
-                    </button>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      <button
+                        onClick={() => openEditTeam(member)}
+                        style={{
+                          flex: 1,
+                          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                          padding: "11px 16px", borderRadius: 10,
+                          background: "hsl(28 95% 52%)", border: "none", color: "#fff",
+                          fontSize: 13, fontWeight: 700, cursor: "pointer",
+                        }}
+                      >
+                        <Camera size={15} /> Edit Photo & Details
+                      </button>
+                      <button
+                        onClick={() => setDeleteTeamTarget(member.id)}
+                        title="Remove Team Member"
+                        style={{
+                          padding: "11px 14px", borderRadius: 10,
+                          background: "hsl(0 80% 60% / 0.1)", border: "1px solid hsl(0 80% 60% / 0.25)",
+                          color: "hsl(0 80% 65%)", cursor: "pointer",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                        }}
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
+
+              {/* Add New Team Member Quick Card */}
+              <div
+                onClick={openAddTeam}
+                style={{
+                  background: "hsl(215 35% 10% / 0.6)",
+                  border: "2px dashed hsl(215 35% 24%)",
+                  borderRadius: 16,
+                  minHeight: 380,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                  padding: 24,
+                  textAlign: "center",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "hsl(28 95% 52%)";
+                  e.currentTarget.style.background = "hsl(215 35% 12%)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "hsl(215 35% 24%)";
+                  e.currentTarget.style.background = "hsl(215 35% 10% / 0.6)";
+                }}
+              >
+                <div style={{ width: 56, height: 56, borderRadius: "50%", background: "hsl(28 95% 52% / 0.15)", border: "1px solid hsl(28 95% 52% / 0.3)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
+                  <Plus size={26} color="hsl(28 95% 58%)" />
+                </div>
+                <h4 style={{ fontSize: 16, fontWeight: 700, color: "#fff", margin: "0 0 6px" }}>Add New Team Member</h4>
+                <p style={{ fontSize: 12.5, color: "hsl(215 20% 55%)", margin: 0, maxWidth: 220 }}>
+                  Add a director, structural engineer, or manager to the leadership section.
+                </p>
+              </div>
             </div>
           </div>
         ) : (
@@ -1036,7 +1160,7 @@ export default function AdminProjectsPage() {
                       margin: 0,
                     }}
                   >
-                    Edit Leader Profile
+                    {isAddingNewTeam ? "Add New Team Member" : "Edit Leader Profile"}
                   </h2>
                   <p
                     style={{
@@ -1046,7 +1170,9 @@ export default function AdminProjectsPage() {
                       fontWeight: 600,
                     }}
                   >
-                    {editingTeamMember.name}
+                    {isAddingNewTeam
+                      ? "Enter details & upload photo for public website"
+                      : editingTeamMember.name}
                   </p>
                 </div>
                 <button
@@ -1303,11 +1429,114 @@ export default function AdminProjectsPage() {
                     gap: 7,
                   }}
                 >
-                  <Check size={16} /> Save Profile & Photo
+                  {isAddingNewTeam ? (
+                    <><Plus size={16} /> Add Team Member</>
+                  ) : (
+                    <><Check size={16} /> Save Profile & Photo</>
+                  )}
                 </button>
               </div>
             </motion.aside>
           </>
+        )}
+      </AnimatePresence>
+
+      {/* ─── DELETE TEAM CONFIRM ─────────────────────────────────── */}
+      <AnimatePresence>
+        {deleteTeamTarget && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "hsl(215 40% 5% / 0.8)",
+              zIndex: 60,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              style={{
+                background: "hsl(215 35% 12%)",
+                border: "1px solid hsl(215 35% 20%)",
+                borderRadius: 14,
+                padding: 32,
+                maxWidth: 360,
+                textAlign: "center",
+              }}
+            >
+              <div
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: 12,
+                  background: "hsl(0 80% 60% / 0.1)",
+                  border: "1px solid hsl(0 80% 60% / 0.3)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  margin: "0 auto 16px",
+                }}
+              >
+                <Trash2 size={20} color="hsl(0 80% 65%)" />
+              </div>
+              <h3
+                style={{
+                  fontFamily: '"Sora", sans-serif',
+                  fontWeight: 700,
+                  fontSize: "1.1rem",
+                  color: "#fff",
+                  marginBottom: 10,
+                }}
+              >
+                Remove Team Member?
+              </h3>
+              <p style={{ fontSize: 13.5, color: "hsl(215 20% 55%)", marginBottom: 24 }}>
+                This will remove the profile and photo from the public website.
+              </p>
+              <div style={{ display: "flex", gap: 10 }}>
+                <button
+                  onClick={() => setDeleteTeamTarget(null)}
+                  style={{
+                    flex: 1,
+                    padding: "10px",
+                    borderRadius: 8,
+                    background: "hsl(215 35% 16%)",
+                    border: "1px solid hsl(215 35% 24%)",
+                    color: "hsl(215 20% 70%)",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => handleDeleteTeam(deleteTeamTarget)}
+                  style={{
+                    flex: 1,
+                    padding: "10px",
+                    borderRadius: 8,
+                    background: "hsl(0 80% 52%)",
+                    border: "none",
+                    color: "#fff",
+                    fontSize: 14,
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  Yes, Remove
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
 

@@ -40,8 +40,8 @@ export default function TeamSection({ className = "", bgLight = true }: TeamSect
           </p>
         </div>
 
-        {/* 2 Leadership Cards (Gangadhar Sir and Upendra Sir only) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        {/* Dynamic Leadership Cards Grid */}
+        <div className={`grid grid-cols-1 ${team.length === 1 ? "max-w-md" : team.length === 2 ? "md:grid-cols-2 max-w-4xl" : "md:grid-cols-2 lg:grid-cols-3 max-w-6xl"} gap-8 mx-auto`}>
           {team.map((member, i) => (
             <motion.div
               key={member.id}
