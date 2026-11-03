@@ -171,8 +171,21 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-slate-800 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="pt-8 border-t border-slate-800 text-xs text-slate-500 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
           <p>&copy; {new Date().getFullYear()} AA Spaces Infra. All rights reserved. PEB- Engineered to strength.</p>
+          
+          <div className="flex items-center space-x-1.5 text-slate-500">
+            <span>Designed by</span>
+            <a
+              href="https://instagram.com/immanuels_realm"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-amber-500 transition-colors font-medium hover:underline underline-offset-4"
+            >
+              Immanuel
+            </a>
+          </div>
+
           <div className="flex items-center space-x-4">
             <Link to="/about" className="hover:text-slate-400 no-underline">About</Link>
             <span>&bull;</span>
