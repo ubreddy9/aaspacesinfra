@@ -499,43 +499,59 @@ export default function AdminProjectsPage() {
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+        {/* Action Buttons — Visible from both tabs */}
+        <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+          <button
+            onClick={() => {
+              setActiveTab("projects");
+              openAdd();
+            }}
+            style={{
+              display: "flex", alignItems: "center", gap: 7,
+              padding: "9px 16px", borderRadius: 8,
+              background: activeTab === "projects" ? "hsl(28 95% 52%)" : "hsl(215 35% 16%)",
+              border: activeTab === "projects" ? "none" : "1px solid hsl(215 35% 24%)",
+              color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer",
+            }}
+          >
+            <Plus size={15} /> Add Project
+          </button>
+
+          <button
+            onClick={() => {
+              setActiveTab("team");
+              openAddTeam();
+            }}
+            style={{
+              display: "flex", alignItems: "center", gap: 7,
+              padding: "9px 16px", borderRadius: 8,
+              background: activeTab === "team" ? "hsl(28 95% 52%)" : "hsl(215 35% 16%)",
+              border: activeTab === "team" ? "none" : "1px solid hsl(215 35% 24%)",
+              color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer",
+            }}
+          >
+            <Plus size={15} /> Add Team Member
+          </button>
+
           {activeTab === "projects" ? (
-            <>
-              <button
-                onClick={handleSeed}
-                disabled={seeding}
-                style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 8, background: "hsl(215 35% 16%)", border: "1px solid hsl(215 35% 24%)", color: "hsl(215 20% 70%)", fontSize: 13, fontWeight: 600, cursor: "pointer" }}
-              >
-                {seeding ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
-                Seed Defaults
-              </button>
-              <button
-                onClick={openAdd}
-                style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 18px", borderRadius: 8, background: "hsl(28 95% 52%)", border: "none", color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
-              >
-                <Plus size={15} /> Add Project
-              </button>
-            </>
+            <button
+              onClick={handleSeed}
+              disabled={seeding}
+              style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, background: "hsl(215 35% 14%)", border: "1px solid hsl(215 35% 22%)", color: "hsl(215 20% 70%)", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}
+            >
+              {seeding ? <Loader2 size={13} className="animate-spin" /> : <Upload size={13} />}
+              Seed Defaults
+            </button>
           ) : (
-            <>
-              <button
-                onClick={handleResetTeam}
-                style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 16px", borderRadius: 8, background: "hsl(215 35% 16%)", border: "1px solid hsl(215 35% 24%)", color: "hsl(215 20% 70%)", fontSize: 13, fontWeight: 600, cursor: "pointer" }}
-              >
-                <RotateCcw size={14} /> Reset Defaults
-              </button>
-              <button
-                onClick={openAddTeam}
-                style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 18px", borderRadius: 8, background: "hsl(28 95% 52%)", border: "none", color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
-              >
-                <Plus size={15} /> Add Team Member
-              </button>
-            </>
+            <button
+              onClick={handleResetTeam}
+              style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, background: "hsl(215 35% 14%)", border: "1px solid hsl(215 35% 22%)", color: "hsl(215 20% 70%)", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}
+            >
+              <RotateCcw size={13} /> Reset Defaults
+            </button>
           )}
 
-          <button onClick={handleLogout} style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, background: "hsl(215 35% 16%)", border: "1px solid hsl(215 35% 24%)", color: "hsl(215 20% 60%)", fontSize: 13, cursor: "pointer" }}>
+          <button onClick={handleLogout} title="Logout" style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 12px", borderRadius: 8, background: "hsl(215 35% 14%)", border: "1px solid hsl(215 35% 22%)", color: "hsl(215 20% 60%)", fontSize: 13, cursor: "pointer" }}>
             <LogOut size={14} />
           </button>
         </div>
